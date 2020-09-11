@@ -1,0 +1,12 @@
+<div class="bg-gradient-topbar icon-height-1">
+	<button *ngIf="isSmallScreen" 
+		class="bg-gradient-topbar icon-border-1 icon-height-1" 
+		type="button" 
+		(click)="menuOpenClick()"
+		>
+		<svg class="icon-fg-color-1 icon-height-1 icon-width-1" viewBox="0 0 24 24">
+			<path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+		</svg>
+	</button>
+</div>
+<app-menu *ngIf="!shouldSmScreenHideMenu"></app-menu>
