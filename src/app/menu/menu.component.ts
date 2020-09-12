@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
@@ -7,6 +7,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
+	@Input() routeDescriptions: { path: string, display: string };
 	currentStyles: {};
 
   constructor() { }

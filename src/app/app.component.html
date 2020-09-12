@@ -11,10 +11,13 @@
 			</svg>
 		</button>
 	</div>
-	<app-menu *ngIf="!shouldSmScreenHideMenu" style="background: inherit"></app-menu>
+	<app-menu 
+		*ngIf="!shouldSmScreenHideMenu" 
+		style="background: inherit"
+		[routeDescriptions]="routeDescriptions"
+		></app-menu>
 	<div class="content-base" [style]="contentDivStyle" >
-
+		<router-outlet></router-outlet>
 	</div>
 
 </div>
-<!-- <router-outlet></router-outlet> -->

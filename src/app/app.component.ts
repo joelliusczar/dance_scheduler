@@ -13,6 +13,12 @@ export class AppComponent {
 	contentDivStyle: {};
 
 	title = 'Dance Scheduler';
+	routeDescriptions = [
+		{ path: 'dancers', display: 'Dancers' },
+		{ path: 'couples', display: 'Couples' },
+		{ path: 'schools', display: 'Schools' },
+		{ path: 'skillTiers', display: 'Skill Tiers' },
+	];
 	
 	ngOnInit(): void {
 		this.getScreenSize();

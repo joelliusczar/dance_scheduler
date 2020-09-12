@@ -1,3 +1,5 @@
 <div class="menu-base" [style]="currentStyles">
-
+	<ul>
+		<li *ngFor="let path of routeDescriptions"><a href="/{{path.path}}">{{path.display}}</a></li>
+	</ul>
 </div>
