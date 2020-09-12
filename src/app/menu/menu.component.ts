@@ -7,7 +7,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-	currentClasses: {};
+	currentStyles: {};
 
   constructor() { }
 
@@ -17,10 +17,8 @@ export class MenuComponent implements OnInit {
 	
 	setClassesForScreenSize() {
 		const isSmallScreen = window.innerWidth <= 640;
-		this.currentClasses = {
-			'width-half': isSmallScreen,
-			'width-fs-menu': !isSmallScreen,
-			'menu-base': true,
+		this.currentStyles = {
+			'width': isSmallScreen ? '50%' : '200px',
 		};
 	}
 

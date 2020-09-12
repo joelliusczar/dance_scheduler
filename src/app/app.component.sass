@@ -1,0 +1,16 @@
+@use '../styles'
+
+.navigation-base
+	@extend .full-size
+	@extend .bg-gradient
+	
+.content-base
+	background-color: white
+	height: 100%
+	border-radius: 0.125rem
+	float: right
+
+.open-menu-icon
+	@extend %icon-base
+	background: inherit
+	color: styles.$fg-color-icon1
