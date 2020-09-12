@@ -10,6 +10,8 @@ $breakpoint-xl: 1280px
 $bg-color-menu1: #6b46c1
 $bg-color-menu2: #553c9a
 
+$fg-color-icon1: #2d3748
+
 
 body
 	font: 100% $font-stack
@@ -20,10 +22,7 @@ button
 	padding: 0
 	margin: 0
 
-.bg-color-menu
-	background-color: $bg-color-menu1
-
-.bg-gradient-menu
+.bg-gradient
 	background: radial-gradient($bg-color-menu1 0%, $bg-color-menu2 70%)
 
 .bg-gradient-topbar
@@ -32,18 +31,20 @@ button
 .height-full
 	height: 100%
 
-.icon-fg-color-1
-	color: #2d3748
+.full-size
+	height: 100%
+	width: 100%
 
-.icon-height-1
+.height-icon
 	height: 1.5rem
 
-.icon-width-1
+%icon-base
+	@extend .height-icon
 	width: 1.5rem
-
-.icon-border-1
 	border-style: none
-
 
 .width-half
 	width: 50%
+
+.width-full
+	width: 100%

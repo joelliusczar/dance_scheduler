@@ -20,8 +20,7 @@ export class MenuComponent implements OnInit {
 		this.currentClasses = {
 			'width-half': isSmallScreen,
 			'width-fs-menu': !isSmallScreen,
-			'bg-gradient-menu': true,
-			'height-full': true,
+			'menu-base': true,
 		};
 	}
 
