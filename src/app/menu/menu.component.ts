@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener, Input } from '@angular/core';
+import { DanceSchedulerRoute } from '../routeDefintions';
 
 @Component({
   selector: 'app-menu',
@@ -7,7 +8,7 @@ import { Component, OnInit, HostListener, Input } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-	@Input() routeDescriptions: { path: string, display: string };
+	@Input() routeDescriptions: Array<DanceSchedulerRoute>;
 	currentStyles: {};
 
   constructor() { }

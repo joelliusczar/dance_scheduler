@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { allRoutes } from './routeDefintions';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +14,7 @@ export class AppComponent {
 	contentDivStyle: {};
 
 	title = 'Dance Scheduler';
-	routeDescriptions = [
-		{ path: 'dancers', display: 'Dancers' },
-		{ path: 'couples', display: 'Couples' },
-		{ path: 'schools', display: 'Schools' },
-		{ path: 'compRules', display: 'Competition Rules' },
-	];
+	routeDescriptions = allRoutes;
 	
 	ngOnInit(): void {
 		this.getScreenSize();
