@@ -17,7 +17,7 @@ export class AppComponent {
 		{ path: 'dancers', display: 'Dancers' },
 		{ path: 'couples', display: 'Couples' },
 		{ path: 'schools', display: 'Schools' },
-		{ path: 'skillTiers', display: 'Skill Tiers' },
+		{ path: 'compRules', display: 'Competition Rules' },
 	];
 	
 	ngOnInit(): void {

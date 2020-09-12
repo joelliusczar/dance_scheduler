@@ -7,7 +7,7 @@ import { DancerListComponent } from './dancer-list/dancer-list.component';
 import { MenuComponent } from './menu/menu.component';
 import { CoupleListComponent } from './couple-list/couple-list.component';
 import { SchoolListComponent } from './school-list/school-list.component';
-import { SkillTierSetupComponent } from './skill-tier-setup/skill-tier-setup.component';
+import { CompRulesSetupComponent } from './comp-rules-setup/comp-rules-setup.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,7 @@ import { SkillTierSetupComponent } from './skill-tier-setup/skill-tier-setup.com
     MenuComponent,
     CoupleListComponent,
     SchoolListComponent,
-    SkillTierSetupComponent
+    CompRulesSetupComponent,
   ],
   imports: [
     BrowserModule,

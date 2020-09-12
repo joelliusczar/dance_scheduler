@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SkillTierSetupComponent } from './skill-tier-setup.component';
+import { CompRulesSetupComponent } from './comp-rules-setup.component';
 
-describe('SkillTierSetupComponent', () => {
-  let component: SkillTierSetupComponent;
-  let fixture: ComponentFixture<SkillTierSetupComponent>;
+describe('CompRulesSetupComponent', () => {
+  let component: CompRulesSetupComponent;
+  let fixture: ComponentFixture<CompRulesSetupComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SkillTierSetupComponent ]
+      declarations: [ CompRulesSetupComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SkillTierSetupComponent);
+    fixture = TestBed.createComponent(CompRulesSetupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
