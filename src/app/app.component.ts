@@ -12,8 +12,11 @@ export class AppComponent {
 	shouldSmScreenHideMenu: boolean;
 	contentDivStyle: {};
 
-	title = 'dance-scheduler';
+	title = 'Dance Scheduler';
 	
+	ngOnInit(): void {
+		this.getScreenSize();
+	}
 
 	hideOrShowForScreenSize() : void {
 		const wasSmallScreen = this.isSmallScreen;
@@ -36,7 +39,10 @@ export class AppComponent {
 		this.hideOrShowForScreenSize();
 		const contentDivSize = this.isSmallScreen ? 
 			this.screenWidth : this.screenWidth - 200;
-		this.contentDivStyle = {'width': `${contentDivSize}px`};
+		this.contentDivStyle = {
+			'width': `${contentDivSize}px`,
+			'float': this.isSmallScreen ? 'none' : 'right',
+		};
 	}
 
 	menuOpenClick() : void {
