@@ -11,16 +11,27 @@ $bg-color-menu1: #6b46c1
 $bg-color-menu2: #553c9a
 
 $fg-color-icon1: #2d3748
+$fg-color-menu-text: #cbd5e0
 
+html, body, button, p, h1, h2, h3, h4, h5 ,h6
+	margin: 0
+	padding: 0
+
+h1
+	font-variant-caps: all-small-caps
+	font-size: 1.5em
+	letter-spacing: .08em
+	text-align: center
+
+html
+	font-size: 16px
 
 body
 	font: 100% $font-stack
 	height: 100vh
-	margin: 0
 
-button
-	padding: 0
-	margin: 0
+
+
 
 
 .bg-gradient
@@ -32,9 +43,15 @@ button
 .height-full
 	height: 100%
 
-.full-size
+
+.size-full
 	height: 100%
 	width: 100%
+
+
+.size-inherit
+	height: inherit
+	width: inherit
 
 .height-icon
 	height: 1.5rem
