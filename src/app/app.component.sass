@@ -5,10 +5,16 @@
 	@extend .bg-gradient
 	
 .content-base
-	background-color: white
-	border-radius: 0.125em
+	background-color: styles.$bg-color-content
+	border-radius: styles.$rounding-standard
 	height: 100%
 	padding: 1em
+
+	a
+		color: styles.$fg-color-menu-text
+
+		&:visited
+		color: styles.$fg-color-menu-text
 	
 
 .open-menu-icon

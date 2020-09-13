@@ -1,8 +1,5 @@
 @use '../../styles'
 
-.width-fs-menu
-	width: 200px
-
 .menu-base
 	height: 100%
 	float: left
@@ -11,16 +8,22 @@
 ul
 	list-style: none
 	padding-left: 30px
+	width: inherit
+	overflow: hidden
+	white-space: nowrap
 
 li
 	margin-bottom: .7em
 
 a
 	color: styles.$fg-color-menu-text
+	display: block
 	text-decoration: none
 	font-variant-caps: all-small-caps
 	font-size: 1.2em
 	letter-spacing: .05em
+	overflow: hidden
+	text-overflow: ellipsis
 
 	&:visted
 		color: styles.$fg-color-menu-text

@@ -1,1 +1,9 @@
-<p>dancer-list works!</p>
+<h1>Dancers participating in competition</h1>
+<p *ngIf="!anySchools">
+	No schools have been added for this competition. Please visit 
+	<a href="/schools">here</a> to add some.
+</p>
+<p *ngIf="!anyRules">
+	No rules have been added for this competition. Please visit 
+	<a href="/compRules">here</a> to add some.
+</p>

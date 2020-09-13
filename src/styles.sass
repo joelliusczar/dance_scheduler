@@ -9,19 +9,30 @@ $breakpoint-xl: 1280px
 
 $bg-color-menu1: #6b46c1
 $bg-color-menu2: #553c9a
+$bg-color-content: #f5f9fa
+$bg-color-header: #dcdcdc
 
 $fg-color-icon1: #2d3748
 $fg-color-menu-text: #cbd5e0
+$fg-color-header: #58585a
+
+$rounding-standard: 0.12em
 
 html, body, button, p, h1, h2, h3, h4, h5 ,h6
 	margin: 0
 	padding: 0
 
 h1
+	color: $fg-color-header
 	font-variant-caps: all-small-caps
-	font-size: 1.5em
+	font-size: 1.7em
 	letter-spacing: .08em
 	text-align: center
+	margin-bottom: 1em
+	
+	border-radius: $rounding-standard
+	font-weight: 400
+	
 
 html
 	font-size: 16px
@@ -32,7 +43,8 @@ body
 
 
 
-
+p
+	margin-bottom: 1em
 
 .bg-gradient
 	background: radial-gradient($bg-color-menu1 0%, $bg-color-menu2 70%)
