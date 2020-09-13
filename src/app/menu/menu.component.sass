@@ -1,14 +1,17 @@
 @use '../../styles'
 
 .menu-base
+	box-shadow: 7px 1px 5px -4px rgb(0, 0, 0, .3)
 	height: 100%
-	float: left
 	background: inherit
+	width: 200px
+	float: left
+	position: static
 
 ul
 	list-style: none
 	padding-left: 30px
-	width: inherit
+	width: 100%
 	overflow: hidden
 	white-space: nowrap
 
@@ -27,3 +30,9 @@ a
 
 	&:visted
 		color: styles.$fg-color-menu-text
+			
+@media(max-width: styles.$breakpoint-small)
+	.menu-base
+		width: 50%
+		float: none
+		position: absolute

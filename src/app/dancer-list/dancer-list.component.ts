@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DancerListComponent implements OnInit {
 
-	anySchools: boolean;
 	anyRules: boolean;
 
   constructor() { }

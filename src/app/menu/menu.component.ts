@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DanceSchedulerRoute } from '../routeDefintions';
 
 @Component({
@@ -14,19 +14,6 @@ export class MenuComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-		this.setClassesForScreenSize();
-	}
-	
-	setClassesForScreenSize() {
-		const isSmallScreen = window.innerWidth <= 640;
-		this.currentStyles = {
-			'width': isSmallScreen ? '50%' : '200px',
-		};
-	}
-
-	@HostListener('window:resize', ['$event'])
-	getScreenSize() : void {
-		this.setClassesForScreenSize();
 	}
 
 }
