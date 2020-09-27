@@ -1,0 +1,78 @@
+<h2>Age Groups:</h2>
+<form 
+	#ageGroupForm="ngForm" 
+	(ngSubmit)="onSubmit(ageGroupForm.form)" 
+	dsAgeRangeValidator
+>
+	<table>
+		<thead>
+			<tr>
+				<th>Group</th>
+				<th>From..</th>
+				<th>To Years Old</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let ageGroup of ageGroups"></tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td>
+					<label for="name">Group</label>
+					<input 
+						[(ngModel)]="ageGroupModel.name" 
+						name="name" 
+						ngModel 
+						type="text" 
+						class="age-group-width"
+						#name="ngModel"
+						required
+					/>
+					<div 
+						*ngIf="!(name.valid || name.untouched)" 
+						class="input-error-label"
+					>
+							Group is required
+					</div>
+				</td>
+				<td>
+					<label for="fromAge">From..</label>
+					<input 
+					[(ngModel)]="ageGroupModel.fromAge" 
+					name="fromAge" 
+					ngModel 
+					type="number" 
+					class="age-group-width"
+					required>
+				</td>
+				<td class="to-age-cell">
+					<label for="toAge">To Years Old</label>
+					<input 
+					[ngModel]="ageGroupModel.toAge" 
+					(ngModelChange)="toAgeOnChange($event)"
+					name="toAge" 
+					ngModel 
+					type="text" 
+					#toAgeInput
+					required>
+					<button 
+						class="to-age-btn" 
+						(click)="unboundedAgeClick()" 
+						type="button"
+					>
+						No Age Limit
+					</button>
+					<div *ngIf="ageGroupForm.errors?.invalidAgeRange && (ageGroupForm.touched || ageGroupForm.dirty)"
+						class="input-error-label"
+					>
+						Impossible age range
+					</div>
+				</td>
+				<td>
+					<button class="add-row-btn">+</button>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</form>

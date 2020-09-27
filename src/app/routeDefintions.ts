@@ -1,7 +1,6 @@
 import { Route } from '@angular/router';
 import { DancerListComponent } from './dancer-list/dancer-list.component';
 import { CoupleListComponent } from './couple-list/couple-list.component';
-import { SchoolListComponent } from './school-list/school-list.component';
 import { CompRulesSetupComponent } from './comp-rules-setup/comp-rules-setup.component';
 
 export enum RouteAccess {
@@ -26,12 +25,6 @@ export const allRoutes: Array<DanceSchedulerRoute> = [
 		path: 'couples', 
 		component: CoupleListComponent, 
 		display: 'Couples', 
-		filter: RouteAccess.CompetitionSetup 
-	},
-	{ 
-		path: 'schools', 
-		component: SchoolListComponent, 
-		display: 'Schools', 
 		filter: RouteAccess.CompetitionSetup 
 	},
 	{ 

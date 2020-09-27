@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SchoolListComponent } from './school-list.component';
+import { AgeGroupFormComponent } from './age-group-form.component';
 
-describe('SchoolListComponent', () => {
-  let component: SchoolListComponent;
-  let fixture: ComponentFixture<SchoolListComponent>;
+describe('AgeGroupFormComponent', () => {
+  let component: AgeGroupFormComponent;
+  let fixture: ComponentFixture<AgeGroupFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SchoolListComponent ]
+      declarations: [ AgeGroupFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SchoolListComponent);
+    fixture = TestBed.createComponent(AgeGroupFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
