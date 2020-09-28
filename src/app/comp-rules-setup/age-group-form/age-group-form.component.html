@@ -3,6 +3,7 @@
 	#ageGroupForm="ngForm" 
 	(ngSubmit)="onSubmit(ageGroupForm.form)" 
 	dsAgeRangeValidator
+	autocomplete="off"
 >
 	<table>
 		<thead>
@@ -50,11 +51,10 @@
 					<label for="toAge">To Years Old</label>
 					<input 
 					[ngModel]="ageGroupModel.toAge" 
-					(ngModelChange)="toAgeOnChange($event)"
+					(ngModelChange)="toAgeOnChange($event, ageGroupForm.form)"
 					name="toAge" 
 					ngModel 
 					type="text" 
-					#toAgeInput
 					required>
 					<button 
 						class="to-age-btn" 

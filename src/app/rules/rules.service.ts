@@ -13,5 +13,11 @@ export interface AgeGroupType {
 })
 export class RulesService {
 
-  constructor() { }
+	ageGroups: Array<AgeGroupType> = [];
+
+	constructor() { }
+	
+	SaveAgeGroup(group: AgeGroupType): void {
+		this.ageGroups.push(group);
+	}
 }

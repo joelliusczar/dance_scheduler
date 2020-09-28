@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { RulesService, AgeGroupType } from '../../rules/rules.service';
 
 @Component({
@@ -8,14 +9,15 @@ import { RulesService, AgeGroupType } from '../../rules/rules.service';
 })
 export class AgeGroupFormComponent implements OnInit {
 
-  ageGroups: Array<AgeGroupType>;
-
-	ageGroupModel: AgeGroupType ={
+	ageGroups: Array<AgeGroupType>;
+	
+	defaultAgeGroupModel: AgeGroupType = {
 		name: '',
 		fromAge: 0,
 		toAge: 0,
 	};
-	@ViewChild('toAgeInput') toAgeInput: ElementRef;
+
+	ageGroupModel: AgeGroupType = {...this.defaultAgeGroupModel }
 
   constructor(private rulesService: RulesService) { 
 		this.ageGroups = [];
@@ -24,12 +26,12 @@ export class AgeGroupFormComponent implements OnInit {
   ngOnInit(): void {
 	}
 	
-	toAgeOnChange(newValue: string) {
-		const allowedInputs = /(^[1-9]\d*$)|(^\+$)/;
-
+	toAgeOnChange(newValue: string, form: FormGroup): void {
+		const allowedInputs = /(^[1-9]\d*$)|(^\+$)|(^0$)/;
+		console.log('change');
 		//if input is valid, we update model 
 		//else we revert the control
-		if(allowedInputs.test(newValue)) {   
+		if(allowedInputs.test(newValue)) {
 			if(newValue === '+') {
 				this.ageGroupModel.toAge = newValue;
 			}
@@ -41,17 +43,24 @@ export class AgeGroupFormComponent implements OnInit {
 			this.ageGroupModel.toAge = '';
 		}
 		else {
-			this.toAgeInput.nativeElement.value = this.ageGroupModel.toAge;
+			form.patchValue({ 'toAge': this.ageGroupModel.toAge}, {'emitEvent': false});
 		}
 		
 	}
 
-	unboundedAgeClick() {
+	unboundedAgeClick(): void {
 		this.ageGroupModel.toAge = '+';
 	}
 
-	onSubmit(values) {
-		console.log(values);
+	onSubmit(form: FormGroup): void {
+		if(!form.valid){
+			form.markAllAsTouched();
+		}
+		else {
+			this.rulesService.SaveAgeGroup({...form.value});
+			this.ageGroupModel = {...this.defaultAgeGroupModel};
+			form.reset(this.ageGroupModel, {emitEvent: false});
+		}
 	}
 
 }
