@@ -15,14 +15,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let ageGroup of ageGroups"></tr>
+			<tr *ngFor="let ageGroup of ageGroups">
+				<td>{{ageGroup.name}}</td>
+				<td>{{ageGroup.fromAge}}</td>
+				<td>{{ageGroup.toAge}}</td>
+				<td><button (click)="onRowRemoveClick(ageGroup)" type="button" class="add-row-btn">-</button></td>
+			</tr>
 		</tbody>
 		<tfoot>
 			<tr>
 				<td>
 					<label for="name">Group</label>
 					<input 
-						[(ngModel)]="ageGroupModel.name" 
 						name="name" 
 						ngModel 
 						type="text" 
@@ -40,17 +44,18 @@
 				<td>
 					<label for="fromAge">From..</label>
 					<input 
-					[(ngModel)]="ageGroupModel.fromAge" 
 					name="fromAge" 
 					ngModel 
 					type="number" 
+					min="0"
+					placeholder="0"
 					class="age-group-width"
 					required>
 				</td>
 				<td class="to-age-cell">
 					<label for="toAge">To Years Old</label>
 					<input 
-					[ngModel]="ageGroupModel.toAge" 
+					placeholder="0"
 					(ngModelChange)="toAgeOnChange($event, ageGroupForm.form)"
 					name="toAge" 
 					ngModel 
@@ -58,7 +63,7 @@
 					required>
 					<button 
 						class="to-age-btn" 
-						(click)="unboundedAgeClick()" 
+						(click)="unboundedAgeClick(ageGroupForm.form)" 
 						type="button"
 					>
 						No Age Limit

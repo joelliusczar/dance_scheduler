@@ -1,66 +1,77 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { RulesService, AgeGroupType } from '../../rules/rules.service';
+import { Unsubscribable } from 'rxjs';
+import { RulesService, AgeGroupType, plus } from '../../rules/rules.service';
 
 @Component({
   selector: 'age-group-form',
   templateUrl: './age-group-form.component.html',
   styleUrls: ['./age-group-form.component.sass']
 })
-export class AgeGroupFormComponent implements OnInit {
+export class AgeGroupFormComponent implements OnInit, OnDestroy {
 
+	ruleServiceUnsub: Unsubscribable;
 	ageGroups: Array<AgeGroupType>;
 	
-	defaultAgeGroupModel: AgeGroupType = {
-		name: '',
-		fromAge: 0,
-		toAge: 0,
-	};
+	toAge: number | plus | ''
 
-	ageGroupModel: AgeGroupType = {...this.defaultAgeGroupModel }
-
-  constructor(private rulesService: RulesService) { 
+  constructor(private rulesService$: RulesService) { 
 		this.ageGroups = [];
 	}
 
   ngOnInit(): void {
+		this.ruleServiceUnsub = this.rulesService$.subscribe(
+			(value: AgeGroupType[]) => {
+				this.ageGroups = value;
+		});
 	}
 	
 	toAgeOnChange(newValue: string, form: FormGroup): void {
 		const allowedInputs = /(^[1-9]\d*$)|(^\+$)|(^0$)/;
-		console.log('change');
 		//if input is valid, we update model 
 		//else we revert the control
 		if(allowedInputs.test(newValue)) {
 			if(newValue === '+') {
-				this.ageGroupModel.toAge = newValue;
+				this.toAge = newValue;
 			}
 			else {
-				this.ageGroupModel.toAge = parseInt(newValue);
+				this.toAge = parseInt(newValue);
 			}
 		}
 		else if(!newValue) {
-			this.ageGroupModel.toAge = '';
+			this.toAge = '';
 		}
 		else {
-			form.patchValue({ 'toAge': this.ageGroupModel.toAge}, {'emitEvent': false});
+			form.patchValue({ 'toAge': this.toAge}, {'emitEvent': false});
 		}
 		
 	}
 
-	unboundedAgeClick(): void {
-		this.ageGroupModel.toAge = '+';
+	unboundedAgeClick(form: FormGroup): void {
+		this.toAge = '+';
+		form.patchValue({ 'toAge': this.toAge}, {'emitEvent': false});
 	}
 
 	onSubmit(form: FormGroup): void {
+		console.log(form);
 		if(!form.valid){
 			form.markAllAsTouched();
 		}
 		else {
-			this.rulesService.SaveAgeGroup({...form.value});
-			this.ageGroupModel = {...this.defaultAgeGroupModel};
-			form.reset(this.ageGroupModel, {emitEvent: false});
+			this.rulesService$.SaveAgeGroup({
+				...form.value, 
+				toAge: parseInt(form.value.toAge)
+			});
+			form.reset({}, {emitEvent: false});
 		}
+	}
+
+	onRowRemoveClick(group) {
+		this.rulesService$.RemoveAgeGroup(group);
+	}
+
+	ngOnDestroy(): void {
+		this.ruleServiceUnsub.unsubscribe();
 	}
 
 }
