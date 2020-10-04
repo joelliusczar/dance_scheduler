@@ -1,0 +1,46 @@
+<h2>Dance Categories:</h2>
+<form 
+	#categoryForm="ngForm" 
+	(ngSubmit)="onSubmit(categoryForm.form)" 
+	dsAgeRangeValidator
+	autocomplete="off"
+>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let catagory of categories">
+				<td>{{catagory}}</td>
+				<td><button (click)="onRowRemoveClick(catagory)" type="button" class="add-row-btn">-</button></td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td>
+					<label for="name">Name</label>
+					<input 
+						name="name" 
+						ngModel 
+						type="text" 
+						class="age-group-width"
+						#name="ngModel"
+						required
+					/>
+					<div 
+						*ngIf="!(name.valid || name.untouched)" 
+						class="input-error-label"
+					>
+						Name is required
+					</div>
+				</td>
+				<td>
+					<button class="add-row-btn">+</button>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</form>

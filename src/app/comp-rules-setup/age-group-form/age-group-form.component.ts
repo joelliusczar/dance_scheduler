@@ -1,76 +1,105 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Unsubscribable } from 'rxjs';
-import { RulesService, AgeGroupType, plus } from '../../rules/rules.service';
+import { FormGroup, Validator, FormControl, Validators } from '@angular/forms';
+import { Subscription, Unsubscribable } from 'rxjs';
+import {
+	AgeGroupService,
+	AgeGroupType, 
+	plus } from '../../rules/variant.service';
+import { 
+	AgeRangeValidatorDirective 
+} from '../../validators/age-range-validator.directive';
+
 
 @Component({
   selector: 'age-group-form',
   templateUrl: './age-group-form.component.html',
-  styleUrls: ['./age-group-form.component.sass']
+	styleUrls: ['./age-group-form.component.sass']
 })
 export class AgeGroupFormComponent implements OnInit, OnDestroy {
-
+	name = new FormControl('');
+	fromAge = new FormControl('',[Validators.min(0)]);
+	toAge = new FormControl('');
+	ageGroupFormGroup = new FormGroup({
+		name: this.name,
+		fromAge: this.fromAge,
+		toAge: this.toAge,
+	});
 	ruleServiceUnsub: Unsubscribable;
-	ageGroups: Array<AgeGroupType>;
+	ageGroups: AgeGroupType[];
+	submitValidators: Validator[];
+	toAgeSubscription: Subscription;
 	
-	toAge: number | plus | ''
+	prevToAge: number | plus | ''
 
-  constructor(private rulesService$: RulesService) { 
+  constructor( private variantService$: AgeGroupService) { 
 		this.ageGroups = [];
+		this.submitValidators = [new AgeRangeValidatorDirective()];
+		this.toAgeSubscription = 
+			this.toAge.valueChanges.subscribe(this.toAgeOnChange.bind(this));
 	}
 
   ngOnInit(): void {
-		this.ruleServiceUnsub = this.rulesService$.subscribe(
+		this.ruleServiceUnsub = this.variantService$.subscribe(
 			(value: AgeGroupType[]) => {
 				this.ageGroups = value;
 		});
 	}
 	
-	toAgeOnChange(newValue: string, form: FormGroup): void {
+	toAgeOnChange(newValue: string): void {
+		if(!this) return;
 		const allowedInputs = /(^[1-9]\d*$)|(^\+$)|(^0$)/;
 		//if input is valid, we update model 
 		//else we revert the control
 		if(allowedInputs.test(newValue)) {
 			if(newValue === '+') {
-				this.toAge = newValue;
+				this.prevToAge = newValue;
 			}
 			else {
-				this.toAge = parseInt(newValue);
+				this.prevToAge = parseInt(newValue);
 			}
 		}
 		else if(!newValue) {
-			this.toAge = '';
+			this.prevToAge = '';
 		}
 		else {
-			form.patchValue({ 'toAge': this.toAge}, {'emitEvent': false});
+			this.toAge.setValue(this.prevToAge, {'emitEvent': false});
 		}
 		
 	}
 
-	unboundedAgeClick(form: FormGroup): void {
-		this.toAge = '+';
-		form.patchValue({ 'toAge': this.toAge}, {'emitEvent': false});
+	unboundedAgeClick(): void {
+		 this.prevToAge = '+';
+		 this.toAge.setValue(this.prevToAge, {'emitEvent': false});
 	}
 
-	onSubmit(form: FormGroup): void {
-		console.log(form);
-		if(!form.valid){
-			form.markAllAsTouched();
+
+	onSubmit(): void {
+		const submitErrors = this.submitValidators.reduce((p, c) => {
+			const addErrors = c.validate(this.ageGroupFormGroup);
+			return addErrors ? { ...p, ...addErrors } : p;
+		},null);
+		const existingErrors = this.ageGroupFormGroup.errors;
+		if(submitErrors || existingErrors) {
+			this.ageGroupFormGroup.setErrors({...existingErrors, ...submitErrors});
+		}
+		if(!this.ageGroupFormGroup.valid){
+			this.ageGroupFormGroup.markAllAsTouched();
 		}
 		else {
-			this.rulesService$.SaveAgeGroup({
-				...form.value, 
-				toAge: parseInt(form.value.toAge)
+			this.variantService$.SaveItem({
+				...this.ageGroupFormGroup.value, 
+				toAge: parseInt(this.ageGroupFormGroup.value.toAge)
 			});
-			form.reset({}, {emitEvent: false});
+			this.ageGroupFormGroup.reset({}, {emitEvent: false});
 		}
 	}
 
-	onRowRemoveClick(group) {
-		this.rulesService$.RemoveAgeGroup(group);
+	onRowRemoveClick(item) {
+		this.variantService$.RemoveItem(item);
 	}
 
 	ngOnDestroy(): void {
+		this.toAgeSubscription.unsubscribe();
 		this.ruleServiceUnsub.unsubscribe();
 	}
 

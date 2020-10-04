@@ -1,5 +1,13 @@
 import { Directive } from '@angular/core';
-import { NG_VALIDATORS, ValidationErrors, AbstractControl } from '@angular/forms';
+import { 
+NG_VALIDATORS, 
+ValidationErrors, 
+AbstractControl, 
+Validator,
+NgForm
+} 
+from '@angular/forms';
+import { Input } from '@angular/core';
 
 @Directive({
 	selector: '[dsAgeRangeValidator]',
@@ -9,7 +17,8 @@ import { NG_VALIDATORS, ValidationErrors, AbstractControl } from '@angular/forms
 		multi: true
 	}]
 })
-export class AgeRangeValidatorDirective {
+export class AgeRangeValidatorDirective implements Validator {
+
 
   validate(control: AbstractControl): ValidationErrors | null {
 		const fromAgeCtl = control.get('fromAge');
@@ -21,8 +30,13 @@ export class AgeRangeValidatorDirective {
 		}
 		const fromAge: number = fromAgeCtl.value;
 		const toAge: number = parseInt(toAgeCtl.value);
-		
-		return fromAge > toAge ? { invalidAgeRange: true } : null;
+		if(fromAge > toAge) {
+			const error = { invalidAgeRange: true };
+			fromAgeCtl.setErrors(error);
+			toAgeCtl.setErrors(error);
+			return error;
+		}
+		return null;
 
 	}
 

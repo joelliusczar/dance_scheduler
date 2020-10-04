@@ -6,19 +6,22 @@ $input-border-width: .125em
 
 $input-height: 1.5em - $input-border-width
 
-
-.age-group-width
-	width: 90px
-
-
 table
 	border-collapse: collapse
 
 td
-	padding-left: $cell-left-padding
+	padding-bottom: .5em
+
+td:not(:nth-last-child(2))
+	width: 90px
+
 
 th
 	text-align: left
+	padding-bottom: .5em
+
+td:nth-child(n + 2), th:nth-child(n + 2)
+	padding-left: $cell-left-padding
 
 tfoot
 	tr
@@ -26,14 +29,21 @@ tfoot
 		vertical-align: top
 
 	input
+		width: inherit
 		vertical-align: top
 		border-radius: styles.$rounding-standard
 		border-width: $input-border-width
+		border-style: solid
 		border-color: #767676
 
 	label
 		position: absolute
 		visibility: hidden
+
+td:nth-last-child(2)
+	input
+		border-top-right-radius: 2 * styles.$rounding-standard
+		border-bottom-right-radius: 2 * styles.$rounding-standard
 
 .to-age-cell
 	position: relative
@@ -59,13 +69,13 @@ tfoot
 	color: styles.$fg-color-menu-text
 	position: absolute
 	right: $input-border-width
-	top: 0
-	height: $input-height
-	padding: .25em
-	border-top-right-radius: styles.$rounding-standard
-	border-bottom-right-radius: styles.$rounding-standard
-	border-top-left-radius: 2 * styles.$rounding-standard
-	border-bottom-left-radius: 2 * styles.$rounding-standard
+	top: $input-border-width
+	height: $input-height - 2 * $input-border-width
+	padding: 0 .25em
+	//border-top-right-radius: styles.$rounding-standard
+	//border-bottom-right-radius: styles.$rounding-standard
+	border-top-left-radius: styles.$rounding-standard
+	border-bottom-left-radius: styles.$rounding-standard
 	@extend %btn-common
 
 

@@ -28,9 +28,9 @@ export const allRoutes: Array<DanceSchedulerRoute> = [
 		filter: RouteAccess.CompetitionSetup 
 	},
 	{ 
-		path: 'compRules', 
+		path: 'compVars', 
 		component: CompRulesSetupComponent, 
-		display: 'Competition Rules', 
+		display: 'Variations', 
 		filter: RouteAccess.CompetitionSetup 
 	},
 ];

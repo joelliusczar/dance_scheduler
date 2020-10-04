@@ -1,8 +1,7 @@
 <h2>Age Groups:</h2>
 <form 
-	#ageGroupForm="ngForm" 
-	(ngSubmit)="onSubmit(ageGroupForm.form)" 
-	dsAgeRangeValidator
+	[formGroup]="ageGroupFormGroup"
+	(ngSubmit)="onSubmit()" 
 	autocomplete="off"
 >
 	<table>
@@ -25,50 +24,61 @@
 		<tfoot>
 			<tr>
 				<td>
-					<label for="name">Group</label>
+					<label for="gname">Group</label>
 					<input 
-						name="name" 
-						ngModel 
+						formControlName="name" 
 						type="text" 
 						class="age-group-width"
-						#name="ngModel"
 						required
 					/>
 					<div 
-						*ngIf="!(name.valid || name.untouched)" 
+						*ngIf="name.errors?.required && !(name.valid || name.untouched)" 
 						class="input-error-label"
-					>
-							Group is required
+					>Group is required
 					</div>
 				</td>
 				<td>
 					<label for="fromAge">From..</label>
 					<input 
-					name="fromAge" 
-					ngModel 
+					formControlName="fromAge" 
 					type="number" 
 					min="0"
 					placeholder="0"
 					class="age-group-width"
 					required>
+					<div *ngIf="!(fromAge.valid || fromAge.untouched)">
+						<div 
+							*ngIf="fromAge.errors?.required" 
+							class="input-error-label"
+						>From age is required
+						</div>
+						<div
+						*ngIf="fromAge.errors?.min" 
+						class="input-error-label"
+						>Minimum value is 0
+						</div>
+					</div>
 				</td>
 				<td class="to-age-cell">
 					<label for="toAge">To Years Old</label>
 					<input 
 					placeholder="0"
-					(ngModelChange)="toAgeOnChange($event, ageGroupForm.form)"
-					name="toAge" 
-					ngModel 
+					formControlName="toAge" 
 					type="text" 
 					required>
 					<button 
 						class="to-age-btn" 
-						(click)="unboundedAgeClick(ageGroupForm.form)" 
+						(click)="unboundedAgeClick()" 
 						type="button"
 					>
 						No Age Limit
 					</button>
-					<div *ngIf="ageGroupForm.errors?.invalidAgeRange && (ageGroupForm.touched || ageGroupForm.dirty)"
+					<div 
+						*ngIf="toAge.errors?.required && !(toAge.valid || toAge.untouched)" 
+						class="input-error-label"
+					>To age is required
+					</div>
+					<div *ngIf="ageGroupFormGroup.errors?.invalidAgeRange && ageGroupFormGroup.touched"
 						class="input-error-label"
 					>
 						Impossible age range
