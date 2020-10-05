@@ -7,6 +7,7 @@
 	<table>
 		<thead>
 			<tr>
+				<th></th>
 				<th>Group</th>
 				<th>From..</th>
 				<th>To Years Old</th>
@@ -15,6 +16,28 @@
 		</thead>
 		<tbody>
 			<tr *ngFor="let ageGroup of ageGroups">
+				<td>
+					<button 
+						*ngIf="ageGroup.order > 0"
+						class="order-btn" 
+						(click)="reorderClick(ageGroup, direction.Down)"
+						type="button"	
+					>
+						<svg viewBox="0 0 6 6">
+							<path d="M1,4.5 l4,0 l-2,-3" />
+						</svg>
+					</button>
+					<button 
+						*ngIf="ageGroup.order < ageGroup.length - 1"
+						class="order-btn" 
+						(click)="reorderClick(ageGroup, direction.Up)"
+						type="button"	
+					>
+						<svg viewBox="0 0 6 6">
+							<path d="M1,1.5 l4,0 l-2,3" />
+						</svg>	
+					</button>
+				</td>
 				<td>{{ageGroup.name}}</td>
 				<td>{{ageGroup.fromAge}}</td>
 				<td>{{ageGroup.toAge}}</td>
@@ -23,6 +46,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
+				<td></td>
 				<td>
 					<label for="gname">Group</label>
 					<input 

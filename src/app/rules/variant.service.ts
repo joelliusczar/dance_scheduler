@@ -1,5 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { PartialObserver, Subscribable, Unsubscribable } from 'rxjs'
+import { Direction, ElevatorDir } from '../types/directions';
+import { swap } from '../shared/utils/arrayHelpers';
 
 export type plus = '+'
 
@@ -26,7 +28,7 @@ export function OrderCompare(a: Sortable, b: Sortable): number {
 	return a.order - b.order;
 }
 
-export class VariantService<T> implements Subscribable<T[]>{
+export class VariantService<T extends Sortable> implements Subscribable<T[]>{
 
 	items: T[] = [];
 	items$: EventEmitter<T[]> = new EventEmitter<T[]>();
@@ -48,8 +50,20 @@ export class VariantService<T> implements Subscribable<T[]>{
 	}
 	
 	SaveItem(item: T): void {
+		item.order = this.items.length;
 		this.items.push(item);
 		this.ReplaceAll(this.items);
+	}
+
+
+	moveItem(item: T, direction: ElevatorDir): void {
+		const increment = direction === Direction.Up ? 1 : -1;
+		if(swap(this.items, item.order, item.order + increment)) {
+			const swapped = this.items[item.order];
+			swapped.order--;
+			item.order++;
+			this.ReplaceAll(this.items);
+		}
 	}
 
 	RemoveItem(item: T): void {

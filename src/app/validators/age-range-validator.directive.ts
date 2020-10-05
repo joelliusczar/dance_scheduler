@@ -3,11 +3,10 @@ import {
 NG_VALIDATORS, 
 ValidationErrors, 
 AbstractControl, 
-Validator,
-NgForm
+Validator
 } 
 from '@angular/forms';
-import { Input } from '@angular/core';
+import { stripDownObj } from '../shared/utils/objectHelpers';
 
 @Directive({
 	selector: '[dsAgeRangeValidator]',
@@ -20,7 +19,7 @@ import { Input } from '@angular/core';
 export class AgeRangeValidatorDirective implements Validator {
 
 
-  validate(control: AbstractControl): ValidationErrors | null {
+	validate(control: AbstractControl): ValidationErrors | null {
 		const fromAgeCtl = control.get('fromAge');
 		if(!fromAgeCtl) return null;
 		const toAgeCtl = control.get('toAge');
@@ -36,6 +35,10 @@ export class AgeRangeValidatorDirective implements Validator {
 			toAgeCtl.setErrors(error);
 			return error;
 		}
+		const fromErrs = stripDownObj(fromAgeCtl.errors,['invalidAgeRange']);
+		fromAgeCtl.setErrors(fromErrs);
+		const toErrs = stripDownObj(toAgeCtl.errors,['invalidAgeRange']);
+		toAgeCtl.setErrors(toErrs);
 		return null;
 
 	}
