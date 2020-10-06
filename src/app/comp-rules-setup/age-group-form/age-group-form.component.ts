@@ -91,9 +91,10 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 			this.ageGroupFormGroup.markAllAsTouched();
 		}
 		else {
+			const toAge = this.ageGroupFormGroup.value.toAge;
 			this.variantService$.SaveItem({
 				...this.ageGroupFormGroup.value, 
-				toAge: parseInt(this.ageGroupFormGroup.value.toAge)
+				toAge: toAge === '+' ? '+' : parseInt(toAge)
 			});
 			this.ageGroupFormGroup.reset({}, {emitEvent: false});
 		}

@@ -14,6 +14,7 @@ import { AgeGroupFormComponent }
 from './comp-rules-setup/age-group-form/age-group-form.component';
 import { CategoryFormComponent } 
 from './comp-rules-setup/category-form/category-form.component';
+import { UpDownComponent } from './shared/components/up-down/up-down.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ from './comp-rules-setup/category-form/category-form.component';
     AgeRangeValidatorDirective,
 		AgeGroupFormComponent,
 		CategoryFormComponent,
+		UpDownComponent,
   ],
   imports: [
     BrowserModule,

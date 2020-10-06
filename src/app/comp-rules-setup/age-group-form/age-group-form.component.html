@@ -28,7 +28,7 @@
 						</svg>
 					</button>
 					<button 
-						*ngIf="ageGroup.order < ageGroup.length - 1"
+						*ngIf="ageGroup.order < ageGroups.length - 1"
 						class="order-btn" 
 						(click)="reorderClick(ageGroup, direction.Up)"
 						type="button"	

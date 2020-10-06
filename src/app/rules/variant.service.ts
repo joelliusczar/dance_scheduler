@@ -2,12 +2,9 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { PartialObserver, Subscribable, Unsubscribable } from 'rxjs'
 import { Direction, ElevatorDir } from '../types/directions';
 import { swap } from '../shared/utils/arrayHelpers';
+import { Sortable } from '../types/sortable';
 
 export type plus = '+'
-
-export interface Sortable {
-	order: number
-};
 
 export interface AgeGroupType extends Sortable {
 	name: string,
@@ -60,8 +57,8 @@ export class VariantService<T extends Sortable> implements Subscribable<T[]>{
 		const increment = direction === Direction.Up ? 1 : -1;
 		if(swap(this.items, item.order, item.order + increment)) {
 			const swapped = this.items[item.order];
-			swapped.order--;
-			item.order++;
+			swapped.order -= increment;
+			item.order += increment;
 			this.ReplaceAll(this.items);
 		}
 	}

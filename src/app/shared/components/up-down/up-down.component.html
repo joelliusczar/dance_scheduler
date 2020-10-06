@@ -1,0 +1,20 @@
+<button 
+	*ngIf="associatedItem.order > 0"
+	class="order-btn" 
+	(click)="reorderClick(associatedItem, direction.Down)"
+	type="button"	
+>
+	<svg viewBox="0 0 6 6">
+		<path d="M1,4.5 l4,0 l-2,-3" />
+	</svg>
+</button>
+<button 
+	*ngIf="associatedItem.order < size - 1"
+	class="order-btn" 
+	(click)="reorderClick(associatedItem, direction.Up)"
+	type="button"	
+>
+	<svg viewBox="0 0 6 6">
+		<path d="M1,1.5 l4,0 l-2,3" />
+	</svg>	
+</button>
