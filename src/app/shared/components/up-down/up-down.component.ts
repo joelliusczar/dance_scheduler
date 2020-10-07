@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ElevatorDir, Direction } from '../../../types/directions';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ElevatorDir, Direction, DirectionEventArg } from '../../../types/directions';
 import { Sortable } from '../../../types/sortable';
 
 @Component({
@@ -8,8 +8,9 @@ import { Sortable } from '../../../types/sortable';
   styleUrls: ['./up-down.component.sass']
 })
 export class UpDownComponent implements OnInit {
-
-	@Input('click') arrowClick: (item: Sortable, direction: ElevatorDir) => void;
+	
+	@Output('reorderClick') arrowClick = 
+		new EventEmitter<DirectionEventArg<Sortable>>();
 	@Input() associatedItem: Sortable;
 	@Input() size: number;
 	direction = Direction;
@@ -20,7 +21,7 @@ export class UpDownComponent implements OnInit {
 	}
 	
 	reorderClick(item: Sortable, direction: ElevatorDir): void {
-		this?.arrowClick(item, direction);
+		this?.arrowClick.emit({ item, direction });
 	}
 
 

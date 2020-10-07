@@ -8,7 +8,7 @@ import {
 import { 
 	AgeRangeValidatorDirective 
 } from '../../validators/age-range-validator.directive';
-import { ElevatorDir, Direction } from '../../types/directions';
+import { ElevatorDir, Direction, DirectionEventArg } from '../../types/directions';
 
 
 @Component({
@@ -74,8 +74,8 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 		 this.toAge.setValue(this.prevToAge, {'emitEvent': false});
 	}
 
-	reorderClick(ageGroup: AgeGroupType, direction: ElevatorDir): void {
-		this.variantService$.moveItem(ageGroup, direction);
+	reorderClick(eventArg: DirectionEventArg<AgeGroupType>): void {
+		this.variantService$.moveItem(eventArg.item, eventArg.direction);
 	}
 
 	onSubmit(): void {

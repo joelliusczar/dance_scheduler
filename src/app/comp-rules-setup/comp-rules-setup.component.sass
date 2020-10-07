@@ -1,5 +1,36 @@
 @use '../../styles'
 	
+$input-border-width: .125em
+
+$input-height: 1.5em - $input-border-width
+
+table
+	border-collapse: collapse
+
+td
+	padding-bottom: .5em
+
+th
+	text-align: left
+	padding-bottom: .5em
+
+tfoot
+	tr
+		height: 2.5em
+		vertical-align: top
+
+	input
+		width: inherit
+		vertical-align: top
+		border-radius: styles.$rounding-standard
+		border-width: $input-border-width
+		border-style: solid
+		border-color: #767676
+
+	label
+		position: absolute
+		visibility: hidden
+
 .order-btn
 	background-color: styles.$bg-color-content
 	color: styles.$border-color-input
@@ -7,7 +38,22 @@
 	width: 1em
 	height: 1em
 
-// .order-btn>svg>path
-// 	&:hover
-// 		box-shadow: -2px 1px 7px 0px #757575
+.btn-common, %btn-common
+	background-color: styles.$bg-color-menu1
+	color: styles.$fg-color-menu-text
+
+	&:hover
+		box-shadow: -2px 1px 7px 0px #757575
+		color: #edeff3
+
+
+.add-row-btn
+	background-color: styles.$bg-color-menu1
+	color: styles.$fg-color-menu-text
+	border-radius: styles.$rounding-standard,
+	height: $input-height
+	width: $input-height
+	@extend %btn-common
+
+
 

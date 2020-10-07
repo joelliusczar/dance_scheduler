@@ -1,17 +1,10 @@
 @use '../../../styles'
-@use '../comp-rules-setup.component'
+@use '../comp-rules-setup.component' as pageParent
 
 $cell-left-padding: .25em
 $cell-right-padding: 0
-$input-border-width: .125em
 
-$input-height: 1.5em - $input-border-width
 
-table
-	border-collapse: collapse
-
-td
-	padding-bottom: .5em
 
 td:not(:nth-last-child(2))
 	width: 90px
@@ -19,29 +12,9 @@ td:not(:nth-last-child(2))
 td:first-child
 	width: unset
 
-th
-	text-align: left
-	padding-bottom: .5em
-
 td:nth-child(n + 2), th:nth-child(n + 2)
 	padding-left: $cell-left-padding
 
-tfoot
-	tr
-		height: 2.5em
-		vertical-align: top
-
-	input
-		width: inherit
-		vertical-align: top
-		border-radius: styles.$rounding-standard
-		border-width: $input-border-width
-		border-style: solid
-		border-color: #767676
-
-	label
-		position: absolute
-		visibility: hidden
 
 td:nth-last-child(2)
 	input
@@ -51,29 +24,14 @@ td:nth-last-child(2)
 .to-age-cell
 	position: relative
 
-.btn-common, %btn-common
-	background-color: styles.$bg-color-menu1
-	color: styles.$fg-color-menu-text
-
-	&:hover
-		box-shadow: -2px 1px 7px 0px #757575
-		color: #edeff3
-
-.add-row-btn
-	background-color: styles.$bg-color-menu1
-	color: styles.$fg-color-menu-text
-	border-radius: styles.$rounding-standard,
-	height: $input-height
-	width: $input-height
-	@extend %btn-common
 
 .to-age-btn
 	background-color: styles.$bg-color-menu1
 	color: styles.$fg-color-menu-text
 	position: absolute
-	right: $input-border-width
-	top: $input-border-width
-	height: $input-height - 2 * $input-border-width
+	right: pageParent.$input-border-width
+	top: pageParent.$input-border-width
+	height: pageParent.$input-height - 2 * pageParent.$input-border-width
 	padding: 0 .25em
 	//border-top-right-radius: styles.$rounding-standard
 	//border-bottom-right-radius: styles.$rounding-standard
