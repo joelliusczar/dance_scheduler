@@ -4,6 +4,16 @@ $input-border-width: .125em
 
 $input-height: 1.5em - $input-border-width
 
+h2
+	&:hover
+		cursor: pointer
+
+	>span:nth-child(2)
+		font-size: 1.7em
+		margin-left: 3em
+		&:hover
+			text-shadow: 5px 5px 10px #000
+
 table
 	border-collapse: collapse
 
@@ -43,7 +53,7 @@ tfoot
 	color: styles.$fg-color-menu-text
 
 	&:hover
-		box-shadow: -2px 1px 7px 0px #757575
+		//@extend %hover-shadow
 		color: #edeff3
 
 
@@ -54,6 +64,5 @@ tfoot
 	height: $input-height
 	width: $input-height
 	@extend %btn-common
-
 
 
