@@ -9,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class CompRulesSetupComponent implements OnInit {
 
 	showAgeGroups: boolean;
+	showDanceCategories: boolean;
+	showDances: boolean;
 
 	ngOnInit(): void {
 	}

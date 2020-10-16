@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
 import { CategoryService, Category } from '../../rules/variant.service';
+import { DirectionEventArg } from '../../types/directions';
 
 
 @Component({
@@ -24,6 +25,10 @@ export class CategoryFormComponent implements OnInit {
 			(value: Category[]) => {
 				this.categories = value;
 		});
+	}
+
+	reorderClick(eventArg: DirectionEventArg<Category>): void {
+		this.variantService$.moveItem(eventArg.item, eventArg.direction);
 	}
 
 	onSubmit(formGroup: FormGroup): void {

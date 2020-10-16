@@ -1,6 +1,6 @@
 <form 
-	#categoryForm="ngForm" 
-	(ngSubmit)="onSubmit(categoryForm.form)" 
+	#danceForm="ngForm" 
+	(ngSubmit)="onSubmit(danceForm.form)" 
 	dsAgeRangeValidator
 	autocomplete="off"
 >
@@ -9,20 +9,22 @@
 			<tr>
 				<th></th>
 				<th>Name</th>
+				<th>Category</th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let catagory of categories">
+			<tr *ngFor="let dance of dances">
 				<td>
 					<ds-up-down (reorderClick)="reorderClick($event)" 
-						[associatedItem]="catagory"
-						[size]="categories.length"
+						[associatedItem]="dance"
+						[size]="dances.length"
 					>
 					</ds-up-down>
 				</td>
-				<td>{{catagory.name}}</td>
-				<td><button (click)="onRowRemoveClick(catagory)" 
+				<td>{{dance.name}}</td>
+				<td>{{dance?.category?.name}}</td>
+				<td><button (click)="onRowRemoveClick(dance)" 
 					type="button" 
 					class="add-row-btn">-</button>
 				</td>
@@ -46,6 +48,26 @@
 						class="input-error-label"
 					>
 						Name is required
+					</div>
+				</td>
+				<td>
+					<label for="name">Category</label>
+					<select
+						name="category"
+						ngModel
+						#category="ngModel"
+						required
+					>
+						<option value="">Pick One</option>
+						<option *ngFor="let cat of categories" [value]="cat.name">
+							{{cat.name}}
+						</option>
+					</select>
+					<div 
+						*ngIf="!(category.valid || category.untouched)" 
+						class="input-error-label"
+					>
+						Category is required
 					</div>
 				</td>
 				<td>

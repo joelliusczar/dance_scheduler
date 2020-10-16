@@ -21,10 +21,48 @@
 	<age-group-form></age-group-form>
 </div>
 <div>
-	<h2>Dance Categories:</h2>
+	<h2 (click)="showDanceCategories = !showDanceCategories">
+		Dance Categories:
+		<ds-hide-icon 
+			[hidden]="showDanceCategories" 
+			strokeColor="black" 
+			width=".8em" 
+			height=".8em"
+		>
+		</ds-hide-icon>
+		<ds-expand-icon 
+			[hidden]="!showDanceCategories" 
+			strokeColor="black" 
+			width=".8em" 
+			height=".8em"
+		>
+		</ds-expand-icon>
+	</h2>
+	<div [hidden]="showDanceCategories" class="section">
+		<category-form></category-form>
+	</div>
 </div>
 <div>
-	<h2>Dances:</h2>
+	<h2 (click)="showDances = !showDances">
+		Dances:
+		<ds-hide-icon 
+			[hidden]="showDances" 
+			strokeColor="black" 
+			width=".8em" 
+			height=".8em"
+		>
+		</ds-hide-icon>
+		<ds-expand-icon 
+			[hidden]="!showDances" 
+			strokeColor="black" 
+			width=".8em" 
+			height=".8em"
+		>
+		</ds-expand-icon>
+	</h2>
+	<div [hidden]="showDances" class="section">
+		<dance-form></dance-form>
+	</div>
 </div>
 <div>
 	<h2>Skill Levels:</h2>

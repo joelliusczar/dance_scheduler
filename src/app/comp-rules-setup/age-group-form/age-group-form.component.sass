@@ -1,7 +1,6 @@
 @use '../../../styles'
 @use '../comp-rules-setup.component' as pageParent
 
-$cell-left-padding: .25em
 $cell-right-padding: 0
 
 
@@ -13,7 +12,7 @@ td:first-child
 	width: unset
 
 td:nth-child(n + 2), th:nth-child(n + 2)
-	padding-left: $cell-left-padding
+	padding-left: pageParent.$cell-left-padding
 
 
 td:nth-last-child(2)

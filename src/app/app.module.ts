@@ -14,11 +14,13 @@ import { AgeGroupFormComponent }
 	from './comp-rules-setup/age-group-form/age-group-form.component';
 import { CategoryFormComponent } 
 	from './comp-rules-setup/category-form/category-form.component';
-import { UpDownComponent } from 
-'./shared/components/up-down/up-down.component';
+import { UpDownComponent } 
+	from './shared/components/up-down/up-down.component';
 import { ExpandIconComponent, 
 	HideIconComponent } 
 	from './shared/components/icons/icons.component';
+import { DanceFormComponent } 
+	from './comp-rules-setup/dance-form/dance-form.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { ExpandIconComponent,
 		CategoryFormComponent,
 		UpDownComponent,
 		ExpandIconComponent,
-		HideIconComponent
+		HideIconComponent,
+		DanceFormComponent
   ],
   imports: [
     BrowserModule,

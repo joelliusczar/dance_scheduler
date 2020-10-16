@@ -8,7 +8,7 @@ import {
 import { 
 	AgeRangeValidatorDirective 
 } from '../../validators/age-range-validator.directive';
-import { ElevatorDir, Direction, DirectionEventArg } from '../../types/directions';
+import { Direction, DirectionEventArg } from '../../types/directions';
 
 
 @Component({

@@ -41,11 +41,13 @@ export class VariantService<T extends Sortable> implements Subscribable<T[]>{
 		return this.items$.subscribe(observerOrNext, error, complete);
 	}
 
+	
 	ReplaceAll(items: T[]): void {
 		this.items = items;
 		this.items$.emit(this.items);
 	}
 	
+
 	SaveItem(item: T): void {
 		item.order = this.items.length;
 		this.items.push(item);
@@ -85,6 +87,17 @@ export class AgeGroupService extends VariantService<AgeGroupType> {
 export class CategoryService extends VariantService<Category> {
 
 	RemoveItem(item: Category): void {
+		this.ReplaceAll(this.items.filter(i => i.name != item.name));
+	}
+}
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DanceVariantService extends VariantService<Dance> {
+
+	RemoveItem(item: Dance): void {
 		this.ReplaceAll(this.items.filter(i => i.name != item.name));
 	}
 }
