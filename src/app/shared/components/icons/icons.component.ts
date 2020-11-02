@@ -3,8 +3,8 @@ import { Component, Directive, Input } from '@angular/core';
 @Directive()
 class Icon {
 	@Input() public strokeColor: string;
-	@Input() public width: Number;
-	@Input() public height: Number;
+	@Input() public width: number;
+	@Input() public height: number;
 }
 
 @Component({

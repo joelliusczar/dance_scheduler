@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
-import { CategoryService, Category } from '../../rules/variant.service';
+import { CompetitionSetupService } 
+	from 'src/app/services/competition-setup/competition-setup.service';
+import { Category } from 'src/app/types/data-shape';
 import { DirectionEventArg } from '../../types/directions';
 
 
@@ -12,23 +14,23 @@ import { DirectionEventArg } from '../../types/directions';
 })
 export class CategoryFormComponent implements OnInit {
 
-	ruleServiceUnsub: Unsubscribable;
-	categories: Array<Category>;
+	compSetupServiceUnsub: Promise<Unsubscribable>;
+	categories: Category[];
 	
 
-  constructor(private variantService$: CategoryService) { 
+  constructor(private competitionSetup$: CompetitionSetupService) { 
 		this.categories = [];
 	}
 
   ngOnInit(): void {
-		this.ruleServiceUnsub = this.variantService$.subscribe(
+		this.compSetupServiceUnsub = this.competitionSetup$.subscribeCategories(
 			(value: Category[]) => {
 				this.categories = value;
 		});
 	}
 
 	reorderClick(eventArg: DirectionEventArg<Category>): void {
-		this.variantService$.moveItem(eventArg.item, eventArg.direction);
+		this.competitionSetup$.moveCategory(eventArg.item, eventArg.direction);
 	}
 
 	onSubmit(formGroup: FormGroup): void {
@@ -36,7 +38,7 @@ export class CategoryFormComponent implements OnInit {
 			formGroup.markAllAsTouched();
 		}
 		else {
-			this.variantService$.SaveItem({
+			this.competitionSetup$.SaveCategory({
 				...formGroup.value
 			});
 			formGroup.reset({}, {emitEvent: false});
@@ -44,10 +46,12 @@ export class CategoryFormComponent implements OnInit {
 	}
 
 	onRowRemoveClick(category) {
-		this.variantService$.RemoveItem(category);
+		this.competitionSetup$.removeCategory(category);
 	}
 
 	ngOnDestroy(): void {
-		this.ruleServiceUnsub.unsubscribe();
+		this.compSetupServiceUnsub.then((unsub: Unsubscribable) => {
+			unsub.unsubscribe();
+		});
 	}
 }

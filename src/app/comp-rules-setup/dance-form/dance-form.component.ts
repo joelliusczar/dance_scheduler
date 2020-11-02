@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Subject, Unsubscribable } from 'rxjs';
-import { DanceVariantService, CategoryService, Dance, Category } from '../../rules/variant.service';
+import { Unsubscribable } from 'rxjs';
+import { CompetitionSetupService } 
+	from 'src/app/services/competition-setup/competition-setup.service';
+import { Category, Dance } from 'src/app/types/data-shape';
 import { DirectionEventArg } from '../../types/directions';
 
 
@@ -12,22 +14,21 @@ import { DirectionEventArg } from '../../types/directions';
 })
 export class DanceFormComponent implements OnInit {
 
-	variantServiceUnsub: Unsubscribable;
-	categoryServiceUnsub: Unsubscribable;
+	dancesUnsub: Promise<Unsubscribable>;
+	categoriesUnsub: Promise<Unsubscribable>;
 	dances: Dance[] = [];
 	categories: Category[] = [];
 	
 
-	constructor(private variantService$: DanceVariantService, 
-		private categoryService$: CategoryService) 
+	constructor(private competitionSetup$: CompetitionSetupService) 
 	{ }
 
   ngOnInit(): void {
-		this.variantServiceUnsub = this.variantService$.subscribe(
+		this.dancesUnsub = this.competitionSetup$.subscribeDances(
 			(value: Dance[]) => {
 				this.dances = value;
 		});
-		this.categoryServiceUnsub = this.categoryService$.subscribe(
+		this.categoriesUnsub = this.competitionSetup$.subscribeCategories(
 			(value: Category[]) => {
 				this.categories = value;
 			}
@@ -35,7 +36,7 @@ export class DanceFormComponent implements OnInit {
 	}
 
 	reorderClick(eventArg: DirectionEventArg<Dance>): void {
-		this.variantService$.moveItem(eventArg.item, eventArg.direction);
+		this.competitionSetup$.moveDance(eventArg.item, eventArg.direction);
 	}
 
 	onSubmit(formGroup: FormGroup): void {
@@ -43,7 +44,7 @@ export class DanceFormComponent implements OnInit {
 			formGroup.markAllAsTouched();
 		}
 		else {
-			this.variantService$.SaveItem({
+			this.competitionSetup$.SaveDance({
 				...formGroup.value
 			});
 			formGroup.reset({}, {emitEvent: false});
@@ -51,12 +52,16 @@ export class DanceFormComponent implements OnInit {
 	}
 
 	onRowRemoveClick(dance) {
-		this.variantService$.RemoveItem(dance);
+		this.competitionSetup$.removeDance(dance);
 	}
 
 	ngOnDestroy(): void {
-		this.variantServiceUnsub.unsubscribe();
-		this.categoryServiceUnsub.unsubscribe();
+		this.dancesUnsub.then((unsub: Unsubscribable) => {
+			unsub.unsubscribe();
+		});
+		this.categoriesUnsub.then((unsub: Unsubscribable) => {
+			unsub.unsubscribe();
+		});
 	}
 }
 

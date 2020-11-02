@@ -1,14 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, Validator, FormControl, Validators } from '@angular/forms';
 import { Subscription, Unsubscribable } from 'rxjs';
-import {
-	AgeGroupService,
-	AgeGroupType, 
-	plus } from '../../rules/variant.service';
 import { 
 	AgeRangeValidatorDirective 
 } from '../../validators/age-range-validator.directive';
 import { Direction, DirectionEventArg } from '../../types/directions';
+import { CompetitionSetupService } from 'src/app/services/competition-setup/competition-setup.service';
+import { AgeGroupType, Competition, plus } from 'src/app/types/data-shape';
 
 
 @Component({
@@ -25,7 +23,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 		fromAge: this.fromAge,
 		toAge: this.toAge,
 	});
-	ruleServiceUnsub: Unsubscribable;
+	compSetupServiceUnsub: Promise<Unsubscribable>;
 	ageGroups: AgeGroupType[];
 	submitValidators: Validator[];
 	toAgeSubscription: Subscription;
@@ -33,7 +31,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 	
 	prevToAge: number | plus | ''
 
-  constructor( private variantService$: AgeGroupService) { 
+  constructor( private competitionSetup$: CompetitionSetupService) { 
 		this.ageGroups = [];
 		this.submitValidators = [new AgeRangeValidatorDirective()];
 		this.toAgeSubscription = 
@@ -41,7 +39,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 	}
 
   ngOnInit(): void {
-		this.ruleServiceUnsub = this.variantService$.subscribe(
+		this.compSetupServiceUnsub = this.competitionSetup$.subscribeAgeGroups(
 			(value: AgeGroupType[]) => {
 				this.ageGroups = value;
 		});
@@ -75,7 +73,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 	}
 
 	reorderClick(eventArg: DirectionEventArg<AgeGroupType>): void {
-		this.variantService$.moveItem(eventArg.item, eventArg.direction);
+		this.competitionSetup$.moveAgeGroup(eventArg.item, eventArg.direction);
 	}
 
 	onSubmit(): void {
@@ -92,7 +90,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 		}
 		else {
 			const toAge = this.ageGroupFormGroup.value.toAge;
-			this.variantService$.SaveItem({
+			this.competitionSetup$.SaveAgeGroup({
 				...this.ageGroupFormGroup.value, 
 				toAge: toAge === '+' ? '+' : parseInt(toAge)
 			});
@@ -101,12 +99,14 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 	}
 
 	onRowRemoveClick(item) {
-		this.variantService$.RemoveItem(item);
+		this.competitionSetup$.removeAgeGroup(item);
 	}
 
 	ngOnDestroy(): void {
 		this.toAgeSubscription.unsubscribe();
-		this.ruleServiceUnsub.unsubscribe();
+		this.compSetupServiceUnsub.then((unsub: Unsubscribable) => {
+			unsub.unsubscribe();
+		});
 	}
 
 }

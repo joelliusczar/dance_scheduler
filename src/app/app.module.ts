@@ -21,6 +21,8 @@ import { ExpandIconComponent,
 	from './shared/components/icons/icons.component';
 import { DanceFormComponent } 
 	from './comp-rules-setup/dance-form/dance-form.component';
+import { HomeComponent } from './home/home.component';
+import { RouteFilterPipe } from './shared/routeFilter/route-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { DanceFormComponent }
 		UpDownComponent,
 		ExpandIconComponent,
 		HideIconComponent,
-		DanceFormComponent
+		DanceFormComponent,
+		HomeComponent,
+		RouteFilterPipe,
   ],
   imports: [
     BrowserModule,

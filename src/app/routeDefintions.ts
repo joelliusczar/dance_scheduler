@@ -1,36 +1,56 @@
 import { Route } from '@angular/router';
 import { DancerListComponent } from './dancer-list/dancer-list.component';
 import { CoupleListComponent } from './couple-list/couple-list.component';
-import { CompRulesSetupComponent } from './comp-rules-setup/comp-rules-setup.component';
+import { CompRulesSetupComponent } 
+	from './comp-rules-setup/comp-rules-setup.component';
+import { HomeComponent } from './home/home.component';
 
-export enum RouteAccess {
+export enum ModeAccess {
+	All,
 	CompetitionSetup,
 };
 
+export enum RoleAccess {
+	All,
+	AdminOnly,
+	Judge
+}
+
 export interface DisplayRoute {
 	display: string,
-	filter: RouteAccess,
+	modeFilter: ModeAccess,
+	roleFilter: RoleAccess,
 };
 
 export interface DanceSchedulerRoute extends Route, DisplayRoute { };
 
-export const allRoutes: Array<DanceSchedulerRoute> = [
+export const allRoutes: DanceSchedulerRoute[] = [
+	{
+		path: '',
+		component: HomeComponent,
+		display: 'Home',
+		modeFilter: ModeAccess.All,
+		roleFilter: RoleAccess.All
+	},
 	{ 
 		path: 'dancers', 
 		component: DancerListComponent, 
 		display: 'Dancers', 
-		filter: RouteAccess.CompetitionSetup 
+		modeFilter: ModeAccess.CompetitionSetup,
+		roleFilter: RoleAccess.AdminOnly 
 	},
 	{ 
 		path: 'couples', 
 		component: CoupleListComponent, 
 		display: 'Couples', 
-		filter: RouteAccess.CompetitionSetup 
+		modeFilter: ModeAccess.CompetitionSetup,
+		roleFilter: RoleAccess.AdminOnly 
 	},
 	{ 
 		path: 'compVars', 
 		component: CompRulesSetupComponent, 
 		display: 'Variations', 
-		filter: RouteAccess.CompetitionSetup 
+		modeFilter: ModeAccess.CompetitionSetup,
+		roleFilter: RoleAccess.AdminOnly 
 	},
 ];
