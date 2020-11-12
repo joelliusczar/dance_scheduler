@@ -69,4 +69,4 @@ export interface Competition extends IdSelectable {
 };
 
 
-export type TableTypes = Competition | Person;
+export type TableTypes = Competition | Person | School;

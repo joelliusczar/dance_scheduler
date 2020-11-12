@@ -6,6 +6,7 @@ const DANCE_SCHEDULER_LOCAL_DB_VERSION = 1;
 const DANCE_SCHEDULER_LOCAL_DB_NAME = "danceSchedulerLocalDb"
 export const COMPETITION_TABLE_NAME = 'competitions';
 export const PEOPLE_TABLE_NAME = 'people';
+export const SCHOOL_TABLE_NAME = 'schools';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,10 @@ export class BrowserDbService {
 						}
 						if(!db.objectStoreNames.contains(COMPETITION_TABLE_NAME)) {
 							db.createObjectStore(COMPETITION_TABLE_NAME, 
+								{ autoIncrement : false, keyPath: 'id' });
+						}
+						if(!db.objectStoreNames.contains(SCHOOL_TABLE_NAME)) {
+							db.createObjectStore(SCHOOL_TABLE_NAME, 
 								{ autoIncrement : false, keyPath: 'id' });
 						}
 					},

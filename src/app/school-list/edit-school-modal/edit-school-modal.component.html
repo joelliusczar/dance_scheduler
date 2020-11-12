@@ -1,0 +1,22 @@
+<div>
+	<mat-form-field>
+		<mat-label>Name:</mat-label>
+		<input 
+			matInput
+			[(ngModel)]="data.name"
+			type="text"
+		/>
+	</mat-form-field>
+	<mat-form-field>
+		<mat-label>Location:</mat-label>
+		<input 
+			matInput
+			[(ngModel)]="data.location"
+			type="text"
+		/>
+	</mat-form-field>
+</div>
+<div mat-dialog-actions>
+	<button mat-button (click)="onCancel()">Cancel</button>
+	<button mat-button [mat-dialog-close]="data">Add School</button>
+</div>

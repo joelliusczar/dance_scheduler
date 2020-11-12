@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AddDancerModalComponent } 
+	from './add-dancer-modal/add-dancer-modal.component';
 
 @Component({
   selector: 'app-dancer-list',
@@ -9,9 +12,19 @@ export class DancerListComponent implements OnInit {
 
 	anyRules: boolean;
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
+	
+	openDialog(): void {
+		const dialogRef = this.dialog.open(AddDancerModalComponent, {
+			width: '250px',
+			data: { firstName: null, lastName: null }
+		});
+
+		dialogRef.afterClosed().subscribe(result => {
+			console.log(result);
+		});
+	}
 
 }

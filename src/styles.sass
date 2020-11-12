@@ -95,6 +95,14 @@ th
 	font-size: 1.2em
 	letter-spacing: .05em
 
+.btn-common, %btn-common
+	background-color: $bg-color-menu1
+	color: $fg-color-menu-text
+
+	&:hover
+		//@extend %hover-shadow
+		color: #edeff3
+
 .add-btn
 	@extend %active-text
 	background: $gradient-linear-bg
@@ -142,4 +150,5 @@ th
 .width-full
 	width: 100%
 
-
+.selectable-row:hover
+	background: whitesmoke

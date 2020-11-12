@@ -4,6 +4,7 @@ import { CoupleListComponent } from './couple-list/couple-list.component';
 import { CompRulesSetupComponent } 
 	from './comp-rules-setup/comp-rules-setup.component';
 import { HomeComponent } from './home/home.component';
+import { SchoolListComponent } from './school-list/school-list.component';
 
 export enum ModeAccess {
 	All,
@@ -38,6 +39,13 @@ export const allRoutes: DanceSchedulerRoute[] = [
 		display: 'Dancers', 
 		modeFilter: ModeAccess.CompetitionSetup,
 		roleFilter: RoleAccess.AdminOnly 
+	},
+	{
+		path: 'schools',
+		component: SchoolListComponent,
+		display: 'Schools',
+		modeFilter: ModeAccess.All,
+		roleFilter: RoleAccess.AdminOnly
 	},
 	{ 
 		path: 'couples', 

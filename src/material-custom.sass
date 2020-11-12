@@ -1,0 +1,15 @@
+@import '~@angular/material/theming'
+
+@include mat-core()
+
+$dance-app-primary: mat-palette($mat-deep-purple)
+
+$dance-app-accent: mat-palette($mat-deep-purple, 400, A200, 500)
+
+$dance-app-warn: mat-palette($mat-red)
+
+$colorObj: (primary: $dance-app-primary,accent: $dance-app-accent,warn: $dance-app-warn)
+$dance-app-theme: mat-light-theme((color: $colorObj))
+
+
+@include angular-material-theme($dance-app-theme)

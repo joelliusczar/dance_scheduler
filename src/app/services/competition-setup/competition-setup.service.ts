@@ -20,11 +20,11 @@ enum CompKeys {
 })
 export class CompetitionSetupService {
 
-	competitions: Competition[];
-	currentCompetition: Competition;
-	ageGroups$ = new Subject<AgeGroupType[]>();
-	categories$ = new Subject<Category[]>();
-	dances$ = new Subject<Dance[]>();
+	private competitions: Competition[];
+	private currentCompetition: Competition;
+	private ageGroups$ = new Subject<AgeGroupType[]>();
+	private categories$ = new Subject<Category[]>();
+	private dances$ = new Subject<Dance[]>();
 
 	constructor(private browserDb: BrowserDbService) { }
 	

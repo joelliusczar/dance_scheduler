@@ -23,6 +23,17 @@ import { DanceFormComponent }
 	from './comp-rules-setup/dance-form/dance-form.component';
 import { HomeComponent } from './home/home.component';
 import { RouteFilterPipe } from './shared/routeFilter/route-filter.pipe';
+import { AddDancerModalComponent } 
+	from './dancer-list/add-dancer-modal/add-dancer-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { SchoolListComponent } from './school-list/school-list.component';
+import { EditSchoolModalComponent } 
+	from './school-list/edit-school-modal/edit-school-modal.component';
 
 @NgModule({
   declarations: [
@@ -40,12 +51,21 @@ import { RouteFilterPipe } from './shared/routeFilter/route-filter.pipe';
 		DanceFormComponent,
 		HomeComponent,
 		RouteFilterPipe,
+		AddDancerModalComponent,
+		SchoolListComponent,
+		EditSchoolModalComponent
   ],
   imports: [
     BrowserModule,
 		AppRoutingModule,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		MatDialogModule,
+		BrowserAnimationsModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatButtonModule,
+		MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
