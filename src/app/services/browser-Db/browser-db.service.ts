@@ -24,16 +24,19 @@ export class BrowserDbService {
 				DANCE_SCHEDULER_LOCAL_DB_VERSION, {
 					upgrade(db: IDBPDatabase) {
 						if(!db.objectStoreNames.contains(PEOPLE_TABLE_NAME)) {
-							db.createObjectStore(PEOPLE_TABLE_NAME, 
+							const personStore = db.createObjectStore(PEOPLE_TABLE_NAME, 
 								{ autoIncrement : false, keyPath: 'id' });
+							personStore.createIndex('id', 'id');
 						}
 						if(!db.objectStoreNames.contains(COMPETITION_TABLE_NAME)) {
-							db.createObjectStore(COMPETITION_TABLE_NAME, 
+							const compStore = db.createObjectStore(COMPETITION_TABLE_NAME, 
 								{ autoIncrement : false, keyPath: 'id' });
+							compStore.createIndex('id', 'id');
 						}
 						if(!db.objectStoreNames.contains(SCHOOL_TABLE_NAME)) {
-							db.createObjectStore(SCHOOL_TABLE_NAME, 
+							const schoolStore = db.createObjectStore(SCHOOL_TABLE_NAME, 
 								{ autoIncrement : false, keyPath: 'id' });
+							schoolStore.createIndex('id', 'id');
 						}
 					},
 				});

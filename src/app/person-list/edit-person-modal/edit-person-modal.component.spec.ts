@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DancerListComponent } from './dancer-list.component';
+import { EditPersonModalComponent } from './edit-person-modal.component';
 
-describe('DancerListComponent', () => {
-  let component: DancerListComponent;
-  let fixture: ComponentFixture<DancerListComponent>;
+describe('AddDancerModalComponent', () => {
+  let component: EditPersonModalComponent;
+  let fixture: ComponentFixture<EditPersonModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DancerListComponent ]
+      declarations: [ EditPersonModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DancerListComponent);
+    fixture = TestBed.createComponent(EditPersonModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

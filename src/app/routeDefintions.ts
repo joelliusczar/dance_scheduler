@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { DancerListComponent } from './dancer-list/dancer-list.component';
+import { PersonListComponent } from './person-list/person-list.component';
 import { CoupleListComponent } from './couple-list/couple-list.component';
 import { CompRulesSetupComponent } 
 	from './comp-rules-setup/comp-rules-setup.component';
@@ -35,7 +35,7 @@ export const allRoutes: DanceSchedulerRoute[] = [
 	},
 	{ 
 		path: 'dancers', 
-		component: DancerListComponent, 
+		component: PersonListComponent, 
 		display: 'Dancers', 
 		modeFilter: ModeAccess.CompetitionSetup,
 		roleFilter: RoleAccess.AdminOnly 

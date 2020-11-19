@@ -6,6 +6,7 @@ import { School } from '../types/data-shape';
 import { SchoolsService } from '../services/schools/schools.service';
 import { DanceAppDataSource } from '../shared/utils/DanceAppDataSource';
 import { Unsubscribable } from 'rxjs';
+import { TableStats } from '../types/table-stats';
 
 @Component({
   selector: 'app-school-list',
@@ -18,7 +19,10 @@ export class SchoolListComponent implements OnInit {
 	dataSource: DanceAppDataSource<School>;
 	displayedColumns = ['name', 'location'];
 	itemCount = 0;
-	private serviceUnsub: Promise<Unsubscribable>;
+	loading = true;
+	pageSize = 25;
+	pageSizeOptions = [25, 100];
+	private serviceUnsub: Unsubscribable;
 
 
 	constructor(public dialog: MatDialog, 
@@ -28,9 +32,10 @@ export class SchoolListComponent implements OnInit {
 	}
 
   ngOnInit(): void {
-		this.serviceUnsub = this.schoolService.subscribe(
-			(value: School[]) => {
-				this.itemCount = value.length;
+		this.serviceUnsub = this.schoolService.subscribeStats(
+			(value: TableStats) => {
+				this.itemCount = value.itemCount;
+				this.loading = value.loading;
 			})
 	}
 	
@@ -50,9 +55,7 @@ export class SchoolListComponent implements OnInit {
 	}
 
 	ngDestroy(): void {
-		this.serviceUnsub.then((unsub: Unsubscribable) => {
-			unsub.unsubscribe();
-		});
+		this.serviceUnsub.unsubscribe();
 	}
 
 }

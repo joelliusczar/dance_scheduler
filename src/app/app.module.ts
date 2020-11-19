@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DancerListComponent } from './dancer-list/dancer-list.component';
+import { PersonListComponent } from './person-list/person-list.component';
 import { MenuComponent } from './menu/menu.component';
 import { CoupleListComponent } from './couple-list/couple-list.component';
 import { CompRulesSetupComponent } 
@@ -23,22 +23,26 @@ import { DanceFormComponent }
 	from './comp-rules-setup/dance-form/dance-form.component';
 import { HomeComponent } from './home/home.component';
 import { RouteFilterPipe } from './shared/routeFilter/route-filter.pipe';
-import { AddDancerModalComponent } 
-	from './dancer-list/add-dancer-modal/add-dancer-modal.component';
+import { EditPersonModalComponent } 
+	from './person-list/edit-person-modal/edit-person-modal.component';
+import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SchoolListComponent } from './school-list/school-list.component';
 import { EditSchoolModalComponent } 
 	from './school-list/edit-school-modal/edit-school-modal.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    DancerListComponent,
+    PersonListComponent,
     MenuComponent,
 		CoupleListComponent,
     CompRulesSetupComponent,
@@ -51,7 +55,7 @@ import { EditSchoolModalComponent }
 		DanceFormComponent,
 		HomeComponent,
 		RouteFilterPipe,
-		AddDancerModalComponent,
+		EditPersonModalComponent,
 		SchoolListComponent,
 		EditSchoolModalComponent
   ],
@@ -65,7 +69,10 @@ import { EditSchoolModalComponent }
 		MatFormFieldModule,
 		MatInputModule,
 		MatButtonModule,
-		MatTableModule
+		MatTableModule,
+		MatProgressSpinnerModule,
+		MatSelectModule,
+		MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

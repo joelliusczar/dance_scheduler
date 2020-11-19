@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { School } from 'src/app/types/data-shape';
-import { BrowserDbService, SCHOOL_TABLE_NAME } from '../browser-Db/browser-db.service';
+import { BrowserDbService, SCHOOL_TABLE_NAME } 
+	from '../browser-Db/browser-db.service';
 import { ListService } from '../list/list.service';
 
 @Injectable({
@@ -13,5 +14,13 @@ export class SchoolsService extends ListService<School> {
 	constructor(browserDb: BrowserDbService) { 
 		super(browserDb);
 	}
+
+	transform(school: School): School {
+		return school;
+	}
 	
+	transformInverse(school: School): School {
+		return school;
+	}
+
 }

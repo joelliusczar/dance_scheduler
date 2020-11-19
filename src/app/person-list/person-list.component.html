@@ -1,22 +1,27 @@
-<h1>All Schools</h1>
+<h1>All Dancers</h1>
 <div *ngIf="loading">
 	<mat-spinner></mat-spinner>
 </div>
 <div *ngIf="!loading">
 	<div>
-		<Button class="add-btn" (click)="openDialog()">Add School</Button>
+		<Button class="add-btn" (click)="openDialog()">Add Dancer</Button>
 	</div>
 	<div *ngIf="itemCount > 0" class="mat-elevation-z1 table-container">
 		<table mat-table [dataSource]="dataSource">
 			<ng-container matColumnDef="name">
 				<th mat-header-cell *matHeaderCellDef>Name</th>
-				<td mat-cell *matCellDef="let element">{{element.name}}</td>
+				<td mat-cell *matCellDef="let element">
+					{{element.firstName + " " + element.lastName}}
+				</td>
+			</ng-container>
+
+			<ng-container matColumnDef="school">
+				<th mat-header-cell *matHeaderCellDef>School</th>
+				<td mat-cell *matCellDef="let element">
+					{{element.school.name}}
+				</td>
 			</ng-container>
 	
-			<ng-container matColumnDef="location">
-				<th mat-header-cell *matHeaderCellDef>Location</th>
-				<td mat-cell *matCellDef="let element">{{element.location}}</td>
-			</ng-container>
 	
 			<tr 
 				mat-header-row 
@@ -30,6 +35,6 @@
 		</table>
 	</div>
 	<div *ngIf="itemCount < 1">
-		<h2>No schools have been added</h2>
+		<h2>No dancers have been added</h2>
 	</div>
 </div>

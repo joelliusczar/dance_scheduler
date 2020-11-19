@@ -1,30 +1,34 @@
 import { CollectionViewer } from '@angular/cdk/collections';
 import { DataSource } from '@angular/cdk/table';
-import { Observable, Subject, Unsubscribable } from 'rxjs';
+import { Observable, Subject, Unsubscribable, from } from 'rxjs';
 import { ListService } from 'src/app/services/list/list.service';
 import { TableTypes } from 'src/app/types/data-shape';
+import { IdSelectable } from 'src/app/types/IdSelectable';
 
-export class DanceAppDataSource<T extends TableTypes> extends DataSource<T> {
+export class DanceAppDataSource<T extends TableTypes, U extends IdSelectable = T> 
+	extends DataSource<U> 
+{
 
-	connectedData = new Subject<T[]>();
-	private serviceUnsub: Promise<Unsubscribable>;
+	connectedData = new Subject<U[]>();
+	private serviceUnsub: Unsubscribable;
 
-	constructor(private listService: ListService<T>) {
+	constructor(private listService: ListService<T, U>)
+	{
 		super();
 	}
 
-	connect(): Observable<T[] | readonly T[]> {
+	connect(): Observable<U[] | readonly U[]> {
+		const ob = from(this.listService);
+		//return ob;
 		this.serviceUnsub = this.listService.subscribe(
-			(value: T[]) => {
+			(value: U[]) => {
 				this.connectedData.next(value);
 			})
 		return this.connectedData;
 	}
 
 	disconnect(): void {
-		this.serviceUnsub.then((unsub: Unsubscribable) => {
-			unsub.unsubscribe();
-		});
+		this.serviceUnsub.unsubscribe();
 		this.connectedData.complete();
 	}
 

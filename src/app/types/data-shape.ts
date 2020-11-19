@@ -31,9 +31,16 @@ export interface School extends IdSelectable {
 	location: string,
 }
 
-export interface Person extends IdSelectable {
+export interface PersonBase extends IdSelectable {
 	firstName: string,
 	lastName: string,
+}
+
+export interface Person extends PersonBase {
+	schoolId: string,
+}
+
+export interface PersonDto extends PersonBase {
 	school: School,
 }
 
