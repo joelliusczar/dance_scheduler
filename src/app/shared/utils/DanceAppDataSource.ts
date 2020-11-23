@@ -18,13 +18,8 @@ export class DanceAppDataSource<T extends TableTypes, U extends IdSelectable = T
 	}
 
 	connect(): Observable<U[] | readonly U[]> {
-		const ob = from(this.listService);
-		//return ob;
-		this.serviceUnsub = this.listService.subscribe(
-			(value: U[]) => {
-				this.connectedData.next(value);
-			})
-		return this.connectedData;
+		const ob = this.listService.asObservable();
+		return ob;
 	}
 
 	disconnect(): void {

@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Subject, Unsubscribable, Subscribable, PartialObserver, Operator } from 'rxjs';
+import { 
+	Subject, 
+	Unsubscribable, 
+	Subscribable, 
+	Observable, 
+	PartialObserver,
+	from } from 'rxjs';
 import { TableTypes } from 'src/app/types/data-shape';
 import { BrowserDbService } from '../browser-Db/browser-db.service';
 import { v4 } from 'uuid';
 import { IdSelectable } from 'src/app/types/IdSelectable';
 import { TableStats } from 'src/app/types/table-stats';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +22,6 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 	pageSize = 25;
 	currentPage = 0;
 	sortFn: (a: T, b: T) => number;
-	nestedOperator: Operator<T,U[]>;
 	private items: T[];
 	private items$ = new Subject<U[]>();
 	private stats$ = new Subject<TableStats>();
@@ -24,7 +30,9 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 
 	constructor(protected browserDb: BrowserDbService) { }
 	
-	private async _loadItems(): Promise<void> {
+	//if items have already been loaded, this functions as an queued emit
+	//that emits after the current callstack has finished.
+	private async _triggerLoadItems(): Promise<void> {
 		if(this.items) {
 			this._sendNext();
 			return;
@@ -52,7 +60,7 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 			else {
 				throw new Error('Invalid argument.');
 			}
-			this._loadItems();
+			this._triggerLoadItems();
 			return unsub;
 	}
 
@@ -66,14 +74,14 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 		complete?: (() => void) | null
 	): Unsubscribable {
 		const unsub = this.stats$.subscribe(next, error, complete);
-		this._loadItems();
+		this._triggerLoadItems();
 		return unsub;
 	}
 
 	private _sendNext() {
 		const fromIdx = this.currentPage * this.pageSize;
 		const usedItems = this.items.slice(fromIdx, fromIdx + this.pageSize);
-		const promises = usedItems.map(this.transform);
+		const promises = usedItems.map((i) => this.transform(i));
 		Promise.all(promises).then(transformed => {
 			this.items$.next(transformed);
 			this._sendNextStats();
@@ -128,6 +136,16 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 			return transformed;
 		}
 		return null;
+	}
+
+	asObservable(): Observable<U[]> {
+		//due to being async and js async event model. calling
+		//_triggerLoadItems causes the emit action
+		//to happen after this current callstack has finished
+		//and so the table data gets loaded.
+		//It's kinda a hack. 
+		this._triggerLoadItems();
+		return from(this.items$);
 	}
 
 	transform(t: T): U | Promise<U> {
