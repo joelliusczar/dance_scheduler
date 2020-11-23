@@ -48,12 +48,13 @@
 				<td>
 					<label for="fromAge">From..</label>
 					<input 
-					formControlName="fromAge" 
-					type="number" 
-					min="0"
-					placeholder="0"
-					class="age-group-width"
-					required>
+						formControlName="fromAge" 
+						type="number" 
+						min="0"
+						placeholder="0"
+						class="age-group-width"
+						required
+					>
 					<div *ngIf="!(fromAge.valid || fromAge.untouched)">
 						<div 
 							*ngIf="fromAge.errors?.required" 
@@ -70,10 +71,10 @@
 				<td class="to-age-cell">
 					<label for="toAge">To Years Old</label>
 					<input 
-					placeholder="0"
-					formControlName="toAge" 
-					type="text" 
-					required>
+						placeholder="0"
+						formControlName="toAge" 
+						type="text" 
+						required>
 					<button 
 						class="to-age-btn" 
 						(click)="unboundedAgeClick()" 
