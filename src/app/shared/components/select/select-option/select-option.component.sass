@@ -1,0 +1,21 @@
+@use '../../../../../styles'
+
+
+.menu-item
+	height: 1em
+	margin: .1em 0
+	padding: .2em 0
+	
+	&::after
+		content: ''
+		display: inline-block
+		width: 10%
+		max-width: 200px
+		min-width: 50px
+
+.highlighted-menu-item
+	background: styles.$bg-color-menu1
+	color: styles.$fg-color-menu-text
+
+.menu-item-content
+	margin-left: .2em

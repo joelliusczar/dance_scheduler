@@ -1,0 +1,29 @@
+<div [class]="containerClass" tabindex="0">
+	<span *ngIf="showSelectedList()" class="tag-list">
+		<span *ngFor="let option of selectedItems" class="single-tag">
+			{{option.display}}
+			<button (click)="onTagXClicked($event, option)">X</button>
+		</span>
+	</span>
+	<span *ngIf="!showSelectedList() && !isOpen">
+		{{getSingularDisplayValue()}}
+	</span>
+	<ds-hide-icon 
+		[hidden]="isOpen"
+		strokeColor="black" 
+		width=".8em" 
+		height=".8em"
+	>
+	</ds-hide-icon>
+	<div *ngIf="isOpen" class="option-menu">
+		<app-select-option
+			*ngFor="let option of options; index as idx" 
+			[option]="option"
+			name="option-{{controlName}}-{{idx}}"
+			[selected]="isOptionChecked(option)"
+			[multiple]="allowMultiSelect"
+			(click)="onChecked(option)"		
+		>
+		</app-select-option>
+	</div>
+</div>

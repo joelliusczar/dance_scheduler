@@ -1,0 +1,16 @@
+<div 
+	[class]="menuItemClasses"	
+>
+	<span class="menu-item-content">
+			<input 
+				*ngIf="allowMultiSelect"
+				type="checkbox" 
+				[name]="name"
+				[checked]="selected"
+			/>
+			<span *ngIf="!allowMultiSelect">
+				<span *ngIf="selected">&#10003;</span>
+			</span>
+		{{option.display}}
+	</span>
+</div>

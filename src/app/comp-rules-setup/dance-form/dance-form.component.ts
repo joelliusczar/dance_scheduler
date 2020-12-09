@@ -4,6 +4,7 @@ import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService } 
 	from 'src/app/services/competition-setup/competition-setup.service';
 import { Category, Dance } from 'src/app/types/data-shape';
+import { OptionInfo } from 'src/app/types/option-info';
 import { DirectionEventArg } from '../../types/directions';
 
 
@@ -18,7 +19,7 @@ export class DanceFormComponent implements OnInit {
 	categoriesUnsub: Promise<Unsubscribable>;
 	dances: Dance[] = [];
 	categories: Category[] = [];
-	
+	tags: OptionInfo[];
 
 	constructor(private competitionSetup$: CompetitionSetupService) 
 	{ }
@@ -27,6 +28,7 @@ export class DanceFormComponent implements OnInit {
 		this.dancesUnsub = this.competitionSetup$.subscribeDances(
 			(value: Dance[]) => {
 				this.dances = value;
+				this.tags = value?.map(d => ({display: d.name}));
 		});
 		this.categoriesUnsub = this.competitionSetup$.subscribeCategories(
 			(value: Category[]) => {

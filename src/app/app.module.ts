@@ -37,6 +37,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SchoolListComponent } from './school-list/school-list.component';
 import { EditSchoolModalComponent } 
 	from './school-list/edit-school-modal/edit-school-modal.component';
+import { SelectComponent } from './shared/components/select/select.component';
+import { SelectOptionComponent } from './shared/components/select/select-option/select-option.component';
 
 
 @NgModule({
@@ -57,7 +59,9 @@ import { EditSchoolModalComponent }
 		RouteFilterPipe,
 		EditPersonModalComponent,
 		SchoolListComponent,
-		EditSchoolModalComponent
+		EditSchoolModalComponent,
+		SelectComponent,
+		SelectOptionComponent
   ],
   imports: [
     BrowserModule,
