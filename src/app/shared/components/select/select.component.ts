@@ -1,12 +1,15 @@
 import { Component, 
 	ElementRef, 
 	EventEmitter, 
+	forwardRef, 
 	HostListener, 
 	Input, 
 	OnInit, 
 	Output, 
 	QueryList, 
 	ViewChildren} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { noop } from 'rxjs';
 import { OptionInfo } from '../../../types/option-info';
 import { 
 	MENU_ITEM_CLASSES_DEFAULT, 
@@ -16,47 +19,103 @@ from './select-option/select-option.component';
 
 const closedMenuClass = 'menu-container-closed';
 const openMenuClass = 'menu-container-open';
+const disabledMenuClass = 'menu-container-disabled';
+
+const skippedKeys = new Set([
+	'Backspace',
+	'Tab',
+	'F1',
+	'F1',
+	'F2',
+	'F3',
+	'F4',
+	'F5',
+	'F6',
+	'F7',
+	'F8',
+	'F9',
+	'F10',
+	'F11',
+	'F12'
+]);
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.sass']
+	styleUrls: ['./select.component.sass'],
+	providers: [{
+		provide: NG_VALUE_ACCESSOR,
+		useExisting: forwardRef(() => SelectComponent),
+		multi: true,
+	}]
 })
-export class SelectComponent implements OnInit {
+export class SelectComponent implements OnInit, ControlValueAccessor {
 
 	@Input('name') controlName: string;
 	@Input('options') options: OptionInfo[];
 	@Input('value') selectedItems: OptionInfo[] | OptionInfo;
 	@Input('multiple') allowMultiSelect: boolean;
+	@Input('disabled') isDisabled: boolean;
 	@Output('onSelected') onSelected = new EventEmitter<OptionInfo[]>() 
 	selectedSet: Set<OptionInfo>;
 	isOpen = false;
 	containerClass = closedMenuClass;
 	defaultDisplay = 'Select...';
 	highlightedMenuItemIdx: number = -1;
+	tabNum: number;
+	propagateChange: (_: any) => {};
+	propagateTouch: () => void;
 
 	@ViewChildren(SelectOptionComponent) optionElements: QueryList<SelectOptionComponent>;
 
-  constructor(private elRef: ElementRef) { }
+	constructor(private elRef: ElementRef) {}
+	
+	ngOnInit(): void {
+		this.initializeSelectedValues(this.selectedItems);
+		if(this.isDisabled) {
+			this.tabNum = -1;
+			this.containerClass = disabledMenuClass;
+		}
+	}
 
-  ngOnInit(): void {
+	writeValue(obj: any): void {
+		console.log(obj);
+		const valueAs = obj as OptionInfo[] | OptionInfo;
+		this.initializeSelectedValues(valueAs);
+	}
+
+	registerOnChange(fn: any): void {
+		this.propagateChange = fn;
+	}
+
+	registerOnTouched(fn: any): void {
+		this.propagateTouch = fn;
+	}
+
+	setDisabledState?(isDisabled: boolean): void {
+		this.isDisabled = isDisabled;
+		this.tabNum = isDisabled ? -1 : 0;
+		this.containerClass = disabledMenuClass;
+	}
+
+	private initializeSelectedValues(selectedItems: OptionInfo[] | OptionInfo) {
 		if(this.allowMultiSelect) {
-			if(Array.isArray(this.selectedItems)) {
-				this.selectedSet = new Set(this.selectedItems);
+			if(Array.isArray(selectedItems)) {
+				this.selectedSet = new Set(selectedItems);
 			}
 			else {
 				throw Error('When using multi-select, provided value must be array');
 			}
 		}
 		else {
-			if(!Array.isArray(this.selectedItems)) {
+			if(!Array.isArray(selectedItems)) {
 				//I've arbitrarily decided I want the internal representation 
 				//to always be an array 
-				this.selectedItems = [this.selectedItems];
+				this.selectedItems = [selectedItems];
 				this.selectedSet = new Set(this.selectedItems);
 			}
-			else if(this.selectedItems.length <= 1) {
-				this.selectedSet = new Set(this.selectedItems);
+			else if(selectedItems.length <= 1) {
+				this.selectedSet = new Set(selectedItems);
 			}
 			else {
 				throw Error('When not using multi-select, '
@@ -66,8 +125,10 @@ export class SelectComponent implements OnInit {
 	}
 
 	private openMenu(): void {
+		if(this.isDisabled) return;
 		this.isOpen = true;
 		this.containerClass = openMenuClass;
+		//this.arrowHighlightIfNone();
 	}
 
 	private closeMenu(): void {
@@ -76,21 +137,29 @@ export class SelectComponent implements OnInit {
 		this.highlightedMenuItemIdx = -1;
 	}
 	
-	@HostListener('document:click',['$event'])
-	clickout(event) {
-		const element = this.elRef.nativeElement.children[0] as HTMLElement;
-		if(element.contains(event.target)) {
-			this.openMenu();
-		}
-		else {
-			this.closeMenu();
-		}
+	onFocus(): void {
+		this.openMenu();
+	}
+
+	onBlur(): void {
+		//this timeout is a hack.
+		//we don't want the blur action to occur if a child is focused
+		//especially since it will occur as we tab through the options
+		//we can check for active element, but first focus goes to body
+		//before switching to our element. the setTimeout tosses our work to the end 
+		//of the queue so that by then the activeElement is our option
+		setTimeout(() => {
+			const element = this.elRef.nativeElement.children[0] as HTMLElement;
+			if(!element.contains(document.activeElement)) {
+				this.closeMenu();
+			}
+		})
 	}
 
 	private arrowHighlightIfNone(): boolean {
 		if(this.highlightedMenuItemIdx === -1) {
 			this.highlightedMenuItemIdx = 0;
-			this.optionElements.first.menuItemClasses = MENU_ITEM_CLASSES_HIGHLIGHTED;
+			this.optionElements.first.elementRef.nativeElement.focus();
 			return true;
 		}
 		return false;
@@ -98,10 +167,8 @@ export class SelectComponent implements OnInit {
 
 	private swapMenuOptionHighlight(oldIdx: number, newIdx: number): void {
 		const optionsElementsArr = this.optionElements.toArray();
-		const currentHighlighted = optionsElementsArr[oldIdx];
 		const nextHighlighted = optionsElementsArr[newIdx];
-		currentHighlighted.menuItemClasses = MENU_ITEM_CLASSES_DEFAULT;
-		nextHighlighted.menuItemClasses = MENU_ITEM_CLASSES_HIGHLIGHTED;
+		nextHighlighted.elementRef.nativeElement.focus();
 		this.highlightedMenuItemIdx = newIdx;
 	}
 
@@ -120,7 +187,8 @@ export class SelectComponent implements OnInit {
 			}
 			else {
 				const option = optionElements[newIdx];
-				option.menuItemClasses = MENU_ITEM_CLASSES_HIGHLIGHTED;
+				//option.menuItemClasses = MENU_ITEM_CLASSES_HIGHLIGHTED;
+				option.elementRef.nativeElement.focus();
 				this.highlightedMenuItemIdx = newIdx;
 			}
 		}
@@ -128,28 +196,28 @@ export class SelectComponent implements OnInit {
 
 	private openMenuKeydownEventBranches(e: KeyboardEvent) {
 		console.log(e.key);
-		if(e.key === 'Enter' && this.highlightedMenuItemIdx > -1) {
+		if(e.key === ' ' && this.highlightedMenuItemIdx > -1) {
 			const optionElements = this.optionElements.toArray();
 			const optionElement = optionElements[this.highlightedMenuItemIdx];
 			const tagInfo = optionElement.option;
 			this.onChecked(tagInfo);
 		}
-		else if(e.key === 'Tab') {
-			this.closeMenu();
-		}
-		if(e.key === 'ArrowUp' && !this.arrowHighlightIfNone()) {
+		else if(e.key === 'ArrowUp') {
 			const idx = this.highlightedMenuItemIdx;
 			if(idx > 0) {
 				this.swapMenuOptionHighlight(idx, idx - 1);
 			}
 			e.preventDefault();	
 		}
-		else if(e.key === 'ArrowDown' && !this.arrowHighlightIfNone()) {
+		else if(e.key === 'ArrowDown' && ! this.arrowHighlightIfNone()) {
 			const idx = this.highlightedMenuItemIdx;
 			if(idx < this.optionElements.length -1) {
 				this.swapMenuOptionHighlight(idx, idx + 1);
 			}
 			e.preventDefault();
+		}
+		else if(skippedKeys.has(e.key)) {
+			noop();
 		}
 		else {
 			this.highlightSearchedOption(e);
@@ -159,16 +227,13 @@ export class SelectComponent implements OnInit {
 
 	@HostListener('window:keydown',['$event'])
 	onKeyDown(e: KeyboardEvent): void {
-		const element = this.elRef.nativeElement.children[0];
-		if(element === document.activeElement) {
-			if(this.isOpen && this.optionElements.length > 0) {
-				this.openMenuKeydownEventBranches(e);
-			}
-			else {
-				if(e.key === 'Enter') {
-					this.openMenu();
-				}
-			}
+		if(this.isOpen && this.optionElements.length > 0) {
+			this.openMenuKeydownEventBranches(e);
+		}
+		else {
+			// if(e.key === 'Enter') {
+			// 	this.openMenu();
+			// }
 		}
 	}
 
@@ -188,6 +253,7 @@ export class SelectComponent implements OnInit {
 		this.selectedItems = selected;
 		this.selectedSet = new Set(selected);
 		this.onSelected.emit([...selected]);
+		this.propagateChange && this.propagateChange([...selected]);
 	}
 
 	private toggleOptionMulti(option: OptionInfo): void {

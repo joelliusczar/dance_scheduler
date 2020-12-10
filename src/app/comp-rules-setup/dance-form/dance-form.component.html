@@ -52,7 +52,12 @@
 				</td>
 				<td>
 					<label for="name">Category</label>
-					<select
+					<app-select
+						name="category"
+						[options]="categories"
+						ngModel
+					></app-select>
+					<!-- <select
 						name="category"
 						ngModel
 						#category="ngModel"
@@ -62,13 +67,13 @@
 						<option *ngFor="let cat of categories" [value]="cat.name">
 							{{cat.name}}
 						</option>
-					</select>
-					<div 
+					</select> -->
+					<!-- <div 
 						*ngIf="!(category.valid || category.untouched)" 
 						class="input-error-label"
 					>
 						Category is required
-					</div>
+					</div> -->
 				</td>
 				<td>
 					<button class="add-row-btn">+</button>
@@ -77,4 +82,3 @@
 		</tfoot>
 	</table>
 </form>
-<app-select [options]="tags" name="test"></app-select>

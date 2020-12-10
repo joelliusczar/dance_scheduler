@@ -38,7 +38,9 @@ import { SchoolListComponent } from './school-list/school-list.component';
 import { EditSchoolModalComponent } 
 	from './school-list/edit-school-modal/edit-school-modal.component';
 import { SelectComponent } from './shared/components/select/select.component';
-import { SelectOptionComponent } from './shared/components/select/select-option/select-option.component';
+import { SelectOptionComponent } 
+	from './shared/components/select/select-option/select-option.component';
+import { SelectMenuComponent } from './shared/components/select/select-menu/select-menu.component';
 
 
 @NgModule({
@@ -61,7 +63,8 @@ import { SelectOptionComponent } from './shared/components/select/select-option/
 		SchoolListComponent,
 		EditSchoolModalComponent,
 		SelectComponent,
-		SelectOptionComponent
+		SelectOptionComponent,
+		SelectMenuComponent,
   ],
   imports: [
     BrowserModule,

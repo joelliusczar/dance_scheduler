@@ -1,4 +1,4 @@
-export interface OptionInfo {
-	associatedObject?: unknown,
+export interface OptionInfo<T = unknown> {
+	associatedObject?: T,
 	display: string,
 };

@@ -18,8 +18,8 @@ export class DanceFormComponent implements OnInit {
 	dancesUnsub: Promise<Unsubscribable>;
 	categoriesUnsub: Promise<Unsubscribable>;
 	dances: Dance[] = [];
-	categories: Category[] = [];
-	tags: OptionInfo[];
+	linkedDances: OptionInfo<Dance>[] = [];
+	categories: OptionInfo<Category>[] = [];
 
 	constructor(private competitionSetup$: CompetitionSetupService) 
 	{ }
@@ -27,12 +27,19 @@ export class DanceFormComponent implements OnInit {
   ngOnInit(): void {
 		this.dancesUnsub = this.competitionSetup$.subscribeDances(
 			(value: Dance[]) => {
+				console.log(value);
 				this.dances = value;
-				this.tags = value?.map(d => ({display: d.name}));
+				this.linkedDances = value?.map(d => ({ 
+					display: d.name, 
+					associatedObject: d })
+				);
 		});
 		this.categoriesUnsub = this.competitionSetup$.subscribeCategories(
 			(value: Category[]) => {
-				this.categories = value;
+				this.categories = value?.map(c => ({
+					display: c.name,
+					associatedObject: c })
+				);
 			}
 		);
 	}
@@ -42,13 +49,14 @@ export class DanceFormComponent implements OnInit {
 	}
 
 	onSubmit(formGroup: FormGroup): void {
+		console.log(formGroup.value);
 		if(!formGroup.valid){
 			formGroup.markAllAsTouched();
 		}
 		else {
-			this.competitionSetup$.SaveDance({
-				...formGroup.value
-			});
+			// this.competitionSetup$.SaveDance({
+			// 	...formGroup.value
+			// });
 			formGroup.reset({}, {emitEvent: false});
 		}
 	}

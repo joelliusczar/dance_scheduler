@@ -1,4 +1,9 @@
-<div [class]="containerClass" tabindex="0">
+<div [class]="containerClass" 
+	[tabindex]="tabNum" 
+	role="listbox"
+	(focus)="onFocus()"
+	(blur)="onBlur()"
+>
 	<span *ngIf="showSelectedList()" class="tag-list">
 		<span *ngFor="let option of selectedItems" class="single-tag">
 			{{option.display}}
@@ -9,7 +14,7 @@
 		{{getSingularDisplayValue()}}
 	</span>
 	<ds-hide-icon 
-		[hidden]="isOpen"
+		[hidden]="isOpen || isDisabled"
 		strokeColor="black" 
 		width=".8em" 
 		height=".8em"

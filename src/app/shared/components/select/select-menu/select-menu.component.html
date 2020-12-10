@@ -1,0 +1,11 @@
+<div *ngIf="isOpen" class="option-menu">
+	<app-select-option
+		*ngFor="let option of options; index as idx" 
+		[option]="option"
+		name="option-{{controlName}}-{{idx}}"
+		[selected]="isOptionChecked(option)"
+		[multiple]="allowMultiSelect"
+		(click)="onChecked(option)"		
+	>
+	</app-select-option>
+</div>

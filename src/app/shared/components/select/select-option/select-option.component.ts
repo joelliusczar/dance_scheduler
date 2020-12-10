@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { OptionInfo } from 'src/app/types/option-info';
 
 export const MENU_ITEM_CLASSES_DEFAULT = 'menu-item';
@@ -15,21 +15,14 @@ export class SelectOptionComponent implements OnInit {
 	@Input('option') option: OptionInfo;
 	@Input('selected') selected: boolean;
 	@Input('name') controlName: string;
+	@Input('tabindex') tabNum = -1;
 	menuItemClasses = MENU_ITEM_CLASSES_DEFAULT;
+
+	@ViewChild('optionElement') elementRef: ElementRef;
 
   constructor() { }
 
   ngOnInit(): void {
 	}
 	
-	@HostListener('mouseenter') 
-	onMouseEnter(): void {
-		this.menuItemClasses = MENU_ITEM_CLASSES_HIGHLIGHTED;
-	}
-
-	@HostListener('mouseleave')
-	onMouseLeave(): void {
-		this.menuItemClasses = MENU_ITEM_CLASSES_DEFAULT;
-	}
-
 }
