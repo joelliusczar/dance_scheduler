@@ -10,6 +10,7 @@
 				<th></th>
 				<th>Name</th>
 				<th>Category</th>
+				<th *ngIf="dances?.length > 0">Linked Dances</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -24,6 +25,7 @@
 				</td>
 				<td>{{dance.name}}</td>
 				<td>{{dance?.category?.name}}</td>
+				<td *ngIf="dances.length > 0"></td>
 				<td><button (click)="onRowRemoveClick(dance)" 
 					type="button" 
 					class="add-row-btn">-</button>
@@ -74,6 +76,14 @@
 					>
 						Category is required
 					</div> -->
+				</td>
+				<td *ngIf="dances?.length > 0">
+					<app-select
+						name="linkedDances"
+						[options]="linkedDances"
+						ngModel
+						multiple="true"
+					></app-select>
 				</td>
 				<td>
 					<button class="add-row-btn">+</button>

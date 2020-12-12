@@ -23,7 +23,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 		fromAge: this.fromAge,
 		toAge: this.toAge,
 	});
-	compSetupServiceUnsub: Promise<Unsubscribable>;
+	compSetupServiceUnsub: Unsubscribable;
 	ageGroups: AgeGroupType[];
 	submitValidators: Validator[];
 	toAgeSubscription: Subscription;
@@ -39,10 +39,11 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 	}
 
   ngOnInit(): void {
-		this.compSetupServiceUnsub = this.competitionSetup$.subscribeAgeGroups(
-			(value: AgeGroupType[]) => {
-				this.ageGroups = value;
-		});
+		this.compSetupServiceUnsub = this.competitionSetup$
+		.subscribe((value: Competition) => {
+				this.ageGroups = value.ageGroups;
+			}
+		);
 	}
 	
 	toAgeOnChange(newValue: string): void {
@@ -104,9 +105,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy(): void {
 		this.toAgeSubscription.unsubscribe();
-		this.compSetupServiceUnsub.then((unsub: Unsubscribable) => {
-			unsub.unsubscribe();
-		});
+		this.compSetupServiceUnsub.unsubscribe();
 	}
 
 }

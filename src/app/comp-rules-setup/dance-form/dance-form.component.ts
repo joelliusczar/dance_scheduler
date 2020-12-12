@@ -3,7 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService } 
 	from 'src/app/services/competition-setup/competition-setup.service';
-import { Category, Dance } from 'src/app/types/data-shape';
+import { first } from 'src/app/shared/utils/anyHelper';
+import { Category, Competition, Dance } from 'src/app/types/data-shape';
 import { OptionInfo } from 'src/app/types/option-info';
 import { DirectionEventArg } from '../../types/directions';
 
@@ -15,8 +16,7 @@ import { DirectionEventArg } from '../../types/directions';
 })
 export class DanceFormComponent implements OnInit {
 
-	dancesUnsub: Promise<Unsubscribable>;
-	categoriesUnsub: Promise<Unsubscribable>;
+	compSetupServiceUnsub: Unsubscribable;
 	dances: Dance[] = [];
 	linkedDances: OptionInfo<Dance>[] = [];
 	categories: OptionInfo<Category>[] = [];
@@ -25,21 +25,19 @@ export class DanceFormComponent implements OnInit {
 	{ }
 
   ngOnInit(): void {
-		this.dancesUnsub = this.competitionSetup$.subscribeDances(
-			(value: Dance[]) => {
-				console.log(value);
-				this.dances = value;
-				this.linkedDances = value?.map(d => ({ 
-					display: d.name, 
-					associatedObject: d })
-				);
-		});
-		this.categoriesUnsub = this.competitionSetup$.subscribeCategories(
-			(value: Category[]) => {
-				this.categories = value?.map(c => ({
+		this.compSetupServiceUnsub = this.competitionSetup$.subscribe(
+			(value: Competition) => {
+				this.dances = value.dances;
+				this.categories = value?.categories?.map((c) => ({
 					display: c.name,
-					associatedObject: c })
-				);
+					associatedObject: c,
+					key: c.key
+				}));
+				this.linkedDances = value?.dances?.map((d) => ({ 
+					display: d.name, 
+					associatedObject: d,
+					key: d.key,
+				}));
 			}
 		);
 	}
@@ -49,14 +47,21 @@ export class DanceFormComponent implements OnInit {
 	}
 
 	onSubmit(formGroup: FormGroup): void {
+		console.log('submit');
 		console.log(formGroup.value);
 		if(!formGroup.valid){
 			formGroup.markAllAsTouched();
 		}
 		else {
-			// this.competitionSetup$.SaveDance({
-			// 	...formGroup.value
-			// });
+			const formVal = formGroup.value;
+			const category = first(formVal.category) as OptionInfo<Category>;
+			this.competitionSetup$.SaveDance({
+				name: formVal.name,
+				category: category?.associatedObject,
+				order: null,
+				key: null,
+				linkedDanceIds: [],
+			});
 			formGroup.reset({}, {emitEvent: false});
 		}
 	}
@@ -66,12 +71,7 @@ export class DanceFormComponent implements OnInit {
 	}
 
 	ngOnDestroy(): void {
-		this.dancesUnsub.then((unsub: Unsubscribable) => {
-			unsub.unsubscribe();
-		});
-		this.categoriesUnsub.then((unsub: Unsubscribable) => {
-			unsub.unsubscribe();
-		});
+		this.compSetupServiceUnsub.unsubscribe();
 	}
 }
 

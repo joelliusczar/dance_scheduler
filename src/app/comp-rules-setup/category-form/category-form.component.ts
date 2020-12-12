@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService } 
 	from 'src/app/services/competition-setup/competition-setup.service';
-import { Category } from 'src/app/types/data-shape';
+import { Category, Competition, Dance } from 'src/app/types/data-shape';
 import { DirectionEventArg } from '../../types/directions';
 
 
@@ -14,8 +14,9 @@ import { DirectionEventArg } from '../../types/directions';
 })
 export class CategoryFormComponent implements OnInit {
 
-	compSetupServiceUnsub: Promise<Unsubscribable>;
+	compSetupServiceUnsub: Unsubscribable;
 	categories: Category[];
+	dances: Dance[];
 	
 
   constructor(private competitionSetup$: CompetitionSetupService) { 
@@ -23,10 +24,12 @@ export class CategoryFormComponent implements OnInit {
 	}
 
   ngOnInit(): void {
-		this.compSetupServiceUnsub = this.competitionSetup$.subscribeCategories(
-			(value: Category[]) => {
-				this.categories = value;
-		});
+		this.compSetupServiceUnsub = this.competitionSetup$.subscribe(
+			(value: Competition) => {
+				this.categories = value.categories;
+				this.dances = value.dances;
+			}
+		);
 	}
 
 	reorderClick(eventArg: DirectionEventArg<Category>): void {
@@ -46,12 +49,18 @@ export class CategoryFormComponent implements OnInit {
 	}
 
 	onRowRemoveClick(category) {
-		this.competitionSetup$.removeCategory(category);
+		if(!this.competitionSetup$.removeCategory(category)) {
+			const problemDances = this.dances
+				.filter(d => d.category.key === category.key)
+				.map(d => d.name);
+			const problemDancesStr = problemDances.join(',');
+			const mainMsg = 'Category could not be removed because ' +
+				'the following dances are part of it:';
+			alert(`${mainMsg} ${problemDancesStr}`);
+		}
 	}
 
 	ngOnDestroy(): void {
-		this.compSetupServiceUnsub.then((unsub: Unsubscribable) => {
-			unsub.unsubscribe();
-		});
+		this.compSetupServiceUnsub.unsubscribe();
 	}
 }

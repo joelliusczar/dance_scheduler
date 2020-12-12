@@ -1,21 +1,22 @@
 import { Sortable } from './sortable';
-import { IdSelectable } from './IdSelectable';
+import { IdSelectable, NumericKeySelectable } from './IdSelectable';
 
 export type plus = '+'
 
-export interface AgeGroupType extends Sortable {
+export interface AgeGroupType extends Sortable, NumericKeySelectable {
 	name: string,
 	fromAge: number,
 	toAge: number | plus | '',
 };
 
-export interface Category extends Sortable {
+export interface Category extends Sortable, NumericKeySelectable {
 	name: string,
 };
 
-export interface Dance extends Sortable {
+export interface Dance extends Sortable, NumericKeySelectable {
 	name: string,
-	category: Category
+	category: Category,
+	linkedDanceIds: number[],
 };
 
 export interface SkillLevel extends Sortable {

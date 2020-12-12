@@ -2,7 +2,7 @@
 	[tabindex]="tabNum" 
 	role="listbox"
 	(focus)="onFocus()"
-	(blur)="onBlur()"
+	(focusout)="onFocusOut()"
 >
 	<span *ngIf="showSelectedList()" class="tag-list">
 		<span *ngFor="let option of selectedItems" class="single-tag">
@@ -14,7 +14,7 @@
 		{{getSingularDisplayValue()}}
 	</span>
 	<ds-hide-icon 
-		[hidden]="isOpen || isDisabled"
+		[hidden]="isOpen || isDisabled || options?.length < 1"
 		strokeColor="black" 
 		width=".8em" 
 		height=".8em"

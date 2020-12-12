@@ -7,13 +7,13 @@ import { Component,
 	OnInit, 
 	Output, 
 	QueryList, 
+	SimpleChange, 
 	ViewChildren} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
 import { OptionInfo } from '../../../types/option-info';
+import { asArray, isEmptyStr } from '../../utils/anyHelper';
 import { 
-	MENU_ITEM_CLASSES_DEFAULT, 
-	MENU_ITEM_CLASSES_HIGHLIGHTED, 
 	SelectOptionComponent } 
 from './select-option/select-option.component';
 
@@ -78,8 +78,27 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		}
 	}
 
+	ngOnChanges(changes: SimpleChange) {
+		const optionChanges = changes['options'];
+		console.log(changes);
+		if(optionChanges && !optionChanges.firstChange) {
+			const prevLength = optionChanges.previousValue?.length;
+			//if something was deleted
+			if(prevLength > optionChanges.currentValue?.length) {
+				const current = optionChanges.currentValue
+					.map(o => o.key);
+				const currentSet = new Set(current);
+				const selected = asArray(this.selectedItems)
+					.filter(o => currentSet.has(o.key));
+				this.selectedItems = selected;
+				this.selectedSet = new Set(selected);
+			}
+		}
+  }
+
 	writeValue(obj: any): void {
 		console.log(obj);
+		console.log(typeof obj);
 		const valueAs = obj as OptionInfo[] | OptionInfo;
 		this.initializeSelectedValues(valueAs);
 	}
@@ -103,6 +122,10 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 			if(Array.isArray(selectedItems)) {
 				this.selectedSet = new Set(selectedItems);
 			}
+			else if(isEmptyStr(selectedItems)) {
+				this.selectedItems = [];
+				this.selectedSet = new Set(this.selectedItems);
+			}
 			else {
 				throw Error('When using multi-select, provided value must be array');
 			}
@@ -125,10 +148,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	}
 
 	private openMenu(): void {
-		if(this.isDisabled) return;
+		if(this.isDisabled || this.options.length < 1) return;
 		this.isOpen = true;
 		this.containerClass = openMenuClass;
-		//this.arrowHighlightIfNone();
 	}
 
 	private closeMenu(): void {
@@ -141,13 +163,17 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		this.openMenu();
 	}
 
-	onBlur(): void {
+	//this needs to be a focusout rather than a simple blur
+	//because we want to get the focus event of the options themselves
+	//otherwise, if an option is selected and we click out, this wont fire
+	onFocusOut(): void {
 		//this timeout is a hack.
 		//we don't want the blur action to occur if a child is focused
 		//especially since it will occur as we tab through the options
 		//we can check for active element, but first focus goes to body
 		//before switching to our element. the setTimeout tosses our work to the end 
 		//of the queue so that by then the activeElement is our option
+
 		setTimeout(() => {
 			const element = this.elRef.nativeElement.children[0] as HTMLElement;
 			if(!element.contains(document.activeElement)) {
@@ -195,12 +221,13 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	}
 
 	private openMenuKeydownEventBranches(e: KeyboardEvent) {
-		console.log(e.key);
-		if(e.key === ' ' && this.highlightedMenuItemIdx > -1) {
-			const optionElements = this.optionElements.toArray();
-			const optionElement = optionElements[this.highlightedMenuItemIdx];
-			const tagInfo = optionElement.option;
-			this.onChecked(tagInfo);
+		
+		if((e.key === ' ' || e.key === 'Enter') && this.highlightedMenuItemIdx > -1) {
+			// const optionElements = this.optionElements.toArray();
+			// const optionElement = optionElements[this.highlightedMenuItemIdx];
+			// const tagInfo = optionElement.option;
+			// this.onChecked(tagInfo);
+
 		}
 		else if(e.key === 'ArrowUp') {
 			const idx = this.highlightedMenuItemIdx;
@@ -233,7 +260,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		else {
 			// if(e.key === 'Enter') {
 			// 	this.openMenu();
-			// }
+			// }	
 		}
 	}
 

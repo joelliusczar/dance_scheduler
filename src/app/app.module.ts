@@ -40,7 +40,7 @@ import { EditSchoolModalComponent }
 import { SelectComponent } from './shared/components/select/select.component';
 import { SelectOptionComponent } 
 	from './shared/components/select/select-option/select-option.component';
-import { SelectMenuComponent } from './shared/components/select/select-menu/select-menu.component';
+
 
 
 @NgModule({
@@ -64,7 +64,6 @@ import { SelectMenuComponent } from './shared/components/select/select-menu/sele
 		EditSchoolModalComponent,
 		SelectComponent,
 		SelectOptionComponent,
-		SelectMenuComponent,
   ],
   imports: [
     BrowserModule,

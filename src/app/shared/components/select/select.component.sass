@@ -15,6 +15,26 @@
 .single-tag button
 	@extend %btn-common
 
+.menu-container-base, %menu-container-base
+	display: inline-block
+	font-size: styles.$data-font-size
+	max-width: 200px
+
+.menu-container-closed
+	@extend %menu-container-base
+
+.menu-container-open
+	@extend %menu-container-base
+	background-color: styles.$bg-color-content 
+	box-shadow: -1px 3px 8px 0px black
+	border-radius: styles.$rounding-standard
+	position: absolute
+	padding: .1em 0
+	z-index: 1
+	
+	&:focus
+		outline-style: none
+
 .menu-container-disabled
 	color: styles.$fg-color-disabled-text
 
