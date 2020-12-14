@@ -4,12 +4,11 @@
 	(focus)="onFocus()"
 	(focusout)="onFocusOut()"
 >
-	<span *ngIf="showSelectedList()" class="tag-list">
-		<span *ngFor="let option of selectedItems" class="single-tag">
-			{{option.display}}
-			<button (click)="onTagXClicked($event, option)">X</button>
-		</span>
-	</span>
+<app-tag-list *ngIf="showSelectedList()" 
+	[value]="selectedItems"
+	(onRemoved)="onTagXClicked($event)"
+>
+</app-tag-list>
 	<span *ngIf="!showSelectedList() && !isOpen">
 		{{getSingularDisplayValue()}}
 	</span>

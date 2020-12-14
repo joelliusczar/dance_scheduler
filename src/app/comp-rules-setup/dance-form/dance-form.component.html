@@ -1,4 +1,8 @@
+<p *ngIf="categories?.length < 1">
+	No dance categories have been added. Please add some.
+</p>
 <form 
+	*ngIf="categories?.length > 0"
 	#danceForm="ngForm" 
 	(ngSubmit)="onSubmit(danceForm.form)" 
 	dsAgeRangeValidator
@@ -25,7 +29,13 @@
 				</td>
 				<td>{{dance.name}}</td>
 				<td>{{dance?.category?.name}}</td>
-				<td *ngIf="dances.length > 0"></td>
+				<td *ngIf="dances.length > 0">
+					<app-tag-list 
+						readonly="true"
+						[value]="dance.linkedDances"
+					>
+					</app-tag-list>
+				</td>
 				<td><button (click)="onRowRemoveClick(dance)" 
 					type="button" 
 					class="add-row-btn">-</button>

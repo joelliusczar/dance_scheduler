@@ -16,6 +16,21 @@ enum CompKeys {
 	Dances = 'dances'
 }
 
+const compBaseShape : Competition = {
+	id: null,
+	name: '',
+	ageGroups: [],
+	categories: [],
+	dances: [],
+	skillLevels: [],
+	dancers: [],
+	heats: [],
+	judges: [],
+	dateOfComp: null,
+	lastUpdated: null,
+	finished: false,
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -42,7 +57,10 @@ export class CompetitionSetupService {
 				.reduce((a, c) => c.lastUpdated > a.lastUpdated ? c : a);
 		}
 		else {
-			this.currentCompetition = { id: v4() } as any;
+			this.currentCompetition = { ...compBaseShape, 
+				id: v4(),
+				lastUpdated: new Date()
+			};
 		}
 		this.competitions$.next(this.currentCompetition);
 	}
@@ -67,28 +85,29 @@ export class CompetitionSetupService {
 			return unsub;
 	}
 
-	private ReplaceAll<T>(items: T[], key: string): void {
+	private replaceAll<T>(items: T[], key: string): void {
 		this.currentCompetition[key] = items;
 		this.browserDb.putValue(COMPETITION_TABLE_NAME, this.currentCompetition);
 		this.competitions$.next({
 			...this.currentCompetition,
-			[`${key}`]: items,
+			[key]: items,
+			lastUpdated: new Date()
 		});
 	}
 
-	ReplaceAllAgeGroups(ageGroups: AgeGroupType[]): void {
-		this.ReplaceAll(ageGroups, CompKeys.AgeGroups);
+	replaceAllAgeGroups(ageGroups: AgeGroupType[]): void {
+		this.replaceAll(ageGroups, CompKeys.AgeGroups);
 	}
 
-	ReplaceAllCategories(categories: Dance[]): void {
-		this.ReplaceAll(categories, CompKeys.Categories);
+	replaceAllCategories(categories: Dance[]): void {
+		this.replaceAll(categories, CompKeys.Categories);
 	}
 
-	ReplaceAllDances(dances: Dance[]): void {
-		this.ReplaceAll(dances, CompKeys.Dances);
+	replaceAllDances(dances: Dance[]): void {
+		this.replaceAll(dances, CompKeys.Dances);
 	}
 
-	private SaveItem<T extends Sortable & NumericKeySelectable>
+	private addItem<T extends Sortable & NumericKeySelectable>
 		(item: T, key: string): void 
 	{
 		if(!this.currentCompetition[key]) {
@@ -98,19 +117,36 @@ export class CompetitionSetupService {
 		item.key =  Date.now();
 		
 		this.currentCompetition[key].push(item);
-		this.ReplaceAll(this.currentCompetition[key], key);
 	}
 
-	SaveAgeGroup(ageGroup: AgeGroupType): void {
-		this.SaveItem(ageGroup, CompKeys.AgeGroups);
+	private saveItem<T extends Sortable & NumericKeySelectable>
+		(item: T, key: string): void 
+	{
+		this.addItem(item, key);
+		this.replaceAll(this.currentCompetition[key], key);
 	}
 
-	SaveCategory(category: Category): void {
-		this.SaveItem(category, CompKeys.Categories);
+	saveAgeGroup(ageGroup: AgeGroupType): void {
+		this.saveItem(ageGroup, CompKeys.AgeGroups);
 	}
 
-	SaveDance(dance: Dance): void {
-		this.SaveItem(dance, CompKeys.Dances);
+	saveCategory(category: Category): void {
+		this.saveItem(category, CompKeys.Categories);
+	}
+
+	saveDance(dance: Dance): void {
+		this.addItem(dance, CompKeys.Dances);
+		if(dance.linkedDanceIds?.length > 0) {
+			const dances = this.currentCompetition.dances.map(d => {
+				if(dance.linkedDanceIds.some(k => k === d.key)) {
+					return {...d, linkedDanceIds: [...(d.linkedDanceIds || []), dance.key]};
+				}
+				return d;
+			});
+			this.replaceAll(dances, CompKeys.Dances);
+			return;
+		}
+		this.replaceAll(this.currentCompetition.dances, CompKeys.Dances);
 	}
 
 	private moveItem<T extends Sortable>(item: T, direction: ElevatorDir, 
@@ -121,7 +157,7 @@ export class CompetitionSetupService {
 			const swapped = this.currentCompetition[key][item.order];
 			swapped.order -= increment;
 			item.order += increment;
-			this.ReplaceAll(this.currentCompetition[key], key);
+			this.replaceAll(this.currentCompetition[key], key);
 		}
 	}
 
@@ -139,7 +175,7 @@ export class CompetitionSetupService {
 
 	removeAgeGroup(ageGroup: AgeGroupType): void {
 		if(!this.currentCompetition.ageGroups) return;
-		this.ReplaceAll(this.currentCompetition.ageGroups
+		this.replaceAll(this.currentCompetition.ageGroups
 			.filter(i => i.name != ageGroup.name), 
 			CompKeys.AgeGroups);
 	}
@@ -149,7 +185,7 @@ export class CompetitionSetupService {
 		const hasDependants = this.currentCompetition.dances
 			.some(d => d.category.key === category.key);
 		if(hasDependants) return false;
-		this.ReplaceAll(this.currentCompetition.categories
+		this.replaceAll(this.currentCompetition.categories
 			.filter(i => i.name != category.name), 
 			CompKeys.Categories);
 		return true;
@@ -157,9 +193,22 @@ export class CompetitionSetupService {
 
 	removeDance(dance: Dance): void {
 		if(!this.currentCompetition.dances) return;
-		this.ReplaceAll(this.currentCompetition.dances
-			.filter(i => i.name != dance.name), 
-			CompKeys.Dances);
+		const filtered = this.currentCompetition.dances
+			.filter(i => i.key != dance.key);
+		if(dance.linkedDanceIds?.length > 0) {
+			const keySet = new Set(dance.linkedDanceIds);
+			const filteredModified = filtered.map(d => {
+				if(keySet.has(d.key)) {
+					return { ...d, 
+						linkedDanceIds: d.linkedDanceIds.filter(k => k !== dance.key)
+					};
+				}
+				return d;
+			});
+			this.replaceAll(filteredModified, CompKeys.Dances);
+			return;
+		}
+		this.replaceAll(filtered, CompKeys.Dances);
 	}
 
 }

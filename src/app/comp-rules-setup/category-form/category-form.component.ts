@@ -41,7 +41,7 @@ export class CategoryFormComponent implements OnInit {
 			formGroup.markAllAsTouched();
 		}
 		else {
-			this.competitionSetup$.SaveCategory({
+			this.competitionSetup$.saveCategory({
 				...formGroup.value
 			});
 			formGroup.reset({}, {emitEvent: false});

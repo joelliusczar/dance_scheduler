@@ -4,7 +4,7 @@ import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService } 
 	from 'src/app/services/competition-setup/competition-setup.service';
 import { first } from 'src/app/shared/utils/anyHelper';
-import { Category, Competition, Dance } from 'src/app/types/data-shape';
+import { Category, Competition, Dance, DanceDto } from 'src/app/types/data-shape';
 import { OptionInfo } from 'src/app/types/option-info';
 import { DirectionEventArg } from '../../types/directions';
 
@@ -17,7 +17,7 @@ import { DirectionEventArg } from '../../types/directions';
 export class DanceFormComponent implements OnInit {
 
 	compSetupServiceUnsub: Unsubscribable;
-	dances: Dance[] = [];
+	dances: DanceDto[] = [];
 	linkedDances: OptionInfo<Dance>[] = [];
 	categories: OptionInfo<Category>[] = [];
 
@@ -27,7 +27,15 @@ export class DanceFormComponent implements OnInit {
   ngOnInit(): void {
 		this.compSetupServiceUnsub = this.competitionSetup$.subscribe(
 			(value: Competition) => {
-				this.dances = value.dances;
+
+				const danceMap = new Map(value.dances.map(d => [d.key, { 
+					display: d.name,
+					key: d.key
+				}]));
+				this.dances = value.dances.map(d => ({
+					...d,
+					linkedDances: d.linkedDanceIds.map(k => danceMap.get(k))
+				}));
 				this.categories = value?.categories?.map((c) => ({
 					display: c.name,
 					associatedObject: c,
@@ -55,12 +63,13 @@ export class DanceFormComponent implements OnInit {
 		else {
 			const formVal = formGroup.value;
 			const category = first(formVal.category) as OptionInfo<Category>;
-			this.competitionSetup$.SaveDance({
+			const linkedIds = formVal.linkedDances?.map(d => d.key) || [];
+			this.competitionSetup$.saveDance({
 				name: formVal.name,
 				category: category?.associatedObject,
 				order: null,
 				key: null,
-				linkedDanceIds: [],
+				linkedDanceIds: linkedIds,
 			});
 			formGroup.reset({}, {emitEvent: false});
 		}

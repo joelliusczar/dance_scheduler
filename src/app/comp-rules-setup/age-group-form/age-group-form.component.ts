@@ -91,7 +91,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 		}
 		else {
 			const toAge = this.ageGroupFormGroup.value.toAge;
-			this.competitionSetup$.SaveAgeGroup({
+			this.competitionSetup$.saveAgeGroup({
 				...this.ageGroupFormGroup.value, 
 				toAge: toAge === '+' ? '+' : parseInt(toAge)
 			});

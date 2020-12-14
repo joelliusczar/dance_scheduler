@@ -1,0 +1,16 @@
+@use '../../../../styles'
+
+.tag-list
+	margin-top: .2em
+
+.single-tag
+	background-color: styles.$bg-color-menu1
+	color: styles.$fg-color-menu-text
+	padding: .2em
+	margin: .2em
+	cursor: default
+	border-radius: styles.$rounding-standard
+	font-size: 12px
+
+.single-tag button
+	@extend %btn-common

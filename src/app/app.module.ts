@@ -40,6 +40,7 @@ import { EditSchoolModalComponent }
 import { SelectComponent } from './shared/components/select/select.component';
 import { SelectOptionComponent } 
 	from './shared/components/select/select-option/select-option.component';
+import { TagListComponent } from './shared/components/tag-list/tag-list.component';
 
 
 
@@ -64,6 +65,7 @@ import { SelectOptionComponent }
 		EditSchoolModalComponent,
 		SelectComponent,
 		SelectOptionComponent,
+		TagListComponent,
   ],
   imports: [
     BrowserModule,

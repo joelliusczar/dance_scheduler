@@ -1,0 +1,8 @@
+<span class="tag-list">
+	<span *ngFor="let option of tags" class="single-tag">
+		{{option.display}}
+		<button *ngIf="!readonly" (click)="onTagXClicked($event, option)">
+			X
+		</button>
+	</span>
+</span>

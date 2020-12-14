@@ -1,5 +1,6 @@
 import { Sortable } from './sortable';
 import { IdSelectable, NumericKeySelectable } from './IdSelectable';
+import { OptionInfo } from './option-info';
 
 export type plus = '+'
 
@@ -18,6 +19,12 @@ export interface Dance extends Sortable, NumericKeySelectable {
 	category: Category,
 	linkedDanceIds: number[],
 };
+
+export interface DanceDto extends Sortable, NumericKeySelectable {
+	name: string,
+	category: Category,
+	linkedDances: OptionInfo<Dance>[],
+}
 
 export interface SkillLevel extends Sortable {
 	name: string,
@@ -71,7 +78,7 @@ export interface Competition extends IdSelectable {
 	dancers: Dancer[],
 	heats: Heat[],
 	judges: Person[],
-	date: Date,
+	dateOfComp: Date,
 	lastUpdated: Date,
 	finished: boolean,
 };
