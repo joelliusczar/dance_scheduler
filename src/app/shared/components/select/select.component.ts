@@ -13,12 +13,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
 import { OptionInfo } from '../../../types/option-info';
 import { asArray, isEmptyStr } from '../../utils/anyHelper';
+import { focusNext } from '../../utils/domHelper';
 import { 
 	SelectOptionComponent } 
 from './select-option/select-option.component';
 
-const closedMenuClass = 'menu-container-closed';
-const openMenuClass = 'menu-container-open';
+const closedMenuClass = 'menu-container-closed ds-select';
+const openMenuClass = 'menu-container-open ds-select';
 const disabledMenuClass = 'menu-container-disabled';
 
 const skippedKeys = new Set([
@@ -57,6 +58,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	@Input('multiple') allowMultiSelect: boolean;
 	@Input('disabled') isDisabled: boolean;
 	@Output('onSelected') onSelected = new EventEmitter<OptionInfo[]>() 
+	topId = '';
 	selectedSet: Set<OptionInfo>;
 	isOpen = false;
 	containerClass = closedMenuClass;
@@ -76,6 +78,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 			this.tabNum = -1;
 			this.containerClass = disabledMenuClass;
 		}
+		this.topId = `ds-select-top-${this.controlName}`;
 	}
 
 	ngOnChanges(changes: SimpleChange) {
@@ -160,6 +163,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	}
 	
 	onFocus(): void {
+		// console.log('on focus');
+		// console.log(this.elRef.nativeElement.children[0]);
 		this.openMenu();
 	}
 
@@ -219,13 +224,27 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		}
 	}
 
+	private chooseOption(): void {
+		const optionElements = this.optionElements.toArray();
+		const optionElement = optionElements[this.highlightedMenuItemIdx];
+		const tagInfo = optionElement.option;
+		this.onChecked(tagInfo);
+	}
+
 	private openMenuKeydownEventBranches(e: KeyboardEvent) {
 		
-		if((e.key === ' ' || e.key === 'Enter') && this.highlightedMenuItemIdx > -1) {
-			const optionElements = this.optionElements.toArray();
-			const optionElement = optionElements[this.highlightedMenuItemIdx];
-			const tagInfo = optionElement.option;
-			this.onChecked(tagInfo);
+		if((e.key === ' ') && this.highlightedMenuItemIdx > -1) {
+			this.chooseOption();
+		}
+		else if(e.key === 'Enter') {
+			if(this.allowMultiSelect) {
+				this.closeMenu();
+			}
+			else if(this.highlightedMenuItemIdx > -1) {
+				this.chooseOption();
+			}
+			const element = this.elRef.nativeElement.children[0];
+			focusNext(element);
 		}
 		else if(e.key === 'ArrowUp') {
 			const idx = this.highlightedMenuItemIdx;
@@ -242,6 +261,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 			e.preventDefault();
 		}
 		else if(skippedKeys.has(e.key)) {
+			console.log('noop');
+			console.log(e);
 			noop();
 		}
 		else {
@@ -253,13 +274,14 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	@HostListener('window:keydown',['$event'])
 	onKeyDown(e: KeyboardEvent): void {
 		if(this.isOpen && this.optionElements.length > 0) {
+			console.log(e);
 			this.openMenuKeydownEventBranches(e);
 		}
-		else {
-			// if(e.key === 'Enter') {
-			// 	this.openMenu();
-			// }	
-		}
+		// else {
+		// 	// if(e.key === 'Enter') {
+		// 	// 	this.openMenu();
+		// 	// }	
+		// }
 	}
 
 	showSelectedList(): boolean {
@@ -294,8 +316,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	private toggleOptionSingle(option: OptionInfo): void {
 		this.replaceValues([option]);
 		this.closeMenu();
-		const element = this.elRef.nativeElement.children[0] as HTMLElement;
-		element.blur();
+		// const element = this.elRef.nativeElement.children[0] as HTMLElement;
+		// element.blur();
 	}
 
 	onChecked(option: OptionInfo): void {

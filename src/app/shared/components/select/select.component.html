@@ -3,6 +3,7 @@
 	role="listbox"
 	(focus)="onFocus()"
 	(focusout)="onFocusOut()"
+	[id]="topId"
 >
 <app-tag-list *ngIf="showSelectedList()" 
 	[value]="selectedItems"
