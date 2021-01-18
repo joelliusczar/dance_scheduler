@@ -1,7 +1,11 @@
+export type keyType = string | number;
+
 export interface IdSelectable {
-	id: string
+	id: keyType
 };
 
-export interface NumericKeySelectable {
-	key: number
-}
+export interface NameDisplayable {
+	name: string,
+};
+
+export interface DataBasic extends IdSelectable, NameDisplayable {};

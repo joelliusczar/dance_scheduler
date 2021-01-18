@@ -3,9 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService } 
 	from 'src/app/services/competition-setup/competition-setup.service';
-import { first } from 'src/app/shared/utils/anyHelper';
+import { first } from 'src/app/shared/utils/arrayHelpers';
 import { Category, Competition, Dance, DanceDto } from 'src/app/types/data-shape';
-import { OptionInfo } from 'src/app/types/option-info';
 import { DirectionEventArg } from '../../types/directions';
 
 
@@ -18,8 +17,8 @@ export class DanceFormComponent implements OnInit {
 
 	compSetupServiceUnsub: Unsubscribable;
 	dances: DanceDto[] = [];
-	linkedDances: OptionInfo<Dance>[] = [];
-	categories: OptionInfo<Category>[] = [];
+	linkedDances: Dance[] = [];
+	categories: Category[] = [];
 
 	constructor(private competitionSetup$: CompetitionSetupService) 
 	{ }
@@ -27,25 +26,14 @@ export class DanceFormComponent implements OnInit {
   ngOnInit(): void {
 		this.compSetupServiceUnsub = this.competitionSetup$.subscribe(
 			(value: Competition) => {
-
-				const danceMap = new Map(value.dances.map(d => [d.key, { 
-					display: d.name,
-					key: d.key
-				}]));
+				console.log('dance sub');
+				const danceMap = new Map(value.dances.map(d => [d.id, d]));
 				this.dances = value.dances.map(d => ({
 					...d,
 					linkedDances: d.linkedDanceIds.map(k => danceMap.get(k))
 				}));
-				this.categories = value?.categories?.map((c) => ({
-					display: c.name,
-					associatedObject: c,
-					key: c.key
-				}));
-				this.linkedDances = value?.dances?.map((d) => ({ 
-					display: d.name, 
-					associatedObject: d,
-					key: d.key,
-				}));
+				this.categories = value.categories;
+				this.linkedDances = value.dances;
 			}
 		);
 	}
@@ -56,19 +44,20 @@ export class DanceFormComponent implements OnInit {
 
 	onSubmit(formGroup: FormGroup): void {
 		console.log('submit');
-		console.log(formGroup.value);
+		console.log(formGroup);
+
 		if(!formGroup.valid){
 			formGroup.markAllAsTouched();
 		}
 		else {
 			const formVal = formGroup.value;
-			const category = first(formVal.category) as OptionInfo<Category>;
 			const linkedIds = formVal.linkedDances?.map(d => d.key) || [];
 			this.competitionSetup$.saveDance({
 				name: formVal.name,
-				category: category?.associatedObject,
+				shortName: formVal.shortName,
+				category: first(formVal.category),
 				order: null,
-				key: null,
+				id: null,
 				linkedDanceIds: linkedIds,
 			});
 			formGroup.reset({}, {emitEvent: false});

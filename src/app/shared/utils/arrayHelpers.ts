@@ -7,3 +7,21 @@ export function swap(array: any[], idx0: number, idx1: number): boolean {
 	}
 	return false;
 }
+
+export function asArray<T>(value: T | T[]): T[] {
+	if(value === null || value === undefined) return [];
+	if(Array.isArray(value)) return value as unknown as T[];
+	return [value];
+}
+
+export function first<T>(value: T[]): T | null {
+	if(value === null || value === undefined) return null;
+	if(value.length > 0) return value[0];
+	return null;
+}
+
+export function last<T>(value: T[]): T | null {
+	if(value === null || value === undefined) return null;
+	if(value.length > 0) return value[value.length - 1];
+	return null;
+}

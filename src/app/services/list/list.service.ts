@@ -9,7 +9,7 @@ import {
 import { TableTypes } from 'src/app/types/data-shape';
 import { BrowserDbService } from '../browser-Db/browser-db.service';
 import { v4 } from 'uuid';
-import { IdSelectable } from 'src/app/types/IdSelectable';
+import { IdSelectable, keyType } from 'src/app/types/IdSelectable';
 import { TableStats } from 'src/app/types/table-stats';
 
 
@@ -25,7 +25,7 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 	private items: T[];
 	private items$ = new Subject<U[]>();
 	private stats$ = new Subject<TableStats>();
-	private cachedItems = new Map<string, U>();
+	private cachedItems = new Map<keyType, U>();
 	protected tableName: string;
 
 	constructor(protected browserDb: BrowserDbService) { }
@@ -96,7 +96,6 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 		}
 	}
 
-
 	replaceAll(items: T[]): void {
 		this.items = items;
 		this._sendNext();
@@ -123,7 +122,7 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 		this.replaceAll(this.items.filter(i => i.id !== item.id));
 	}
 
-	async getItemById(id: string): Promise<U | null> {
+	async getItemById(id: keyType): Promise<U | null> {
 		if(!id) return null;
 		if(this.cachedItems.has(id)) {
 			const item = this.cachedItems.get(id);

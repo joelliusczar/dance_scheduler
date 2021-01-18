@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BehaviorSubject } from 'rxjs';
+import { SelectConfig, SELECT_CONFIG } from '../select-config';
 
 import { SelectOptionComponent } from './select-option.component';
 
@@ -8,7 +10,15 @@ describe('SelectOptionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SelectOptionComponent ]
+			declarations: [ SelectOptionComponent ],
+			providers: [
+				{
+					provide: SELECT_CONFIG,
+					useFactory: () => {
+						return new BehaviorSubject<SelectConfig | null>(null);
+					}
+				}
+			]
     })
     .compileComponents();
   });

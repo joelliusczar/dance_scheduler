@@ -14,12 +14,13 @@ describe('UpDownComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UpDownComponent);
-    component = fixture.componentInstance;
+		fixture = TestBed.createComponent(UpDownComponent);
+		component = fixture.componentInstance;
+		component.associatedItem = { order: 0 };
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+		expect(component).toBeTruthy();
   });
 });

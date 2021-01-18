@@ -1,5 +1,9 @@
 @use '../../../../styles'
 
+:host 
+	vertical-align: middle
+	border-radius: styles.$rounding-standard
+
 .tag-list
 	margin-top: .2em
 
@@ -19,6 +23,7 @@
 	display: inline-block
 	font-size: styles.$data-font-size
 	max-width: 200px
+	border-width: styles.$input-border-width
 
 .menu-container-closed
 	@extend %menu-container-base
@@ -44,3 +49,6 @@
 
 .select-open-icon
 	float: right
+
+.ng-invalid.ng-touched:host .select-picked-value
+	color: red

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Unsubscribable, Subject, PartialObserver } from 'rxjs';
-import { AgeGroupType, Category, Dance, Competition } 
+import { AgeGroupType, Category, Dance, Competition, SkillLevel } 
 	from 'src/app/types/data-shape';
 import { Sortable } from 'src/app/types/sortable';
 import { BrowserDbService, COMPETITION_TABLE_NAME } 
@@ -8,12 +8,13 @@ import { BrowserDbService, COMPETITION_TABLE_NAME }
 import { swap } from '../../shared/utils/arrayHelpers';
 import { Direction, ElevatorDir } from 'src/app/types/directions';
 import { v4 } from 'uuid';
-import { NumericKeySelectable } from 'src/app/types/IdSelectable';
+import { IdSelectable, keyType } from 'src/app/types/IdSelectable';
 
 enum CompKeys {
 	AgeGroups = 'ageGroups',
 	Categories = 'categories',
-	Dances = 'dances'
+	Dances = 'dances',
+	SkillLevls = 'skillLevels'
 }
 
 const compBaseShape : Competition = {
@@ -40,16 +41,22 @@ export class CompetitionSetupService {
 	private currentCompetition: Competition;
 	private competitions$ = new Subject<Competition>();
 
-	constructor(private browserDb: BrowserDbService) { }
+	constructor(private browserDb: BrowserDbService) { 
+		console.log('comp service');
+	}
 	
 	async _triggerLoadItems() : Promise<void> {
+		const note = v4();
+		console.log(`_triggerLoadItems ${note}`);
 		if(this.currentCompetition) {
 			this.competitions$.next(this.currentCompetition);
 			return;
 		}
+		console.log(`_before dbopen ${note}`);
 		if(!this.browserDb.isOpen) {
 			await this.browserDb.openDb();
 		}
+		console.log(`_before pull ${note}`);
 		const values = await this.browserDb.getAllValues(COMPETITION_TABLE_NAME);
 		this.competitions = values as Competition[];
 		if(this.competitions?.length) {
@@ -62,6 +69,7 @@ export class CompetitionSetupService {
 				lastUpdated: new Date()
 			};
 		}
+		console.log(`_before next ${note}`);
 		this.competitions$.next(this.currentCompetition);
 	}
 
@@ -88,6 +96,7 @@ export class CompetitionSetupService {
 	private replaceAll<T>(items: T[], key: string): void {
 		this.currentCompetition[key] = items;
 		this.browserDb.putValue(COMPETITION_TABLE_NAME, this.currentCompetition);
+		console.log('next 3');
 		this.competitions$.next({
 			...this.currentCompetition,
 			[key]: items,
@@ -107,19 +116,19 @@ export class CompetitionSetupService {
 		this.replaceAll(dances, CompKeys.Dances);
 	}
 
-	private addItem<T extends Sortable & NumericKeySelectable>
+	private addItem<T extends Sortable & IdSelectable>
 		(item: T, key: string): void 
 	{
 		if(!this.currentCompetition[key]) {
 			this.currentCompetition[key] = [];
 		}
 		item.order = this.currentCompetition[key].length;
-		item.key =  Date.now();
+		item.id =  Date.now();
 		
 		this.currentCompetition[key].push(item);
 	}
 
-	private saveItem<T extends Sortable & NumericKeySelectable>
+	private saveItem<T extends Sortable & IdSelectable>
 		(item: T, key: string): void 
 	{
 		this.addItem(item, key);
@@ -138,8 +147,8 @@ export class CompetitionSetupService {
 		this.addItem(dance, CompKeys.Dances);
 		if(dance.linkedDanceIds?.length > 0) {
 			const dances = this.currentCompetition.dances.map(d => {
-				if(dance.linkedDanceIds.some(k => k === d.key)) {
-					return {...d, linkedDanceIds: [...(d.linkedDanceIds || []), dance.key]};
+				if(dance.linkedDanceIds.some(k => k === d.id)) {
+					return {...d, linkedDanceIds: [...(d.linkedDanceIds || []), dance.id]};
 				}
 				return d;
 			});
@@ -147,6 +156,10 @@ export class CompetitionSetupService {
 			return;
 		}
 		this.replaceAll(this.currentCompetition.dances, CompKeys.Dances);
+	}
+
+	saveSkillLevel(skillLevel: SkillLevel): void {
+		this.saveItem(skillLevel, CompKeys.SkillLevls);
 	}
 
 	private moveItem<T extends Sortable>(item: T, direction: ElevatorDir, 
@@ -173,20 +186,24 @@ export class CompetitionSetupService {
 		this.moveItem(dance, direction, CompKeys.Dances);
 	}
 
+	moveSkillLevel(skillLevel: SkillLevel, direction: ElevatorDir): void {
+		this.moveItem(skillLevel, direction, CompKeys.SkillLevls);
+	}
+
 	removeAgeGroup(ageGroup: AgeGroupType): void {
 		if(!this.currentCompetition.ageGroups) return;
 		this.replaceAll(this.currentCompetition.ageGroups
-			.filter(i => i.name != ageGroup.name), 
+			.filter(i => i.id !== ageGroup.id), 
 			CompKeys.AgeGroups);
 	}
 
 	removeCategory(category: Category): boolean {
 		if(!this.currentCompetition.categories) return false;
 		const hasDependants = this.currentCompetition.dances
-			.some(d => d.category.key === category.key);
+			.some(d => d.category.id === category.id);
 		if(hasDependants) return false;
 		this.replaceAll(this.currentCompetition.categories
-			.filter(i => i.name != category.name), 
+			.filter(i => i.id !== category.id), 
 			CompKeys.Categories);
 		return true;
 	}
@@ -194,13 +211,13 @@ export class CompetitionSetupService {
 	removeDance(dance: Dance): void {
 		if(!this.currentCompetition.dances) return;
 		const filtered = this.currentCompetition.dances
-			.filter(i => i.key != dance.key);
+			.filter(i => i.id != dance.id);
 		if(dance.linkedDanceIds?.length > 0) {
-			const keySet = new Set(dance.linkedDanceIds);
+			const keySet = new Set<keyType>(dance.linkedDanceIds);
 			const filteredModified = filtered.map(d => {
-				if(keySet.has(d.key)) {
+				if(keySet.has(d.id)) {
 					return { ...d, 
-						linkedDanceIds: d.linkedDanceIds.filter(k => k !== dance.key)
+						linkedDanceIds: d.linkedDanceIds.filter(k => k !== dance.id)
 					};
 				}
 				return d;
@@ -209,6 +226,13 @@ export class CompetitionSetupService {
 			return;
 		}
 		this.replaceAll(filtered, CompKeys.Dances);
+	}
+
+	removeSkillLevel(skillLevel: SkillLevel): void {
+		if(!this.currentCompetition.skillLevels) return;
+		this.replaceAll(this.currentCompetition.skillLevels
+			.filter(i => i.id !== skillLevel.id), 
+			CompKeys.SkillLevls);
 	}
 
 }

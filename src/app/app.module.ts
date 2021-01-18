@@ -40,7 +40,10 @@ import { EditSchoolModalComponent }
 import { SelectComponent } from './shared/components/select/select.component';
 import { SelectOptionComponent } 
 	from './shared/components/select/select-option/select-option.component';
-import { TagListComponent } from './shared/components/tag-list/tag-list.component';
+import { TagListComponent } 
+	from './shared/components/tag-list/tag-list.component';
+import { SkillLevelFormComponent } 
+	from './comp-rules-setup/skill-level-form/skill-level-form.component';
 
 
 
@@ -66,6 +69,7 @@ import { TagListComponent } from './shared/components/tag-list/tag-list.componen
 		SelectComponent,
 		SelectOptionComponent,
 		TagListComponent,
+		SkillLevelFormComponent
   ],
   imports: [
     BrowserModule,

@@ -1,41 +1,36 @@
 import { Sortable } from './sortable';
-import { IdSelectable, NumericKeySelectable } from './IdSelectable';
-import { OptionInfo } from './option-info';
+import { IdSelectable, keyType, DataBasic } from './IdSelectable';
 
 export type plus = '+'
 
-export interface AgeGroupType extends Sortable, NumericKeySelectable {
-	name: string,
+export interface AgeGroupType extends Sortable, DataBasic {
 	fromAge: number,
 	toAge: number | plus | '',
 };
 
-export interface Category extends Sortable, NumericKeySelectable {
-	name: string,
+export interface Category extends Sortable, DataBasic {
 };
 
-export interface Dance extends Sortable, NumericKeySelectable {
-	name: string,
+export interface Dance extends Sortable, DataBasic {
+	shortName: string,
 	category: Category,
 	linkedDanceIds: number[],
 };
 
-export interface DanceDto extends Sortable, NumericKeySelectable {
-	name: string,
+export interface DanceDto extends Sortable, DataBasic {
+	shortName: string,
 	category: Category,
-	linkedDances: OptionInfo<Dance>[],
+	linkedDances: Dance[],
 }
 
-export interface SkillLevel extends Sortable {
-	name: string,
+export interface SkillLevel extends Sortable, DataBasic {
 }
 
 export interface GroupedDance extends Dance {
 	skillLevel: SkillLevel,
 };
 
-export interface School extends IdSelectable {
-	name: string,
+export interface School extends DataBasic {
 	location: string,
 }
 
@@ -45,7 +40,7 @@ export interface PersonBase extends IdSelectable {
 }
 
 export interface Person extends PersonBase {
-	schoolId: string,
+	schoolId: keyType,
 }
 
 export interface PersonDto extends PersonBase {
@@ -69,8 +64,7 @@ export interface Heat {
 };
 
 
-export interface Competition extends IdSelectable {
-	name: string,
+export interface Competition extends DataBasic {
 	ageGroups: AgeGroupType[],
 	categories: Category[],
 	dances: Dance[],

@@ -51,7 +51,7 @@ export class CategoryFormComponent implements OnInit {
 	onRowRemoveClick(category) {
 		if(!this.competitionSetup$.removeCategory(category)) {
 			const problemDances = this.dances
-				.filter(d => d.category.key === category.key)
+				.filter(d => d.category.id === category.id)
 				.map(d => d.name);
 			const problemDancesStr = problemDances.join(',');
 			const mainMsg = 'Category could not be removed because ' +

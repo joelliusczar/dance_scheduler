@@ -2,9 +2,9 @@ import { Component, Directive, Input } from '@angular/core';
 
 @Directive()
 class Icon {
-	@Input() public strokeColor: string;
-	@Input() public width: number;
-	@Input() public height: number;
+	@Input() strokeColor: string;
+	@Input() width: number;
+	@Input() height: number;
 }
 
 @Component({

@@ -31,6 +31,7 @@ $gradient-radial-bg: radial-gradient($bg-color-menu1 0%, $bg-color-menu2 70%)
 $gradient-linear-bg: linear-gradient($bg-color-menu1 0%, $bg-color-menu2 50%)
 
 $rounding-standard: 0.12em
+$input-border-width: .125em
 
 a
 	color: $fg-color-default-text
@@ -82,7 +83,8 @@ button
 	cursor: pointer
 
 	&:focus
-		outline-width: 0
+		outline-width: .1px
+		outline-color: $fg-color-menu-text
 p
 	margin-bottom: 1em
 
@@ -149,6 +151,8 @@ th
 .ng-invalid.ng-touched:not(form)
 	border-style: solid
 	border-color: $border-color-error
+	border-width: $input-border-width
+	border-radius: $rounding-standard
 
 .width-half
 	width: 50%

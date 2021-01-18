@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { OptionInfo } from 'src/app/types/option-info';
+import { DataBasic } from '../../../types/IdSelectable';
 
 @Component({
   selector: 'app-tag-list',
@@ -8,16 +8,16 @@ import { OptionInfo } from 'src/app/types/option-info';
 })
 export class TagListComponent implements OnInit {
 
-	@Input('value') tags: OptionInfo[];
+	@Input('value') tags: DataBasic[];
 	@Input('readonly') readonly: boolean;
-	@Output('onRemoved') removedEvent = new EventEmitter<OptionInfo>();
+	@Output('onRemoved') removedEvent = new EventEmitter<DataBasic>();
 	
   constructor() { }
 
   ngOnInit(): void {
 	}
 	
-	onTagXClicked(e: MouseEvent, option: OptionInfo) {
+	onTagXClicked(e: MouseEvent, option: DataBasic) {
 		this.removedEvent.emit(option);
 		e.stopPropagation();
 	}

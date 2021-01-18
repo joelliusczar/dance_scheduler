@@ -65,7 +65,26 @@
 	</div>
 </div>
 <div>
-	<h2>Skill Levels:</h2>
+	<h2 (click)="showSkillLvls = !showSkillLvls">
+		Skill Levels:
+		<ds-hide-icon 
+			[hidden]="showSkillLvls" 
+			strokeColor="black" 
+			width=".8em" 
+			height=".8em"
+		>
+		</ds-hide-icon>
+		<ds-expand-icon 
+			[hidden]="!showSkillLvls" 
+			strokeColor="black" 
+			width=".8em" 
+			height=".8em"
+		>
+		</ds-expand-icon>
+	</h2>
+	<div [hidden]="showSkillLvls" class="section">
+		<app-skill-level-form></app-skill-level-form>
+	</div>
 </div>
 <div>
 	<h2>Miscellaneous:</h2>

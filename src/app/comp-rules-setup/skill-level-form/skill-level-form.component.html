@@ -1,0 +1,57 @@
+<form 
+	#skillLevelForm="ngForm" 
+	(ngSubmit)="onSubmit(skillLevelForm.form)" 
+	dsAgeRangeValidator
+	autocomplete="off"
+>
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Name</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let skillLevel of skillLevels">
+				<td>
+					<ds-up-down (reorderClick)="reorderClick($event)" 
+						[associatedItem]="skillLevel"
+						[size]="skillLevels.length"
+					>
+					</ds-up-down>
+				</td>
+				<td>{{skillLevel.name}}</td>
+				<td><button (click)="onRowRemoveClick(skillLevel)" 
+					type="button" 
+					class="add-row-btn">-</button>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td></td>
+				<td>
+					<label for="name">Name</label>
+					<input 
+						name="name" 
+						ngModel 
+						type="text" 
+						class="age-group-width"
+						#name="ngModel"
+						required
+					/>
+					<div 
+						*ngIf="!(name.valid || name.untouched)" 
+						class="input-error-label"
+					>
+						Name is required
+					</div>
+				</td>
+				<td>
+					<button class="add-row-btn">+</button>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</form>

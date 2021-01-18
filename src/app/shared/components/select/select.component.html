@@ -10,26 +10,18 @@
 	(onRemoved)="onTagXClicked($event)"
 >
 </app-tag-list>
-	<span *ngIf="!showSelectedList() && !isOpen">
+	<span *ngIf="!showSelectedList() && !isOpen" class="select-picked-value">
 		{{getSingularDisplayValue()}}
 	</span>
 	<ds-hide-icon 
 		[hidden]="isOpen || isDisabled || options?.length < 1"
-		strokeColor="black" 
+		[strokeColor]="hasError ? 'red' : 'black'" 
 		width=".8em" 
 		height=".8em"
 		class="select-open-icon"
 	>
 	</ds-hide-icon>
-	<div *ngIf="isOpen" class="option-menu">
-		<app-select-option
-			*ngFor="let option of options; index as idx" 
-			[option]="option"
-			name="option-{{controlName}}-{{idx}}"
-			[selected]="isOptionChecked(option)"
-			[multiple]="allowMultiSelect"
-			(click)="onChecked(option)"		
-		>
-		</app-select-option>
+	<div [hidden]="!isOpen" class="option-menu">
+		<ng-content select="app-select-option"></ng-content>
 	</div>
 </div>

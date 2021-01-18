@@ -13,6 +13,7 @@
 			<tr>
 				<th></th>
 				<th>Name</th>
+				<th>Short Name</th>
 				<th>Category</th>
 				<th *ngIf="dances?.length > 0">Linked Dances</th>
 				<th></th>
@@ -28,6 +29,7 @@
 					</ds-up-down>
 				</td>
 				<td>{{dance.name}}</td>
+				<td>{{dance.shortName || dance.name}}</td>
 				<td>{{dance?.category?.name}}</td>
 				<td *ngIf="dances.length > 0">
 					<app-tag-list 
@@ -63,37 +65,51 @@
 					</div>
 				</td>
 				<td>
+					<label for="shortName">Short Name</label>
+					<input 
+						name="shortName" 
+						ngModel 
+						type="text" 
+						class="age-group-width"
+					/>
+				</td>
+				<td>
 					<label for="name">Category</label>
 					<app-select
 						name="category"
-						[options]="categories"
 						ngModel
-					></app-select>
-					<!-- <select
-						name="category"
-						ngModel
-						#category="ngModel"
 						required
+						#category="ngModel"
 					>
-						<option value="">Pick One</option>
-						<option *ngFor="let cat of categories" [value]="cat.name">
-							{{cat.name}}
-						</option>
-					</select> -->
-					<!-- <div 
+						<app-select-option test="empty">Select...</app-select-option>
+						<app-select-option
+							*ngFor="let category of categories" 
+							[value]="category"
+							[test]="category.name"
+						>
+							{{category.name}}
+						</app-select-option>
+					</app-select>
+					<div 
 						*ngIf="!(category.valid || category.untouched)" 
 						class="input-error-label"
 					>
 						Category is required
-					</div> -->
+					</div>
 				</td>
 				<td *ngIf="dances?.length > 0">
-					<app-select
-						name="linkedDances"
-						[options]="linkedDances"
-						ngModel
+					<!-- <app-select
 						multiple="true"
-					></app-select>
+						name="linkedDances"
+					>
+						<app-select-option
+							*ngFor="let dance of linkedDances"
+							[value]="dance"
+							[test]="dance.name"
+						>
+						{{dance.name}}
+						</app-select-option>
+					</app-select> -->
 				</td>
 				<td>
 					<button class="add-row-btn">+</button>

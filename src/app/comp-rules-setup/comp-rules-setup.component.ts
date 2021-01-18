@@ -11,6 +11,7 @@ export class CompRulesSetupComponent implements OnInit {
 	showAgeGroups: boolean;
 	showDanceCategories: boolean;
 	showDances: boolean;
+	showSkillLvls: boolean;
 
 	ngOnInit(): void {
 	}
