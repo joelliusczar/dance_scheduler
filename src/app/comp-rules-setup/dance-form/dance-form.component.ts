@@ -24,10 +24,8 @@ export class DanceFormComponent implements OnInit {
 	{ }
 
   ngOnInit(): void {
-		console.log('dance init');
 		this.compSetupServiceUnsub = this.competitionSetup$.subscribe(
 			(value: Competition) => {
-				console.log('dance sub');
 				const danceMap = new Map(value.dances.map(d => [d.id, d]));
 				this.dances = value.dances.map(d => ({
 					...d,

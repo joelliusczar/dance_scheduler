@@ -38,14 +38,11 @@ export class SelectOptionComponent implements OnInit {
 	}
 
   ngOnInit(): void {
-		console.log(`${this.test} init`)
 		this.selectConfig$.subscribe((config: SelectConfig) => {
 			if(!config) return;
-			console.log(`option ${config.controlName}_ ${this.test}_`);
 			const registration = config.register();
-			//console.log(registration);
 			this.allowMultiSelect = config.allowMultiSelect;
-			this.controlName = `option-${config.controlName}-${Date.now()}`;
+			this.controlName = `option-${config.controlName}-${registration.idx}`;
 			this.onClickCallback = config.onClickCallback;
 		});
 	}

@@ -56,10 +56,7 @@ const skippedKeys = new Set([
 	},
 	{
 		provide: SELECT_CONFIG,
-		useFactory: () => {
-			console.log('factory');
-			return new BehaviorSubject<SelectConfig | null>(null);
-		}
+		useFactory: () => new BehaviorSubject<SelectConfig | null>(null)
 	}
 	// {
 	// 	provide: NG_VALIDATORS,
@@ -99,7 +96,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	{ }
 	
 	ngOnInit(): void {
-		console.log(`%cabove-${this.controlName}_`,'color: blue; font-size: 20px');
 		this.initializeSelectedValues(this.selectedItems);
 		this.topId = `ds-select-top-${this.controlName}`;
 		this.selectConfig$.next({
@@ -108,7 +104,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 			onClickCallback: this.onChecked.bind(this),
 			register: () => ({ idx: this.optionMaxIdx++ }),
 		});
-		console.log(`%cafter-${this.controlName}_`,'color: blue; font-size: 20px');
 		if(this.isDisabled) {
 			this.tabNum = -1;
 			this.containerClass = disabledMenuClass;

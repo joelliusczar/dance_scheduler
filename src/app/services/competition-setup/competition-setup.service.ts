@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Unsubscribable, Subject, PartialObserver } from 'rxjs';
+import { Unsubscribable, Subject, PartialObserver, BehaviorSubject } from 'rxjs';
 import { AgeGroupType, Category, Dance, Competition, SkillLevel } 
 	from 'src/app/types/data-shape';
 import { Sortable } from 'src/app/types/sortable';
@@ -40,30 +40,24 @@ export class CompetitionSetupService {
 
 	private competitions: Competition[];
 	private currentCompetition: Competition;
-	private competitions$ = new Subject<Competition>();
+	private competitions$ = new BehaviorSubject<Competition>({ ...compBaseShape});
 
 	constructor(private browserDb: BrowserDbService, 
 		private opQueue: OpQueueService) 
 	{ 
-		console.log('comp service');
 	}
 	
 	async _triggerLoadItems() : Promise<void> {
-		const note = v4();
-		console.log(`_triggerLoadItems ${note}`);
 		if(this.currentCompetition) {
-			console.log('it exits');
-			this.competitions$.next(this.currentCompetition);
 			return;
 		}
-		console.log(`_before dbopen ${note}`);
 		if(!this.browserDb.isOpen) {
 			await this.browserDb.openDb();
 		}
-		console.log(`_before pull ${note}`);
 		const values = await this.browserDb.getAllValues(COMPETITION_TABLE_NAME);
 		this.competitions = values as Competition[];
 		if(this.competitions?.length) {
+			//get most recent
 			this.currentCompetition = this.competitions
 				.reduce((a, c) => c.lastUpdated > a.lastUpdated ? c : a);
 		}
@@ -73,7 +67,6 @@ export class CompetitionSetupService {
 				lastUpdated: new Date()
 			};
 		}
-		console.log(`_before next ${note}`);
 		this.competitions$.next(this.currentCompetition);
 	}
 
@@ -100,7 +93,6 @@ export class CompetitionSetupService {
 	private replaceAll<T>(items: T[], key: string): void {
 		this.currentCompetition[key] = items;
 		this.browserDb.putValue(COMPETITION_TABLE_NAME, this.currentCompetition);
-		console.log('next 3');
 		this.competitions$.next({
 			...this.currentCompetition,
 			[key]: items,
