@@ -24,6 +24,7 @@ export class DanceFormComponent implements OnInit {
 	{ }
 
   ngOnInit(): void {
+		console.log('dance init');
 		this.compSetupServiceUnsub = this.competitionSetup$.subscribe(
 			(value: Competition) => {
 				console.log('dance sub');

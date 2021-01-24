@@ -9,6 +9,7 @@ import { swap } from '../../shared/utils/arrayHelpers';
 import { Direction, ElevatorDir } from 'src/app/types/directions';
 import { v4 } from 'uuid';
 import { IdSelectable, keyType } from 'src/app/types/IdSelectable';
+import { OpQueueService } from '../op-queue/op-queue.service';
 
 enum CompKeys {
 	AgeGroups = 'ageGroups',
@@ -41,7 +42,9 @@ export class CompetitionSetupService {
 	private currentCompetition: Competition;
 	private competitions$ = new Subject<Competition>();
 
-	constructor(private browserDb: BrowserDbService) { 
+	constructor(private browserDb: BrowserDbService, 
+		private opQueue: OpQueueService) 
+	{ 
 		console.log('comp service');
 	}
 	
@@ -49,6 +52,7 @@ export class CompetitionSetupService {
 		const note = v4();
 		console.log(`_triggerLoadItems ${note}`);
 		if(this.currentCompetition) {
+			console.log('it exits');
 			this.competitions$.next(this.currentCompetition);
 			return;
 		}
@@ -89,7 +93,7 @@ export class CompetitionSetupService {
 			else {
 				throw new Error('Invalid argument.');
 			}
-			this._triggerLoadItems();
+			this.opQueue.enqueueOp(() => this._triggerLoadItems());
 			return unsub;
 	}
 
