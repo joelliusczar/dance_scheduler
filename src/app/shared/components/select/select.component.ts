@@ -9,7 +9,7 @@ import { Component,
 	Output, 
 	QueryList, 
 	SimpleChange } from '@angular/core';
-import { ControlValueAccessor, 
+import { AbstractControl, ControlValueAccessor, 
 	FormControl, 
 	NG_VALIDATORS, 
 	NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -57,12 +57,12 @@ const skippedKeys = new Set([
 	{
 		provide: SELECT_CONFIG,
 		useFactory: () => new BehaviorSubject<SelectConfig | null>(null)
+	},
+	{
+		provide: NG_VALIDATORS,
+		useExisting: forwardRef(() => SelectComponent),
+		multi: true,
 	}
-	// {
-	// 	provide: NG_VALIDATORS,
-	// 	useExisting: forwardRef(() => SelectComponent),
-	// 	multi: true,
-	// }
 ]
 })
 export class SelectComponent implements OnInit, ControlValueAccessor {
@@ -72,7 +72,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	@Input('value') selectedItems: DataBasic[];
 	@Input('multiple') allowMultiSelect: boolean = false;
 	@Input('disabled') isDisabled: boolean;
-	@Input('expected') isRequired: boolean;
 	@Output('onSelected') onSelected = new EventEmitter<DataBasic[]>(); 
 	isOpen: boolean = false;
 	topId: string = '';
@@ -146,18 +145,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		this.containerClass = disabledMenuClass;
 	}
 
-	validate(): any {
-		console.log(`wtf! ${this.controlName}`);
-		if(this.isRequired) {
-
-			// return (c: FormControl) => {
-			// 	const validity = (c.value as [])?.length < 1 ? {} : null;
-			// 	this.hasError = !!validity;
-			// 	console.log(validity);
-			// 	return null;
-			// };
-		}
-		return null;
+	validate(control: AbstractControl): any {
+		const validity = (control.value as [])?.length < 1 ? {} : null;
+		return validity;
 	}
 
 	private initializeSelectedValues(selectedItems: DataBasic[] | any) {
@@ -348,7 +338,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	}
 
 	private toggleOptionSingle(option: DataBasic): void {
-		this.replaceValues([option]);
+		this.replaceValues(option ? [option] : []);
 		this.closeMenu();
 	}
 
