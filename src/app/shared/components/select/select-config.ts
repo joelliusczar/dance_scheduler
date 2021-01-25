@@ -11,6 +11,7 @@ export interface SelectConfig {
 	controlName: string,
 	onClickCallback: (option: DataBasic) => void,
 	register: () => SelectRegistration,
+	selectedSet: Set<DataBasic>
 };
 
 export const SELECT_CONFIG = 

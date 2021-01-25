@@ -27,6 +27,8 @@ export class SelectOptionComponent implements OnInit {
 	@Input('test') test: string;
 	onClickCallback: (option: DataBasic) => void = null;
 
+	private inialized: boolean;
+
 	//this is for outside to mess with
 	@ViewChild('optionElement') elementRef: ElementRef;
 
@@ -40,16 +42,18 @@ export class SelectOptionComponent implements OnInit {
   ngOnInit(): void {
 		this.selectConfig$.subscribe((config: SelectConfig) => {
 			if(!config) return;
-			const registration = config.register();
-			this.allowMultiSelect = config.allowMultiSelect;
-			this.controlName = `option-${config.controlName}-${registration.idx}`;
-			this.onClickCallback = config.onClickCallback;
+			if(!this.inialized) {
+				this.inialized = true;
+				const registration = config.register();
+				this.allowMultiSelect = config.allowMultiSelect;
+				this.controlName = `option-${config.controlName}-${registration.idx}`;
+				this.onClickCallback = config.onClickCallback;
+			}
+			this.selected = config.selectedSet?.has(this.option);
 		});
 	}
 
 	onClick(): void {
-		console.log('hi');
-		console.log(this);
 		this.onClickCallback && this.onClickCallback(this.option);
 	}
 	

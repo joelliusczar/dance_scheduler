@@ -119,7 +119,7 @@ export class CompetitionSetupService {
 			this.currentCompetition[key] = [];
 		}
 		item.order = this.currentCompetition[key].length;
-		item.id =  Date.now();
+		item.id =  v4();
 		
 		this.currentCompetition[key].push(item);
 	}

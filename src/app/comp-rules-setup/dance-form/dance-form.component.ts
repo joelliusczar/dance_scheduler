@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService } 
@@ -19,6 +19,8 @@ export class DanceFormComponent implements OnInit {
 	dances: DanceDto[] = [];
 	linkedDances: Dance[] = [];
 	categories: Category[] = [];
+
+	@ViewChild('firstInput') firstInput: ElementRef;
 
 	constructor(private competitionSetup$: CompetitionSetupService) 
 	{ }
@@ -42,15 +44,12 @@ export class DanceFormComponent implements OnInit {
 	}
 
 	onSubmit(formGroup: FormGroup): void {
-		console.log('submit');
-		console.log(formGroup);
-
 		if(!formGroup.valid){
 			formGroup.markAllAsTouched();
 		}
 		else {
 			const formVal = formGroup.value;
-			const linkedIds = formVal.linkedDances?.map(d => d.key) || [];
+			const linkedIds = formVal.linkedDances?.map(d => d.id) || [];
 			this.competitionSetup$.saveDance({
 				name: formVal.name,
 				shortName: formVal.shortName,
@@ -60,6 +59,7 @@ export class DanceFormComponent implements OnInit {
 				linkedDanceIds: linkedIds,
 			});
 			formGroup.reset({}, {emitEvent: false});
+			(this.firstInput.nativeElement as HTMLElement).focus();
 		}
 	}
 
