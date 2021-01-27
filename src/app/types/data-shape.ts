@@ -70,6 +70,7 @@ export interface Competition extends DataBasic {
 	categories: Category[],
 	dances: Dance[],
 	skillLevels: SkillLevel[],
+	multiEventSkillLevels: SkillLevel[],
 	dancers: Dancer[],
 	heats: Heat[],
 	judges: Person[],

@@ -15,7 +15,9 @@ export enum CompKeys {
 	ageGroups = 'ageGroups',
 	categories = 'categories',
 	dances = 'dances',
-	skillLevels = 'skillLevels'
+	skillLevels = 'skillLevels',
+	multiEventAgeGroups = 'multiEventAgeGroups',
+	multiEventSkillLevels = 'multiEventSkillLevels',
 }
 
 export type CompKeyChoices = keyof typeof CompKeys;
@@ -28,6 +30,7 @@ const compBaseShape : Competition = {
 	categories: [],
 	dances: [],
 	skillLevels: [],
+	multiEventSkillLevels: [],
 	dancers: [],
 	heats: [],
 	judges: [],
@@ -104,7 +107,7 @@ export class CompetitionSetupService {
 	}
 
 	addItem<T extends Sortable & IdSelectable, U extends CompSubType>
-		(item: T, key: CompKeyChoices): U[] 
+		(item: T, key: CompKeyChoices): U[]
 	{
 		if(!this.currentCompetition[key]) {
 			this.currentCompetition[key] = [];

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
 import { FormGroup, Validator, FormControl, Validators } from '@angular/forms';
 import { Subscription, Unsubscribable } from 'rxjs';
 import { 
@@ -8,6 +8,7 @@ import { Direction, DirectionEventArg } from '../../types/directions';
 import { CompetitionSetupService, CompKeys } from 'src/app/services/competition-setup/competition-setup.service';
 import { AgeGroupType, Competition, plus } from 'src/app/types/data-shape';
 
+export type AgeGroupChoice = CompKeys.ageGroups | CompKeys.multiEventAgeGroups;
 
 @Component({
   selector: 'age-group-form',
@@ -15,6 +16,7 @@ import { AgeGroupType, Competition, plus } from 'src/app/types/data-shape';
 	styleUrls: ['./age-group-form.component.sass']
 })
 export class AgeGroupFormComponent implements OnInit, OnDestroy {
+	@Input('ageGroupChoice') ageGroupChoice: AgeGroupChoice = CompKeys.ageGroups;
 	name = new FormControl('');
 	fromAge = new FormControl('',[Validators.min(0)]);
 	toAge = new FormControl('');
@@ -29,7 +31,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 	toAgeSubscription: Subscription;
 	direction = Direction;
 	
-	prevToAge: number | plus | ''
+	prevToAge: number | plus | '';
 
 	@ViewChild('firstInput') firstInput: ElementRef;
 
@@ -43,7 +45,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 		this.compSetupServiceUnsub = this.competitionSetup$
 		.subscribe((value: Competition) => {
-				this.ageGroups = value.ageGroups;
+				this.ageGroups = value[this.ageGroupChoice];
 			}
 		);
 	}
@@ -77,7 +79,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 
 	reorderClick(eventArg: DirectionEventArg<AgeGroupType>): void {
 		this.competitionSetup$.moveItem(eventArg.item, eventArg.direction, 
-			CompKeys.ageGroups);
+			this.ageGroupChoice);
 	}
 
 	onSubmit(): void {
@@ -97,7 +99,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 			this.competitionSetup$.saveItem({
 				...this.ageGroupFormGroup.value, 
 				toAge: toAge === '+' ? '+' : parseInt(toAge)
-			}, CompKeys.ageGroups);
+			}, this.ageGroupChoice);
 			this.ageGroupFormGroup.reset({}, {emitEvent: false});
 			(this.firstInput.nativeElement as HTMLElement).focus();
 		}
@@ -105,7 +107,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 
 	onRowRemoveClick(item) {
 		this.competitionSetup$
-			.removeItems(i => i.id !== item.id, CompKeys.ageGroups);
+			.removeItems(i => i.id !== item.id, this.ageGroupChoice);
 	}
 
 	ngOnDestroy(): void {
