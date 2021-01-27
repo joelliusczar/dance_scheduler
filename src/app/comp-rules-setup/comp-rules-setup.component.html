@@ -1,91 +1,123 @@
 <h1>Setup competition Variations</h1>
-<h2 (click)="showAgeGroups = !showAgeGroups">
-	Age Groups:
-	<ds-hide-icon 
-		[hidden]="showAgeGroups" 
-		strokeColor="black" 
-		width=".8em" 
-		height=".8em"
-	>
-	</ds-hide-icon>
-	<ds-expand-icon 
-		[hidden]="!showAgeGroups" 
-		strokeColor="black" 
-		width=".8em" 
-		height=".8em"
-	>
-	</ds-expand-icon>
-</h2>
+<h3>
+	<span (click)="showAgeGroups = !showAgeGroups">
+		Age Groups:
+		<ds-hide-icon 
+			[hidden]="showAgeGroups" 
+			strokeColor="black" 
+			width=".8em" 
+			height=".8em"
+		>
+		</ds-hide-icon>
+		<ds-expand-icon 
+			[hidden]="!showAgeGroups" 
+			strokeColor="black" 
+			width=".8em" 
+			height=".8em"
+		>
+		</ds-expand-icon>
+	</span>
+</h3>
 
 <div [hidden]="showAgeGroups" class="section">
 	<age-group-form></age-group-form>
 </div>
 <div>
-	<h2 (click)="showDanceCategories = !showDanceCategories">
-		Dance Categories:
-		<ds-hide-icon 
-			[hidden]="showDanceCategories" 
-			strokeColor="black" 
-			width=".8em" 
-			height=".8em"
-		>
-		</ds-hide-icon>
-		<ds-expand-icon 
-			[hidden]="!showDanceCategories" 
-			strokeColor="black" 
-			width=".8em" 
-			height=".8em"
-		>
-		</ds-expand-icon>
-	</h2>
+	<h3>
+		<span (click)="showDanceCategories = !showDanceCategories">
+			Dance Categories:
+			<ds-hide-icon 
+				[hidden]="showDanceCategories" 
+				strokeColor="black" 
+				width=".8em" 
+				height=".8em"
+			>
+			</ds-hide-icon>
+			<ds-expand-icon 
+				[hidden]="!showDanceCategories" 
+				strokeColor="black" 
+				width=".8em" 
+				height=".8em"
+			>
+			</ds-expand-icon>
+		</span>
+	</h3>
 	<div [hidden]="showDanceCategories" class="section">
 		<category-form></category-form>
 	</div>
 </div>
 <div>
-	<h2 (click)="showDances = !showDances">
-		Dances:
-		<ds-hide-icon 
-			[hidden]="showDances" 
-			strokeColor="black" 
-			width=".8em" 
-			height=".8em"
-		>
-		</ds-hide-icon>
-		<ds-expand-icon 
-			[hidden]="!showDances" 
-			strokeColor="black" 
-			width=".8em" 
-			height=".8em"
-		>
-		</ds-expand-icon>
-	</h2>
+	<h3>
+		<span (click)="showDances = !showDances">
+			Dances:
+			<ds-hide-icon 
+				[hidden]="showDances" 
+				strokeColor="black" 
+				width=".8em" 
+				height=".8em"
+			>
+			</ds-hide-icon>
+			<ds-expand-icon 
+				[hidden]="!showDances" 
+				strokeColor="black" 
+				width=".8em" 
+				height=".8em"
+			>
+			</ds-expand-icon>
+		</span>
+	</h3>
 	<div [hidden]="showDances" class="section">
 		<dance-form></dance-form>
 	</div>
 </div>
 <div>
-	<h2 (click)="showSkillLvls = !showSkillLvls">
-		Skill Levels:
-		<ds-hide-icon 
-			[hidden]="showSkillLvls" 
-			strokeColor="black" 
-			width=".8em" 
-			height=".8em"
-		>
-		</ds-hide-icon>
-		<ds-expand-icon 
-			[hidden]="!showSkillLvls" 
-			strokeColor="black" 
-			width=".8em" 
-			height=".8em"
-		>
-		</ds-expand-icon>
-	</h2>
+	<h3>
+		<span (click)="showSkillLvls = !showSkillLvls">
+			Skill Levels:
+			<ds-hide-icon 
+				[hidden]="showSkillLvls" 
+				strokeColor="black" 
+				width=".8em" 
+				height=".8em"
+			>
+			</ds-hide-icon>
+			<ds-expand-icon 
+				[hidden]="!showSkillLvls" 
+				strokeColor="black" 
+				width=".8em" 
+				height=".8em"
+			>
+			</ds-expand-icon>
+		</span>
+	</h3>
 	<div [hidden]="showSkillLvls" class="section">
 		<app-skill-level-form></app-skill-level-form>
 	</div>
 </div>
 <div>
-	<h2>Miscellaneous:</h2>
+	<h2>Multi Event Setup:</h2>
+	<div>
+		<h3>
+			<span (click)="showMultiEventAgeGroups = !showMultiEventAgeGroups">
+				Age Groups:
+				<ds-hide-icon 
+					[hidden]="showMultiEventAgeGroups" 
+					strokeColor="black" 
+					width=".8em" 
+					height=".8em"
+				>
+				</ds-hide-icon>
+				<ds-expand-icon 
+					[hidden]="!showMultiEventAgeGroups" 
+					strokeColor="black" 
+					width=".8em" 
+					height=".8em"
+				>
+				</ds-expand-icon>
+			</span>
+		</h3>
+		<div [hidden]="showMultiEventAgeGroups" class="section">
+			<age-group-form></age-group-form>
+		</div>
+	</div>
 </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
-import { CompetitionSetupService } 
+import { CompetitionSetupService, CompKeys } 
 	from 'src/app/services/competition-setup/competition-setup.service';
 import { Category, Competition, Dance } from 'src/app/types/data-shape';
 import { DirectionEventArg } from '../../types/directions';
@@ -33,7 +33,8 @@ export class CategoryFormComponent implements OnInit {
 	}
 
 	reorderClick(eventArg: DirectionEventArg<Category>): void {
-		this.competitionSetup$.moveCategory(eventArg.item, eventArg.direction);
+		this.competitionSetup$
+			.moveItem(eventArg.item, eventArg.direction, CompKeys.categories);
 	}
 
 	onSubmit(formGroup: FormGroup): void {
@@ -41,15 +42,17 @@ export class CategoryFormComponent implements OnInit {
 			formGroup.markAllAsTouched();
 		}
 		else {
-			this.competitionSetup$.saveCategory({
+			this.competitionSetup$.saveItem({
 				...formGroup.value
-			});
+			}, CompKeys.categories);
 			formGroup.reset({}, {emitEvent: false});
 		}
 	}
 
 	onRowRemoveClick(category) {
-		if(!this.competitionSetup$.removeCategory(category)) {
+		const hasDependants = this.dances
+	 		.some(d => d.category.id === category.id);
+	 	if(hasDependants) {
 			const problemDances = this.dances
 				.filter(d => d.category.id === category.id)
 				.map(d => d.name);
@@ -57,7 +60,11 @@ export class CategoryFormComponent implements OnInit {
 			const mainMsg = 'Category could not be removed because ' +
 				'the following dances are part of it:';
 			alert(`${mainMsg} ${problemDancesStr}`);
+			return;
 		}
+		this.competitionSetup$
+				.removeItems(i => i.id !== category.id, CompKeys.categories);
+			
 	}
 
 	ngOnDestroy(): void {

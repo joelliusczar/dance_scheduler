@@ -5,15 +5,18 @@ $input-height: 1.5em - styles.$input-border-width
 $cell-left-padding: .25em
 $cell-bottom-padding: .5em
 
-h2
-	&:hover
-		cursor: pointer
+h3
+
+	span
+		&:hover
+			cursor: pointer
 
 	>span:nth-child(2)
 		font-size: 1.7em
 		margin-left: 3em
 		&:hover
 			text-shadow: 5px 5px 10px #000
+			
 
 table
 	border-collapse: collapse
@@ -39,6 +42,9 @@ tfoot
 		border-width: styles.$input-border-width
 		border-style: solid
 		border-color: #767676
+
+	button
+		vertical-align: top
 
 	label
 		position: absolute

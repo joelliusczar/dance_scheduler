@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Unsubscribable, Subject, PartialObserver, BehaviorSubject } from 'rxjs';
-import { AgeGroupType, Category, Dance, Competition, SkillLevel } 
+import { Unsubscribable, PartialObserver, BehaviorSubject } from 'rxjs';
+import { AgeGroupType, Category, Dance, Competition, SkillLevel, CompSubType } 
 	from 'src/app/types/data-shape';
 import { Sortable } from 'src/app/types/sortable';
 import { BrowserDbService, COMPETITION_TABLE_NAME } 
@@ -11,17 +11,20 @@ import { v4 } from 'uuid';
 import { IdSelectable, keyType } from 'src/app/types/IdSelectable';
 import { OpQueueService } from '../op-queue/op-queue.service';
 
-enum CompKeys {
-	AgeGroups = 'ageGroups',
-	Categories = 'categories',
-	Dances = 'dances',
-	SkillLevls = 'skillLevels'
+export enum CompKeys {
+	ageGroups = 'ageGroups',
+	categories = 'categories',
+	dances = 'dances',
+	skillLevels = 'skillLevels'
 }
+
+export type CompKeyChoices = keyof typeof CompKeys;
 
 const compBaseShape : Competition = {
 	id: null,
 	name: '',
 	ageGroups: [],
+	multiEventAgeGroups: [],
 	categories: [],
 	dances: [],
 	skillLevels: [],
@@ -90,8 +93,8 @@ export class CompetitionSetupService {
 			return unsub;
 	}
 
-	private replaceAll<T>(items: T[], key: string): void {
-		this.currentCompetition[key] = items;
+	replaceAll<T extends CompSubType>(items: T[], key: CompKeyChoices): void {
+		this.currentCompetition[key] = (items as any);
 		this.browserDb.putValue(COMPETITION_TABLE_NAME, this.currentCompetition);
 		this.competitions$.next({
 			...this.currentCompetition,
@@ -100,66 +103,27 @@ export class CompetitionSetupService {
 		});
 	}
 
-	replaceAllAgeGroups(ageGroups: AgeGroupType[]): void {
-		this.replaceAll(ageGroups, CompKeys.AgeGroups);
-	}
-
-	replaceAllCategories(categories: Dance[]): void {
-		this.replaceAll(categories, CompKeys.Categories);
-	}
-
-	replaceAllDances(dances: Dance[]): void {
-		this.replaceAll(dances, CompKeys.Dances);
-	}
-
-	private addItem<T extends Sortable & IdSelectable>
-		(item: T, key: string): void 
+	addItem<T extends Sortable & IdSelectable, U extends CompSubType>
+		(item: T, key: CompKeyChoices): U[] 
 	{
 		if(!this.currentCompetition[key]) {
 			this.currentCompetition[key] = [];
 		}
 		item.order = this.currentCompetition[key].length;
 		item.id =  v4();
-		
-		this.currentCompetition[key].push(item);
+		this.currentCompetition[key].push(item as any);
+		return this.currentCompetition[key] as unknown as U[];
 	}
 
-	private saveItem<T extends Sortable & IdSelectable>
-		(item: T, key: string): void 
+	saveItem<T extends Sortable & IdSelectable>
+		(item: T, key: CompKeyChoices): void 
 	{
 		this.addItem(item, key);
 		this.replaceAll(this.currentCompetition[key], key);
 	}
 
-	saveAgeGroup(ageGroup: AgeGroupType): void {
-		this.saveItem(ageGroup, CompKeys.AgeGroups);
-	}
-
-	saveCategory(category: Category): void {
-		this.saveItem(category, CompKeys.Categories);
-	}
-
-	saveDance(dance: Dance): void {
-		this.addItem(dance, CompKeys.Dances);
-		if(dance.linkedDanceIds?.length > 0) {
-			const dances = this.currentCompetition.dances.map(d => {
-				if(dance.linkedDanceIds.some(k => k === d.id)) {
-					return {...d, linkedDanceIds: [...(d.linkedDanceIds || []), dance.id]};
-				}
-				return d;
-			});
-			this.replaceAll(dances, CompKeys.Dances);
-			return;
-		}
-		this.replaceAll(this.currentCompetition.dances, CompKeys.Dances);
-	}
-
-	saveSkillLevel(skillLevel: SkillLevel): void {
-		this.saveItem(skillLevel, CompKeys.SkillLevls);
-	}
-
-	private moveItem<T extends Sortable>(item: T, direction: ElevatorDir, 
-		key: string): void 
+	moveItem<T extends Sortable>(item: T, direction: ElevatorDir, 
+		key: CompKeyChoices): void 
 	{
 		const increment = direction === Direction.Up ? 1 : -1;
 		if(swap(this.currentCompetition[key], item.order, item.order + increment)) {
@@ -170,65 +134,20 @@ export class CompetitionSetupService {
 		}
 	}
 
-	moveAgeGroup(ageGroup: AgeGroupType, direction: ElevatorDir): void {
-		this.moveItem(ageGroup, direction, CompKeys.AgeGroups);
-	}
-
-	moveCategory(category: Category, direction: ElevatorDir): void {
-		this.moveItem(category, direction, CompKeys.Categories);
-	}
-
-	moveDance(dance: Dance, direction: ElevatorDir): void {
-		this.moveItem(dance, direction, CompKeys.Dances);
-	}
-
-	moveSkillLevel(skillLevel: SkillLevel, direction: ElevatorDir): void {
-		this.moveItem(skillLevel, direction, CompKeys.SkillLevls);
-	}
-
-	removeAgeGroup(ageGroup: AgeGroupType): void {
-		if(!this.currentCompetition.ageGroups) return;
-		this.replaceAll(this.currentCompetition.ageGroups
-			.filter(i => i.id !== ageGroup.id), 
-			CompKeys.AgeGroups);
-	}
-
-	removeCategory(category: Category): boolean {
-		if(!this.currentCompetition.categories) return false;
-		const hasDependants = this.currentCompetition.dances
-			.some(d => d.category.id === category.id);
-		if(hasDependants) return false;
-		this.replaceAll(this.currentCompetition.categories
-			.filter(i => i.id !== category.id), 
-			CompKeys.Categories);
-		return true;
-	}
-
-	removeDance(dance: Dance): void {
-		if(!this.currentCompetition.dances) return;
-		const filtered = this.currentCompetition.dances
-			.filter(i => i.id != dance.id);
-		if(dance.linkedDanceIds?.length > 0) {
-			const keySet = new Set<keyType>(dance.linkedDanceIds);
-			const filteredModified = filtered.map(d => {
-				if(keySet.has(d.id)) {
-					return { ...d, 
-						linkedDanceIds: d.linkedDanceIds.filter(k => k !== dance.id)
-					};
-				}
-				return d;
-			});
-			this.replaceAll(filteredModified, CompKeys.Dances);
-			return;
+	removeItems<T extends CompSubType>(filter: (t:T) => boolean, 
+		key: CompKeyChoices): void 
+	{
+		const data = this.currentCompetition[key];
+		if(data instanceof Array) {
+			this.replaceAll(data.filter(filter), key);
 		}
-		this.replaceAll(filtered, CompKeys.Dances);
 	}
 
-	removeSkillLevel(skillLevel: SkillLevel): void {
-		if(!this.currentCompetition.skillLevels) return;
-		this.replaceAll(this.currentCompetition.skillLevels
-			.filter(i => i.id !== skillLevel.id), 
-			CompKeys.SkillLevls);
+	get<T extends CompSubType>(key: CompKeyChoices): T[] {
+		if(!this.currentCompetition[key]) {
+			return [];
+		}
+		return this.currentCompetition[key] as unknown as T[];
 	}
 
 }

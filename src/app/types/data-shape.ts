@@ -66,6 +66,7 @@ export interface Heat {
 
 export interface Competition extends DataBasic {
 	ageGroups: AgeGroupType[],
+	multiEventAgeGroups: AgeGroupType[],
 	categories: Category[],
 	dances: Dance[],
 	skillLevels: SkillLevel[],
@@ -79,3 +80,5 @@ export interface Competition extends DataBasic {
 
 
 export type TableTypes = Competition | Person | School;
+
+export type CompSubType = AgeGroupType | Category | Dance | SkillLevel;

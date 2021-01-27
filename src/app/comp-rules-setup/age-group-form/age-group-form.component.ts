@@ -5,7 +5,7 @@ import {
 	AgeRangeValidatorDirective 
 } from '../../validators/age-range-validator.directive';
 import { Direction, DirectionEventArg } from '../../types/directions';
-import { CompetitionSetupService } from 'src/app/services/competition-setup/competition-setup.service';
+import { CompetitionSetupService, CompKeys } from 'src/app/services/competition-setup/competition-setup.service';
 import { AgeGroupType, Competition, plus } from 'src/app/types/data-shape';
 
 
@@ -74,7 +74,8 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 	}
 
 	reorderClick(eventArg: DirectionEventArg<AgeGroupType>): void {
-		this.competitionSetup$.moveAgeGroup(eventArg.item, eventArg.direction);
+		this.competitionSetup$.moveItem(eventArg.item, eventArg.direction, 
+			CompKeys.ageGroups);
 	}
 
 	onSubmit(): void {
@@ -91,16 +92,17 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 		}
 		else {
 			const toAge = this.ageGroupFormGroup.value.toAge;
-			this.competitionSetup$.saveAgeGroup({
+			this.competitionSetup$.saveItem({
 				...this.ageGroupFormGroup.value, 
 				toAge: toAge === '+' ? '+' : parseInt(toAge)
-			});
+			}, CompKeys.ageGroups);
 			this.ageGroupFormGroup.reset({}, {emitEvent: false});
 		}
 	}
 
 	onRowRemoveClick(item) {
-		this.competitionSetup$.removeAgeGroup(item);
+		this.competitionSetup$
+			.removeItems(i => i.id !== item.id, CompKeys.ageGroups);
 	}
 
 	ngOnDestroy(): void {

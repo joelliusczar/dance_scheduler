@@ -1,10 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
-import { CompetitionSetupService } 
+import { CompetitionSetupService, CompKeys } 
 	from 'src/app/services/competition-setup/competition-setup.service';
 import { first } from 'src/app/shared/utils/arrayHelpers';
 import { Category, Competition, Dance, DanceDto } from 'src/app/types/data-shape';
+import { keyType } from 'src/app/types/IdSelectable';
 import { DirectionEventArg } from '../../types/directions';
 
 
@@ -40,7 +41,8 @@ export class DanceFormComponent implements OnInit {
 	}
 
 	reorderClick(eventArg: DirectionEventArg<Dance>): void {
-		this.competitionSetup$.moveDance(eventArg.item, eventArg.direction);
+		this.competitionSetup$
+			.moveItem(eventArg.item, eventArg.direction, CompKeys.dances);
 	}
 
 	onSubmit(formGroup: FormGroup): void {
@@ -50,7 +52,7 @@ export class DanceFormComponent implements OnInit {
 		else {
 			const formVal = formGroup.value;
 			const linkedIds = formVal.linkedDances?.map(d => d.id) || [];
-			this.competitionSetup$.saveDance({
+			this.saveDance({
 				name: formVal.name,
 				shortName: formVal.shortName,
 				category: first(formVal.category),
@@ -63,8 +65,44 @@ export class DanceFormComponent implements OnInit {
 		}
 	}
 
+	saveDance(dance: Dance): void {
+		const dances = this.competitionSetup$
+			.addItem(dance, CompKeys.dances) as Dance[];
+		if(dance.linkedDanceIds?.length > 0) {
+			const updated = dances.map(d => {
+				if(dance.linkedDanceIds.some(k => k === d.id)) {
+					return {...d, linkedDanceIds: [...(d.linkedDanceIds || []), dance.id]};
+				}
+				return d;
+			});
+			this.competitionSetup$.replaceAll(updated, CompKeys.dances);
+			return;
+		}
+		this.competitionSetup$.replaceAll(dances, CompKeys.dances);
+	}
+
 	onRowRemoveClick(dance) {
-		this.competitionSetup$.removeDance(dance);
+		this.removeDance(dance);
+	}
+
+	removeDance(dance: Dance): void {
+		const dances: Dance[] = this.competitionSetup$.get(CompKeys.dances);
+		const filtered = dances
+			.filter(i => i.id != dance.id);
+		if(dance.linkedDanceIds?.length > 0) {
+			const keySet = new Set<keyType>(dance.linkedDanceIds);
+			const filteredModified = filtered.map(d => {
+				if(keySet.has(d.id)) {
+					return { ...d, 
+						linkedDanceIds: d.linkedDanceIds.filter(k => k !== dance.id)
+					};
+				}
+				return d;
+			});
+			this.competitionSetup$.replaceAll(filteredModified, CompKeys.dances);
+			return;
+		}
+		this.competitionSetup$.replaceAll(filtered, CompKeys.dances);
 	}
 
 	ngOnDestroy(): void {

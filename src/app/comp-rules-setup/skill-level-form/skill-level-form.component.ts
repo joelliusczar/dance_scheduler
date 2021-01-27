@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
-import { CompetitionSetupService } from 'src/app/services/competition-setup/competition-setup.service';
+import { CompetitionSetupService, CompKeys } from 'src/app/services/competition-setup/competition-setup.service';
 import { Competition, SkillLevel } from 'src/app/types/data-shape';
 import { DirectionEventArg } from 'src/app/types/directions';
 
@@ -27,7 +27,8 @@ export class SkillLevelFormComponent implements OnInit {
 	}
 
 	reorderClick(eventArg: DirectionEventArg<SkillLevel>): void {
-		this.competitionSetup$.moveSkillLevel(eventArg.item, eventArg.direction);
+		this.competitionSetup$
+			.moveItem(eventArg.item, eventArg.direction, CompKeys.skillLevels);
 	}
 
 	onSubmit(formGroup: FormGroup): void {
@@ -37,17 +38,18 @@ export class SkillLevelFormComponent implements OnInit {
 		}
 		else {
 			const formVal = formGroup.value;
-			this.competitionSetup$.saveSkillLevel({
+			this.competitionSetup$.saveItem({
 				...formVal,
 				order: null,
 				key: null,
-			});
+			}, CompKeys.skillLevels);
 			formGroup.reset({}, {emitEvent: false});
 		}
 	}
 
 	onRowRemoveClick(skillLevel): void {
-		this.competitionSetup$.removeSkillLevel(skillLevel);
+		this.competitionSetup$
+			.removeItems(i => i.id !== skillLevel.id, CompKeys.skillLevels);
 	}
 
 	ngOnDestroy(): void {
