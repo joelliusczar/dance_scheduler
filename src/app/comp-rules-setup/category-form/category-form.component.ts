@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService, CompKeys } 
@@ -17,6 +17,8 @@ export class CategoryFormComponent implements OnInit {
 	compSetupServiceUnsub: Unsubscribable;
 	categories: Category[];
 	dances: Dance[];
+
+	@ViewChild('firstInput') firstInput: ElementRef;
 	
 
   constructor(private competitionSetup$: CompetitionSetupService) { 
@@ -46,6 +48,7 @@ export class CategoryFormComponent implements OnInit {
 				...formGroup.value
 			}, CompKeys.categories);
 			formGroup.reset({}, {emitEvent: false});
+			(this.firstInput.nativeElement as HTMLElement).focus();
 		}
 	}
 

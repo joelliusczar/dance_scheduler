@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService, CompKeys } from 'src/app/services/competition-setup/competition-setup.service';
@@ -14,6 +14,8 @@ export class SkillLevelFormComponent implements OnInit {
 
 	compSetupServiceUnsub: Unsubscribable;
 	skillLevels: SkillLevel[] = [];
+
+	@ViewChild('firstInput') firstInput: ElementRef;
 
 	constructor(private competitionSetup$: CompetitionSetupService) 
 	{ }
@@ -44,6 +46,7 @@ export class SkillLevelFormComponent implements OnInit {
 				key: null,
 			}, CompKeys.skillLevels);
 			formGroup.reset({}, {emitEvent: false});
+			(this.firstInput.nativeElement as HTMLElement).focus();
 		}
 	}
 

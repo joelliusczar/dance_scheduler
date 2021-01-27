@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, Validator, FormControl, Validators } from '@angular/forms';
 import { Subscription, Unsubscribable } from 'rxjs';
 import { 
@@ -30,6 +30,8 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 	direction = Direction;
 	
 	prevToAge: number | plus | ''
+
+	@ViewChild('firstInput') firstInput: ElementRef;
 
   constructor( private competitionSetup$: CompetitionSetupService) { 
 		this.ageGroups = [];
@@ -97,6 +99,7 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 				toAge: toAge === '+' ? '+' : parseInt(toAge)
 			}, CompKeys.ageGroups);
 			this.ageGroupFormGroup.reset({}, {emitEvent: false});
+			(this.firstInput.nativeElement as HTMLElement).focus();
 		}
 	}
 
