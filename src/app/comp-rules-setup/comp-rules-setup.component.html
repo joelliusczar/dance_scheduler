@@ -121,4 +121,53 @@
 			</age-group-form>
 		</div>
 	</div>
+	<div>
+		<h3>
+			<span (click)="showMultiEventSkillLevels = !showMultiEventSkillLevels">
+				Skill Levels:
+				<ds-hide-icon 
+					[hidden]="showMultiEventSkillLevels" 
+					strokeColor="black" 
+					width=".8em" 
+					height=".8em"
+				>
+				</ds-hide-icon>
+				<ds-expand-icon 
+					[hidden]="!showMultiEventSkillLevels" 
+					strokeColor="black" 
+					width=".8em" 
+					height=".8em"
+				>
+				</ds-expand-icon>
+			</span>
+		</h3>
+		<div [hidden]="showMultiEventSkillLevels" class="section">
+			<app-skill-level-form skillLevelsChoice="multiEventSkillLevels">
+			</app-skill-level-form>
+		</div>
+	</div>
+	<div>
+		<h3>
+			<span (click)="showMultiEventDances = !showMultiEventDances">
+				Multi event dances:
+				<ds-hide-icon 
+					[hidden]="showMultiEventDances" 
+					strokeColor="black" 
+					width=".8em" 
+					height=".8em"
+				>
+				</ds-hide-icon>
+				<ds-expand-icon 
+					[hidden]="!showMultiEventDances" 
+					strokeColor="black" 
+					width=".8em" 
+					height=".8em"
+				>
+				</ds-expand-icon>
+			</span>
+		</h3>
+		<div [hidden]="showMultiEventDances" class="section">
+			
+		</div>
+	</div>
 </div>
