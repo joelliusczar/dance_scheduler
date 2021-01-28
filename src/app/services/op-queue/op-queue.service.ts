@@ -12,20 +12,20 @@ export class OpQueueService {
 	enqueueOp(op: () => Promise<unknown>): Promise<unknown> {
 		const promiseTail = new Promise<unknown>((resolve) => {
 			if(!this._promiseTail) {
-				op().then(() => {
+				op().then((result) => {
 					if(promiseTail === this._promiseTail) {
 						this._promiseTail = null;
 					}
-					resolve();
+					resolve(result);
 				});
 			}
 			else {
 				this._promiseTail.then(() => {
-					op().then(() => {
+					op().then((result) => {
 						if(promiseTail === this._promiseTail) {
 							this._promiseTail = null;
 						}
-						resolve();
+						resolve(result);
 					});
 				});
 			}

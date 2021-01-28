@@ -1,21 +1,21 @@
 <p *ngIf="categories?.length < 1">
 	No dance categories have been added. Please add some.
 </p>
+<p *ngIf="dancesChoices?.length < 1">
+	No single dances have been added. Please add some.
+</p>
 <form 
-	*ngIf="categories?.length > 0"
-	#danceForm="ngForm" 
-	(ngSubmit)="onSubmit(danceForm.form)" 
+	*ngIf="categories?.length > 0 && dancesChoices?.length > 0"
+	#multiDanceForm="ngForm" 
+	(ngSubmit)="onSubmit(multiDanceForm.form)" 
 	autocomplete="off"
 >
 	<table>
 		<thead>
 			<tr>
 				<th></th>
-				<th>Name</th>
-				<th>Short Name</th>
 				<th>Category</th>
-				<th *ngIf="dances?.length > 0">Linked Dances</th>
-				<th></th>
+				<th>Dances</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,10 +27,7 @@
 					>
 					</ds-up-down>
 				</td>
-				<td>{{dance.name}}</td>
-				<td>{{dance.shortName || dance.name}}</td>
-				<td>{{dance?.category?.name}}</td>
-				<td *ngIf="dances.length > 0">
+				<td>
 					<app-tag-list 
 						readonly="true"
 						[value]="dance.linkedDances"
@@ -46,34 +43,6 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td></td>
-				<td>
-					<label for="name">Name</label>
-					<input 
-						name="name" 
-						ngModel 
-						type="text" 
-						class="age-group-width"
-						#name="ngModel"
-						#firstInput
-						required
-					/>
-					<div 
-						*ngIf="!(name.valid || name.untouched)" 
-						class="input-error-label"
-					>
-						Name is required
-					</div>
-				</td>
-				<td>
-					<label for="shortName">Short Name</label>
-					<input 
-						name="shortName" 
-						ngModel 
-						type="text" 
-						class="age-group-width"
-					/>
-				</td>
 				<td>
 					<label for="name">Category</label>
 					<app-select
@@ -98,14 +67,14 @@
 						Category is required
 					</div>
 				</td>
-				<td *ngIf="dances?.length > 0">
+				<td>
 					<app-select
 						multiple="true"
 						ngModel
-						name="linkedDances"
+						name="dancesChoices"
 					>
 						<app-select-option
-							*ngFor="let dance of linkedDances"
+							*ngFor="let dance of dancesChoices"
 							[value]="dance"
 							[test]="dance.name"
 						>

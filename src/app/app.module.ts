@@ -44,6 +44,7 @@ import { TagListComponent }
 	from './shared/components/tag-list/tag-list.component';
 import { SkillLevelFormComponent } 
 	from './comp-rules-setup/skill-level-form/skill-level-form.component';
+import { MultiDanceFormComponent } from './comp-rules-setup/multi-dance-form/multi-dance-form.component';
 
 
 
@@ -69,7 +70,8 @@ import { SkillLevelFormComponent }
 		SelectComponent,
 		SelectOptionComponent,
 		TagListComponent,
-		SkillLevelFormComponent
+		SkillLevelFormComponent,
+		MultiDanceFormComponent
   ],
   imports: [
     BrowserModule,

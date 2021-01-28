@@ -1,5 +1,5 @@
 import { Sortable } from './sortable';
-import { IdSelectable, keyType, DataBasic } from './IdSelectable';
+import { IdSelectable, keyType, DataBasic, NameDisplayable } from './IdSelectable';
 
 export type plus = '+'
 
@@ -11,23 +11,34 @@ export interface AgeGroupType extends Sortable, DataBasic {
 export interface Category extends Sortable, DataBasic {
 };
 
-export interface Dance extends Sortable, DataBasic {
-	shortName: string,
+export interface DanceCommon extends Sortable, IdSelectable {
 	category: Category,
-	linkedDanceIds: number[],
-};
+	linkedDanceIds: string[],
+}
 
-export interface DanceDto extends Sortable, DataBasic {
-	shortName: string,
+export interface DanceDtoCommon extends Sortable, IdSelectable {
 	category: Category,
 	linkedDances: Dance[],
 }
 
+export interface Dance extends DanceCommon, NameDisplayable {
+	shortName: string,
+};
+
+export interface DanceDto extends DanceDtoCommon, NameDisplayable {
+	shortName: string,
+}
+
+export interface MultiDance extends DanceCommon {}
+
+export interface MultiDanceDto extends DanceDtoCommon {}
+
 export interface SkillLevel extends Sortable, DataBasic {
 }
 
-export interface GroupedDance extends Dance {
+export interface CoupledDance {
 	skillLevel: SkillLevel,
+	dance: DanceCommon,
 };
 
 export interface School extends DataBasic {
@@ -48,7 +59,7 @@ export interface PersonDto extends PersonBase {
 }
 
 export interface Couple {
-	danceCounts: Map<GroupedDance, number>,
+	danceCounts: Map<CoupledDance, number>,
 	dancers: [Dancer, Dancer],
 };
 
@@ -69,6 +80,7 @@ export interface Competition extends DataBasic {
 	multiEventAgeGroups: AgeGroupType[],
 	categories: Category[],
 	dances: Dance[],
+	multiDances: MultiDance[],
 	skillLevels: SkillLevel[],
 	multiEventSkillLevels: SkillLevel[],
 	dancers: Dancer[],
@@ -82,4 +94,5 @@ export interface Competition extends DataBasic {
 
 export type TableTypes = Competition | Person | School;
 
-export type CompSubType = AgeGroupType | Category | Dance | SkillLevel;
+export type CompSubType = AgeGroupType | Category | Dance | 
+	SkillLevel | MultiDance;

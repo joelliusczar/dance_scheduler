@@ -81,16 +81,16 @@ export class DanceFormComponent implements OnInit {
 		this.competitionSetup$.replaceAll(dances, CompKeys.dances);
 	}
 
-	onRowRemoveClick(dance) {
+	onRowRemoveClick(dance: DanceDto) {
 		this.removeDance(dance);
 	}
 
-	removeDance(dance: Dance): void {
+	removeDance(dance: DanceDto): void {
 		const dances: Dance[] = this.competitionSetup$.get(CompKeys.dances);
 		const filtered = dances
 			.filter(i => i.id != dance.id);
-		if(dance.linkedDanceIds?.length > 0) {
-			const keySet = new Set<keyType>(dance.linkedDanceIds);
+		if(dance.linkedDances?.length > 0) {
+			const keySet = new Set<keyType>(dance.linkedDances.map(d => d.id));
 			const filteredModified = filtered.map(d => {
 				if(keySet.has(d.id)) {
 					return { ...d, 

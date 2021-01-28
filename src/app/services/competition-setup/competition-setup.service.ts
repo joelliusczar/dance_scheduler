@@ -15,6 +15,7 @@ export enum CompKeys {
 	ageGroups = 'ageGroups',
 	categories = 'categories',
 	dances = 'dances',
+	multiDances = 'multiDances',
 	skillLevels = 'skillLevels',
 	multiEventAgeGroups = 'multiEventAgeGroups',
 	multiEventSkillLevels = 'multiEventSkillLevels',
@@ -29,6 +30,7 @@ const compBaseShape : Competition = {
 	multiEventAgeGroups: [],
 	categories: [],
 	dances: [],
+	multiDances: [],
 	skillLevels: [],
 	multiEventSkillLevels: [],
 	dancers: [],
@@ -106,7 +108,7 @@ export class CompetitionSetupService {
 		});
 	}
 
-	addItem<T extends Sortable & IdSelectable, U extends CompSubType>
+	addItem<T extends CompSubType, U extends CompSubType>
 		(item: T, key: CompKeyChoices): U[]
 	{
 		if(!this.currentCompetition[key]) {
@@ -118,14 +120,14 @@ export class CompetitionSetupService {
 		return this.currentCompetition[key] as unknown as U[];
 	}
 
-	saveItem<T extends Sortable & IdSelectable>
+	saveItem<T extends CompSubType>
 		(item: T, key: CompKeyChoices): void 
 	{
 		this.addItem(item, key);
-		this.replaceAll(this.currentCompetition[key], key);
+		this.replaceAll(this.currentCompetition[key] as any, key);
 	}
 
-	moveItem<T extends Sortable>(item: T, direction: ElevatorDir, 
+	moveItem<T extends CompSubType>(item: T, direction: ElevatorDir, 
 		key: CompKeyChoices): void 
 	{
 		const increment = direction === Direction.Up ? 1 : -1;
@@ -133,14 +135,14 @@ export class CompetitionSetupService {
 			const swapped = this.currentCompetition[key][item.order];
 			swapped.order -= increment;
 			item.order += increment;
-			this.replaceAll(this.currentCompetition[key], key);
+			this.replaceAll(this.currentCompetition[key] as any, key);
 		}
 	}
 
 	removeItems<T extends CompSubType>(filter: (t:T) => boolean, 
 		key: CompKeyChoices): void 
 	{
-		const data = this.currentCompetition[key];
+		const data = this.currentCompetition[key] as any;
 		if(data instanceof Array) {
 			this.replaceAll(data.filter(filter), key);
 		}
