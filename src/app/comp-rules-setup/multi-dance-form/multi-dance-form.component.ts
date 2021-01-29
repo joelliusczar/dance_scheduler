@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService, CompKeys } from 'src/app/services/competition-setup/competition-setup.service';
+import { first } from 'src/app/shared/utils/arrayHelpers';
 import { Category, Competition, Dance, MultiDance, MultiDanceDto } from 'src/app/types/data-shape';
 import { DirectionEventArg } from 'src/app/types/directions';
 
@@ -14,7 +15,7 @@ export class MultiDanceFormComponent implements OnInit {
 
 	compSetupServiceUnsub: Unsubscribable;
 	categories: Category[] = [];
-	dancesChoices: Dance[] = [];
+	danceChoices: Dance[] = [];
 	dances: MultiDanceDto[] = [];
 
 	@ViewChild('firstInput') firstInput: ElementRef;
@@ -25,12 +26,14 @@ export class MultiDanceFormComponent implements OnInit {
 		this.compSetupServiceUnsub = this.competitionSetup$.subscribe(
 			(value: Competition) => {
 				const danceMap = new Map(value.dances.map(d => [d.id, d]));
+				const catMap = new Map(value.categories.map(c => [c.id, c]));
 				this.dances = value.multiDances.map(d => ({
 					...d,
+					category: catMap.get(d.categoryId),
 					linkedDances: d.linkedDanceIds.map(k => danceMap.get(k))
 				}));
 				this.categories = value.categories;
-				this.dancesChoices = value.dances;
+				this.danceChoices = value.dances;
 			}
 		);
 	}
@@ -49,9 +52,11 @@ export class MultiDanceFormComponent implements OnInit {
 		}
 		else {
 			const formVal = formGroup.value;
-
+			this.competitionSetup$.saveItem({
+				categoryId: (first(formVal.category) as Category).id,
+				linkedDanceIds: formVal.linkedDances.map(d => d.id)
+			} as MultiDance, CompKeys.multiDances);
 			formGroup.reset({}, {emitEvent: false});
-			(this.firstInput.nativeElement as HTMLElement).focus();
 		}
 	}
 

@@ -48,16 +48,15 @@ export class CategoryFormComponent implements OnInit {
 				...formGroup.value
 			}, CompKeys.categories);
 			formGroup.reset({}, {emitEvent: false});
-			(this.firstInput.nativeElement as HTMLElement).focus();
 		}
 	}
 
 	onRowRemoveClick(category) {
 		const hasDependants = this.dances
-	 		.some(d => d.category.id === category.id);
+	 		.some(d => d.categoryId === category.id);
 	 	if(hasDependants) {
 			const problemDances = this.dances
-				.filter(d => d.category.id === category.id)
+				.filter(d => d.categoryId === category.id)
 				.map(d => d.name);
 			const problemDancesStr = problemDances.join(',');
 			const mainMsg = 'Category could not be removed because ' +

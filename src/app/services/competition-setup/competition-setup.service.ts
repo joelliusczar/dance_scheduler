@@ -123,8 +123,8 @@ export class CompetitionSetupService {
 	saveItem<T extends CompSubType>
 		(item: T, key: CompKeyChoices): void 
 	{
-		this.addItem(item, key);
-		this.replaceAll(this.currentCompetition[key] as any, key);
+		const expandedList = this.addItem(item, key);
+		this.replaceAll(expandedList, key);
 	}
 
 	moveItem<T extends CompSubType>(item: T, direction: ElevatorDir, 

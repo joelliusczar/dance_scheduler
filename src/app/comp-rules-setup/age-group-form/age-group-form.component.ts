@@ -101,7 +101,6 @@ export class AgeGroupFormComponent implements OnInit, OnDestroy {
 				toAge: toAge === '+' ? '+' : parseInt(toAge)
 			}, this.ageGroupChoice);
 			this.ageGroupFormGroup.reset({}, {emitEvent: false});
-			(this.firstInput.nativeElement as HTMLElement).focus();
 		}
 	}
 

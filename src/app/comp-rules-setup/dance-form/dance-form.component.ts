@@ -30,8 +30,10 @@ export class DanceFormComponent implements OnInit {
 		this.compSetupServiceUnsub = this.competitionSetup$.subscribe(
 			(value: Competition) => {
 				const danceMap = new Map(value.dances.map(d => [d.id, d]));
+				const catMap = new Map(value.categories.map(c => [c.id, c]));
 				this.dances = value.dances.map(d => ({
 					...d,
+					category: catMap.get(d.categoryId),
 					linkedDances: d.linkedDanceIds.map(k => danceMap.get(k))
 				}));
 				this.categories = value.categories;
@@ -55,13 +57,12 @@ export class DanceFormComponent implements OnInit {
 			this.saveDance({
 				name: formVal.name,
 				shortName: formVal.shortName,
-				category: first(formVal.category),
+				categoryId: (first(formVal.category) as Category).id,
 				order: null,
 				id: null,
 				linkedDanceIds: linkedIds,
 			});
 			formGroup.reset({}, {emitEvent: false});
-			(this.firstInput.nativeElement as HTMLElement).focus();
 		}
 	}
 

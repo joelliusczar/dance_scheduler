@@ -86,7 +86,6 @@
 						<app-select-option
 							*ngFor="let category of categories" 
 							[value]="category"
-							[test]="category.name"
 						>
 							{{category.name}}
 						</app-select-option>
@@ -107,7 +106,6 @@
 						<app-select-option
 							*ngFor="let dance of linkedDances"
 							[value]="dance"
-							[test]="dance.name"
 						>
 						{{dance.name}}
 						</app-select-option>

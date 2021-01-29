@@ -1,11 +1,11 @@
 <p *ngIf="categories?.length < 1">
 	No dance categories have been added. Please add some.
 </p>
-<p *ngIf="dancesChoices?.length < 1">
+<p *ngIf="danceChoices?.length < 1">
 	No single dances have been added. Please add some.
 </p>
 <form 
-	*ngIf="categories?.length > 0 && dancesChoices?.length > 0"
+	*ngIf="categories?.length > 0 && danceChoices?.length > 0"
 	#multiDanceForm="ngForm" 
 	(ngSubmit)="onSubmit(multiDanceForm.form)" 
 	autocomplete="off"
@@ -28,6 +28,9 @@
 					</ds-up-down>
 				</td>
 				<td>
+					{{dance.category.name}}
+				</td>
+				<td>
 					<app-tag-list 
 						readonly="true"
 						[value]="dance.linkedDances"
@@ -43,6 +46,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
+				<td></td>
 				<td>
 					<label for="name">Category</label>
 					<app-select
@@ -71,16 +75,23 @@
 					<app-select
 						multiple="true"
 						ngModel
-						name="dancesChoices"
+						required
+						name="linkedDances"
+						#linkedDances="ngModel"
 					>
 						<app-select-option
-							*ngFor="let dance of dancesChoices"
+							*ngFor="let dance of danceChoices"
 							[value]="dance"
-							[test]="dance.name"
 						>
 						{{dance.name}}
 						</app-select-option>
 					</app-select>
+					<div 
+						*ngIf="!(linkedDances.valid || linkedDances.untouched)" 
+						class="input-error-label"
+					>
+						At least one dance is required
+					</div>
 				</td>
 				<td>
 					<button class="add-row-btn">+</button>
