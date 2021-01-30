@@ -1,13 +1,26 @@
 @use '../styles'
 
+$width-menu-base: 200px
+
+
 .navigation-base
-	@extend .size-full
+	display: grid
+	grid-template-rows: [top] 2em [body] auto
+	grid-template-columns: [menu] $width-menu-base [body] auto
 	@extend .bg-gradient
-	
+	@extend .size-full
+
+.menu-container
+	grid-row-start: body
+	grid-column-start: menu
+	grid-column-end: body
+
 .content-base
+	grid-row-start: body
+	grid-row-end: -1
+	grid-column-start: body
 	background-color: styles.$bg-color-content
 	border-radius: styles.$rounding-standard
-	min-height: 80%
 	padding: 1em
 
 	a
@@ -15,7 +28,29 @@
 
 		&:visited
 			color: styles.$fg-color-menu-text
+
+.icon-coords
+	grid-row-start: top
+	grid-row-end: body
 	
+@media(max-width: styles.$breakpoint-small)
+
+	.menu-container
+		width: 50%
+		height: 100%
+		float: none
+		position: absolute
+		z-index: 2
+		background: styles.$gradient-radial-bg
+		top: styles.$top-bar-height
+		box-shadow: 7px 1px 5px -4px rgb(0, 0, 0, .3)
+
+	.content-base
+		grid-column-start: menu
+		grid-column-end: -1
+		grid-row-start: body
+		grid-row-end: -1
+		height: 100%
 
 .open-menu-icon
 	@extend %icon-base

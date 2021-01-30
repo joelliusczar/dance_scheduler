@@ -1,6 +1,5 @@
-
 <div class="navigation-base">
-	<div class="height-icon">
+	<div class="height-icon icon-coords">
 		<button *ngIf="isSmallScreen" 
 			class="open-menu-icon" 
 			type="button" 
@@ -11,11 +10,11 @@
 			</svg>
 		</button>
 	</div>
-	<app-menu 
-		*ngIf="!shouldSmScreenHideMenu" 
-		style="background: inherit"
-		[routeDescriptions]="routeDescriptions"
-		></app-menu>
+	<div class="menu-container" *ngIf="!shouldSmScreenHideMenu" >
+		<app-menu 
+			[routeDescriptions]="routeDescriptions"
+			></app-menu>
+	</div>
 	<div id="content-base" class="content-base" [style]="contentDivStyle" >
 		<router-outlet></router-outlet>
 	</div>

@@ -8,7 +8,7 @@ import { DanceSchedulerRoute } from '../routeDefintions';
 })
 export class MenuComponent implements OnInit {
 
-	@Input() routeDescriptions: Array<DanceSchedulerRoute>;
+	@Input() routeDescriptions: DanceSchedulerRoute[];
 	currentStyles: {};
 
   constructor() { }

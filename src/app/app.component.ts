@@ -23,7 +23,6 @@ export class AppComponent {
 	hideOrShowForScreenSize() : void {
 		const wasSmallScreen = this.isSmallScreen;
 		this.isSmallScreen = this.screenWidth <= 640;
-
 		if(!this.isSmallScreen) { //wasSmallScreen is irrelevant
 			this.shouldSmScreenHideMenu = false;
 		}
@@ -50,16 +49,6 @@ export class AppComponent {
 	getScreenSize() : void {
 		this.screenWidth = window.innerWidth;
 		this.hideOrShowForScreenSize();
-		const el = document.getElementById('content-base');
-		const outsideWidth = this.getOutsideWidth(el);
-		const contentDivSize = this.isSmallScreen ? 
-			(this.screenWidth - outsideWidth) : 
-			(this.screenWidth - 200 - outsideWidth);
-		
-		this.contentDivStyle = {
-			'width': `${contentDivSize}px`,
-			'float': this.isSmallScreen ? 'none' : 'right',
-		};
 	}
 
 	menuOpenClick() : void {

@@ -3,15 +3,6 @@
 $width-menu-base: 200px
 $padding-left-ul: 30px
 
-.menu-base
-	border-bottom-right-radius: styles.$rounding-standard
-	box-shadow: 7px 1px 5px -4px rgb(0, 0, 0, .3)
-	min-height: 80%
-	background: inherit
-	width: $width-menu-base
-	float: left
-	position: static
-
 ul
 	list-style: none
 	padding-left: $padding-left-ul
@@ -34,14 +25,4 @@ a
 	&:visted
 		color: styles.$fg-color-menu-text
 			
-@media(max-width: styles.$breakpoint-small)
-	.menu-base
-		width: 50%
-		float: none
-		position: absolute
-		z-index: 2
-
-@media(max-width: styles.$breakpoint-xsmall)
-	.menu-base
-		width: 70%
 
