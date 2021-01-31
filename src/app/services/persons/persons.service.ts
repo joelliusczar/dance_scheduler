@@ -3,6 +3,7 @@ import { Person, PersonDto } from 'src/app/types/data-shape';
 import { BrowserDbService, PEOPLE_TABLE_NAME } 
 	from '../browser-Db/browser-db.service';
 import { ListService } from '../list/list.service';
+import { OpQueueService } from '../op-queue/op-queue.service';
 import { SchoolsService } from '../schools/schools.service';
 
 @Injectable({
@@ -12,10 +13,11 @@ export class PersonsService extends ListService<Person, PersonDto>{
 
 	tableName = PEOPLE_TABLE_NAME;
 
-	constructor(protected browserDb: BrowserDbService,  
+	constructor(browserDb: BrowserDbService, 
+		opQueue: OpQueueService,
 		private schoolsService: SchoolsService) 
 	{ 
-		super(browserDb);
+		super(browserDb, opQueue);
 	}
 
 	async transform(person: Person): Promise<PersonDto> {

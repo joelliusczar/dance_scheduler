@@ -20,6 +20,7 @@ export class DanceFormComponent implements OnInit {
 	dances: DanceDto[] = [];
 	linkedDances: Dance[] = [];
 	categories: Category[] = [];
+	multiDanceDanceIds: Set<KeyType> = new Set();
 
 	@ViewChild('firstInput') firstInput: ElementRef;
 
@@ -38,6 +39,8 @@ export class DanceFormComponent implements OnInit {
 				}));
 				this.categories = value.categories;
 				this.linkedDances = value.dances;
+				value.multiDances.flatMap(md => md.linkedDanceIds)
+					.forEach(id => this.multiDanceDanceIds.add(id as KeyType));
 			}
 		);
 	}
@@ -83,10 +86,19 @@ export class DanceFormComponent implements OnInit {
 	}
 
 	onRowRemoveClick(dance: DanceDto) {
-		this.removeDance(dance);
+		const hasDependants = this.multiDanceDanceIds.has(dance.id as KeyType);
+		if(hasDependants) {
+			alert('Dance could not be removed because some multi dances are using it');
+			return;
+		}
+		else {
+			this.removeDance(dance);
+		}
 	}
 
 	removeDance(dance: DanceDto): void {
+		
+		
 		const dances: Dance[] = this.competitionSetup$.get(CompKeys.dances);
 		const filtered = dances
 			.filter(i => i.id != dance.id);

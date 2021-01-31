@@ -5,12 +5,14 @@ import {
 	Subscribable, 
 	Observable, 
 	PartialObserver,
-	from } from 'rxjs';
+	from, 
+	BehaviorSubject} from 'rxjs';
 import { TableTypes } from 'src/app/types/data-shape';
 import { BrowserDbService } from '../browser-Db/browser-db.service';
 import { v4 } from 'uuid';
 import { IdSelectable, keyType } from 'src/app/types/IdSelectable';
 import { TableStats } from 'src/app/types/table-stats';
+import { OpQueueService } from '../op-queue/op-queue.service';
 
 
 @Injectable({
@@ -23,18 +25,22 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 	currentPage = 0;
 	sortFn: (a: T, b: T) => number;
 	private items: T[];
-	private items$ = new Subject<U[]>();
-	private stats$ = new Subject<TableStats>();
+	private items$ = new BehaviorSubject<U[]>([]);
+	private stats$ = new BehaviorSubject<TableStats>({
+		itemCount: 0,
+		loading: true,
+	});
 	private cachedItems = new Map<keyType, U>();
 	protected tableName: string;
 
-	constructor(protected browserDb: BrowserDbService) { }
+	constructor(protected browserDb: BrowserDbService, 
+		private _opQueue: OpQueueService) 
+	{ }
 	
 	//if items have already been loaded, this functions as an queued emit
 	//that emits after the current callstack has finished.
 	private async _triggerLoadItems(): Promise<void> {
 		if(this.items) {
-			this._sendNext();
 			return;
 		};
 		if(!this.browserDb.isOpen) {
@@ -60,7 +66,7 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 			else {
 				throw new Error('Invalid argument.');
 			}
-			this._triggerLoadItems();
+			this._opQueue.enqueueOp(() => this._triggerLoadItems());
 			return unsub;
 	}
 

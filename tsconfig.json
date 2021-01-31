@@ -15,7 +15,8 @@
 		"suppressImplicitAnyIndexErrors": true,
     "lib": [
       "es2018",
-      "dom"
+			"dom",
+			"es2019.array"
     ]
   }
 }

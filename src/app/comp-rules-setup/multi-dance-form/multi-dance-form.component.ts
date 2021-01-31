@@ -44,6 +44,8 @@ export class MultiDanceFormComponent implements OnInit {
 	}
 
 	onRowRemoveClick(dance: MultiDanceDto) {
+		this.competitionSetup$
+		 .removeItems(i => i.id !== dance.id, CompKeys.multiDances);
 	}
 	
 	onSubmit(formGroup: FormGroup): void {
@@ -58,6 +60,10 @@ export class MultiDanceFormComponent implements OnInit {
 			} as MultiDance, CompKeys.multiDances);
 			formGroup.reset({}, {emitEvent: false});
 		}
+	}
+
+	ngOnDestroy(): void {
+		this.compSetupServiceUnsub.unsubscribe();
 	}
 
 }

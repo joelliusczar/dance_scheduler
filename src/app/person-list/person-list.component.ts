@@ -32,7 +32,7 @@ export class PersonListComponent implements OnInit {
 			(value: TableStats) => {
 				this.itemCount = value.itemCount;
 				this.loading = value.loading;
-			})
+			});
 	}
 	
 	openDialog(): void {

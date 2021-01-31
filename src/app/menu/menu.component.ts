@@ -9,7 +9,7 @@ import { DanceSchedulerRoute } from '../routeDefintions';
 export class MenuComponent implements OnInit {
 
 	@Input() routeDescriptions: DanceSchedulerRoute[];
-	currentStyles: {};
+	@Input('styleOverrides') currentStyles: {};
 
   constructor() { }
 
