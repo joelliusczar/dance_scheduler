@@ -42,6 +42,7 @@ export class PersonListComponent implements OnInit {
 		});
 
 		dialogRef.afterClosed().subscribe(result => {
+			if(!result) return;
 			this.personService.saveItem(result);
 		});
 	}

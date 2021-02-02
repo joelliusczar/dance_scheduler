@@ -46,6 +46,7 @@ export class SchoolListComponent implements OnInit {
 		});
 
 		dialogRef.afterClosed().subscribe(result => {
+			if(!result) return;
 			this.schoolService.saveItem(result);
 		});
 	}

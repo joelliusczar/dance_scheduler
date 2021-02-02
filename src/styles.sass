@@ -35,6 +35,8 @@ $input-border-width: .125em
 
 $top-bar-height: 2em
 
+$min-height: 600px
+
 a
 	color: $fg-color-default-text
 
@@ -71,11 +73,11 @@ h3
 	
 html
 	font-size: 16px
-	height: max-content
+	height: 100vh
 
 body
 	font: 100% $font-stack
-	height: 100%
+	min-height: $min-height
 
 button, input
 	font-size: 100%

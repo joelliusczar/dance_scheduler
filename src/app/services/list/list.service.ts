@@ -37,8 +37,6 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 		private _opQueue: OpQueueService) 
 	{ }
 	
-	//if items have already been loaded, this functions as an queued emit
-	//that emits after the current callstack has finished.
 	private async _triggerLoadItems(): Promise<void> {
 		if(this.items) {
 			return;
@@ -80,7 +78,7 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 		complete?: (() => void) | null
 	): Unsubscribable {
 		const unsub = this.stats$.subscribe(next, error, complete);
-		this._triggerLoadItems();
+		this._opQueue.enqueueOp(() => this._triggerLoadItems());
 		return unsub;
 	}
 
@@ -98,7 +96,7 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 		if(this.items) {
 			this.stats$.next({ 
 				itemCount: this.items.length, 
-				loading: this.items.length < 1 });
+				loading: false });
 		}
 	}
 

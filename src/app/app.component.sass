@@ -8,8 +8,9 @@ $top-bar-height: 2em
 	display: grid
 	grid-template-rows: [top] $top-bar-height [body] auto
 	grid-template-columns: [menu] $width-menu-base [body] auto
+	width: 100%
+	min-height: styles.$min-height
 	@extend .bg-gradient
-	@extend .size-full
 
 .menu-container
 	grid-row-start: body
