@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { 
-	Subject, 
 	Unsubscribable, 
 	Subscribable, 
 	Observable, 
 	PartialObserver,
 	from, 
-	BehaviorSubject} from 'rxjs';
+	BehaviorSubject } from 'rxjs';
 import { TableTypes } from 'src/app/types/data-shape';
 import { BrowserDbService } from '../browser-Db/browser-db.service';
 import { v4 } from 'uuid';
-import { IdSelectable, keyType } from 'src/app/types/IdSelectable';
+import { IdSelectable, KeyType } from 'src/app/types/IdSelectable';
 import { TableStats } from 'src/app/types/table-stats';
 import { OpQueueService } from '../op-queue/op-queue.service';
 
@@ -30,7 +29,7 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 		itemCount: 0,
 		loading: true,
 	});
-	private cachedItems = new Map<keyType, U>();
+	private cachedItems = new Map<KeyType, U>();
 	protected tableName: string;
 
 	constructor(protected browserDb: BrowserDbService, 
@@ -126,7 +125,7 @@ export class ListService<T extends TableTypes, U extends IdSelectable = T>
 		this.replaceAll(this.items.filter(i => i.id !== item.id));
 	}
 
-	async getItemById(id: keyType): Promise<U | null> {
+	async getItemById(id: KeyType): Promise<U | null> {
 		if(!id) return null;
 		if(this.cachedItems.has(id)) {
 			const item = this.cachedItems.get(id);

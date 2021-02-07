@@ -41,7 +41,7 @@ export class SchoolListComponent implements OnInit {
 	
 	openDialog(): void {
 		const dialogRef = this.dialog.open(EditSchoolModalComponent, {
-			width: '250px',
+			width: '275px',
 			data: { name: null, location: null }
 		});
 

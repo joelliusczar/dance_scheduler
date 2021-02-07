@@ -311,10 +311,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		}
 	}
 
-	showSelectedList(): boolean {
+	showTagList(): boolean {
 		if(this.allowMultiSelect) {
-			const selectedArray = this.selectedItems as DataBasic[];
-			return selectedArray && selectedArray.length > 0;
+			return this.selectedItems && this.selectedItems.length > 0;
 		}
 		return false;
 	}

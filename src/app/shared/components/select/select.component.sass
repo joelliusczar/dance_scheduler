@@ -24,21 +24,29 @@
 	font-size: styles.$data-font-size
 	max-width: 200px
 	border-width: styles.$input-border-width
+	position: relative
 
 .menu-container-closed
 	@extend %menu-container-base
 
 .menu-container-open
 	@extend %menu-container-base
+	
+	
+	&:focus
+		outline-style: none
+
+.option-menu
 	background-color: styles.$bg-color-content 
 	box-shadow: -1px 3px 8px 0px black
 	border-radius: styles.$rounding-standard
 	position: absolute
+	top: -.5em
+	left: .08em
 	padding: .1em 0
 	z-index: 1
-	
-	&:focus
-		outline-style: none
+	min-width: 200px
+
 
 .menu-container-disabled
 	color: styles.$fg-color-disabled-text

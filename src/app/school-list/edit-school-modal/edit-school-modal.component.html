@@ -1,22 +1,21 @@
+<h1>Add School</h1>
 <div>
-	<mat-form-field>
-		<mat-label>Name:</mat-label>
+		<label for="name">Name:</label>
 		<input 
-			matInput
+			name="name"
+			placeholder="Name:"
 			[(ngModel)]="data.name"
 			type="text"
 		/>
-	</mat-form-field>
-	<mat-form-field>
-		<mat-label>Location:</mat-label>
+		<label for="location">Location:</label>
 		<input 
-			matInput
+			name="location"
+			placeholder="Location:"
 			[(ngModel)]="data.location"
 			type="text"
 		/>
-	</mat-form-field>
 </div>
-<div mat-dialog-actions>
-	<button mat-button (click)="onCancel()">Cancel</button>
-	<button mat-button [mat-dialog-close]="data">Add School</button>
+<div>
+	<button class="add-btn" (click)="onCancel()">Cancel</button>
+	<button class="add-btn" [mat-dialog-close]="data">Add School</button>
 </div>

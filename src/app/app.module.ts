@@ -45,6 +45,7 @@ import { TagListComponent }
 import { SkillLevelFormComponent } 
 	from './comp-rules-setup/skill-level-form/skill-level-form.component';
 import { MultiDanceFormComponent } from './comp-rules-setup/multi-dance-form/multi-dance-form.component';
+import { AddCompModalComponent } from './add-comp-modal/add-comp-modal.component';
 
 
 
@@ -71,7 +72,8 @@ import { MultiDanceFormComponent } from './comp-rules-setup/multi-dance-form/mul
 		SelectOptionComponent,
 		TagListComponent,
 		SkillLevelFormComponent,
-		MultiDanceFormComponent
+		MultiDanceFormComponent,
+		AddCompModalComponent,
   ],
   imports: [
     BrowserModule,

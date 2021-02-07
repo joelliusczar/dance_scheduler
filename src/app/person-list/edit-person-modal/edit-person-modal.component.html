@@ -3,36 +3,43 @@
 </div>
 <div *ngIf="!loading">
 	<div>
-		<mat-form-field>
-			<mat-label>First Name:</mat-label>
-			<input 
-				matInput
-				[(ngModel)]="data.firstName"
-				type="text"
-			/>
-		</mat-form-field>
-		<mat-form-field>
-			<mat-label>Last Name:</mat-label>
-			<input 
-				matInput
-				[(ngModel)]="data.lastName"
-				type="text"
-			/>
-		</mat-form-field>
-		<mat-form-field>
-			<mat-label>School:</mat-label>
-			<mat-select
-				[(ngModel)]="data.schoolId"
-			>
-				<mat-option *ngFor="let school of schoolChoices"
-					[value]="school.id"
-				>{{school.name}}</mat-option>
-			</mat-select>
-		</mat-form-field>
+			<div>
+				<label for="firstName">First Name:</label>
+				<input 
+					name="firstName"
+					placeholder="First Name:"
+					[(ngModel)]="data.firstName"
+					type="text"
+				/>
+			</div>
+			<div>
+				<label for="lastName">Last Name:</label>
+				<input 
+					name="lastName"
+					placeholder="Last Name:"
+					[(ngModel)]="data.lastName"
+					type="text"
+				/>
+			</div>
+			<div>
+				<label for="schoolId">School:</label>
+				<app-select
+					name="schoolId"
+					[(ngModel)]="data.schoolId"
+				>
+					<app-select-option>Select...</app-select-option>
+					<app-select-option
+						*ngFor="let school of schoolChoices" 
+						[value]="school.id"
+					>
+						{{school.name}}
+					</app-select-option>
+				</app-select>
+			</div>
 	</div>
 	<div>
-		<button mat-button (click)="onCancel()">Cancel</button>
-		<button mat-button [mat-dialog-close]="data">Add Person</button>
+		<button class="add-btn" (click)="onCancel()">Cancel</button>
+		<button class="add-btn" [mat-dialog-close]="data">Add Person</button>
 	</div>
 </div>
 

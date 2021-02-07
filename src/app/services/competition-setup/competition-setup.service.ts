@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Unsubscribable, PartialObserver, BehaviorSubject } from 'rxjs';
-import { AgeGroupType, Category, Dance, Competition, SkillLevel, CompSubType } 
+import { Competition, CompSubType } 
 	from 'src/app/types/data-shape';
-import { Sortable } from 'src/app/types/sortable';
 import { BrowserDbService, COMPETITION_TABLE_NAME } 
 	from '../browser-Db/browser-db.service';
-import { swap } from '../../shared/utils/arrayHelpers';
+import { getLatest, swap } from '../../shared/utils/arrayHelpers';
 import { Direction, ElevatorDir } from 'src/app/types/directions';
 import { v4 } from 'uuid';
-import { IdSelectable, keyType } from 'src/app/types/IdSelectable';
 import { OpQueueService } from '../op-queue/op-queue.service';
 
 export enum CompKeys {
@@ -49,6 +47,7 @@ export class CompetitionSetupService {
 	private competitions: Competition[];
 	private currentCompetition: Competition;
 	private competitions$ = new BehaviorSubject<Competition>({ ...compBaseShape});
+	private allCompetitions$ = new BehaviorSubject<Competition[]>([]);
 
 	constructor(private browserDb: BrowserDbService, 
 		private opQueue: OpQueueService) 
@@ -66,8 +65,7 @@ export class CompetitionSetupService {
 		this.competitions = values as Competition[];
 		if(this.competitions?.length) {
 			//get most recent
-			this.currentCompetition = this.competitions
-				.reduce((a, c) => c.lastUpdated > a.lastUpdated ? c : a);
+			this.currentCompetition = getLatest(this.competitions);
 		}
 		else {
 			this.currentCompetition = { ...compBaseShape, 
@@ -90,6 +88,26 @@ export class CompetitionSetupService {
 			}
 			else if(typeof observerOrNext === 'object') {
 				unsub = this.competitions$.subscribe(observerOrNext);
+			}
+			else {
+				throw new Error('Invalid argument.');
+			}
+			this.opQueue.enqueueOp(() => this._triggerLoadItems());
+			return unsub;
+	}
+
+	arraySubscribe(
+		observerOrNext?: PartialObserver<Competition[]> | 
+			((value: Competition[]) => void) | null,
+		error?: ((error: any) => void) | null,
+		complete?: (() => void) | null
+		): Unsubscribable {
+			let unsub;
+			if(typeof observerOrNext === 'function') {
+				unsub = this.allCompetitions$.subscribe(observerOrNext, error, complete);
+			}
+			else if(typeof observerOrNext === 'object') {
+				unsub = this.allCompetitions$.subscribe(observerOrNext);
 			}
 			else {
 				throw new Error('Invalid argument.');

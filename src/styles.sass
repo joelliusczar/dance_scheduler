@@ -46,11 +46,43 @@ a
 	&:hover
 		text-shadow: -1px -1px 10px rgb(0,0,0,.2)
 
-html, body, button, p, h1, h2, h3, h4, h5 ,h6, table, form, input, td
+.no-extra-space, %no-extra-space
 	margin: 0
 	padding: 0
+
+html, body, button, p, h1, h2, h3, h4, h5 ,h6, table, form, input, td
+	@extend %no-extra-space
 	border-width: 0
 
+
+input[type="text"], input[type="number"]
+	border-radius: $rounding-standard
+	border-width: $input-border-width
+	border-style: solid
+	border-color: #767676
+
+input[type="checkbox"]
+	visibility: hidden
+	margin: 0 .25em 0 0
+	vertical-align: top
+
+input[type="checkbox"]:after
+	border: 1px solid #333
+	content: "\00a0"
+	visibility: visible
+	display: inline-block
+	height: $data-font-size
+	padding: 0
+	width: $data-font-size
+
+input[type="checkbox"]:checked:after
+	background: $bg-color-menu1
+	color: #fff
+	content: "\2713"
+	text-align: center
+
+input[type="checkbox"]:hover:not(:checked):after
+	background: #fff
 
 .header-common, %header-common
 	color: $fg-color-header
@@ -79,8 +111,8 @@ body
 	font: 100% $font-stack
 	min-height: $min-height
 
-button, input
-	font-size: 100%
+button, input, label
+	font: $data-font-size $font-stack
 	line-height: 1
 
 button

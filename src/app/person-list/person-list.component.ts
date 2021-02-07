@@ -37,7 +37,7 @@ export class PersonListComponent implements OnInit {
 	
 	openDialog(): void {
 		const dialogRef = this.dialog.open(EditPersonModalComponent, {
-			width: '250px',
+			width: '275px',
 			data: { firstName: null, lastName: null, schoolId: null }
 		});
 

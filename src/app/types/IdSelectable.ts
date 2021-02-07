@@ -1,11 +1,15 @@
-export type keyType = string | number;
+export type KeyType = string | number;
 
 export interface IdSelectable {
-	id: keyType
+	id: KeyType
 };
 
 export interface NameDisplayable {
 	name: string,
 };
+
+export interface TouchedTimestamp {
+	lastUpdated: Date,
+}
 
 export interface DataBasic extends IdSelectable, NameDisplayable {};

@@ -1,5 +1,6 @@
 import { Sortable } from './sortable';
-import { IdSelectable, keyType as KeyType, DataBasic, NameDisplayable } from './IdSelectable';
+import { IdSelectable, KeyType, DataBasic, NameDisplayable, TouchedTimestamp } 
+	from './IdSelectable';
 
 export type plus = '+'
 
@@ -75,7 +76,7 @@ export interface Heat {
 };
 
 
-export interface Competition extends DataBasic {
+export interface Competition extends DataBasic, TouchedTimestamp {
 	ageGroups: AgeGroupType[],
 	multiEventAgeGroups: AgeGroupType[],
 	categories: Category[],
@@ -87,7 +88,6 @@ export interface Competition extends DataBasic {
 	heats: Heat[],
 	judges: Person[],
 	dateOfComp: Date,
-	lastUpdated: Date,
 	finished: boolean,
 };
 

@@ -30,8 +30,11 @@ export class EditPersonModalComponent implements OnInit {
   }
 
 	onCancel(): void {
-		this.serviceUnsub.unsubscribe();
 		this.dialogRef.close();
+	}
+	
+	ngOnDestroy(): void {
+		this.serviceUnsub.unsubscribe();
 	}
 	
 }

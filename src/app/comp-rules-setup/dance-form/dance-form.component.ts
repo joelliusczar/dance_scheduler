@@ -5,7 +5,7 @@ import { CompetitionSetupService, CompKeys }
 	from 'src/app/services/competition-setup/competition-setup.service';
 import { first } from 'src/app/shared/utils/arrayHelpers';
 import { Category, Competition, Dance, DanceDto } from 'src/app/types/data-shape';
-import { keyType } from 'src/app/types/IdSelectable';
+import { KeyType } from 'src/app/types/IdSelectable';
 import { DirectionEventArg } from '../../types/directions';
 
 
@@ -103,7 +103,7 @@ export class DanceFormComponent implements OnInit {
 		const filtered = dances
 			.filter(i => i.id != dance.id);
 		if(dance.linkedDances?.length > 0) {
-			const keySet = new Set<keyType>(dance.linkedDances.map(d => d.id));
+			const keySet = new Set<KeyType>(dance.linkedDances.map(d => d.id));
 			const filteredModified = filtered.map(d => {
 				if(keySet.has(d.id)) {
 					return { ...d, 

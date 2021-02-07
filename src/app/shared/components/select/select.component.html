@@ -1,3 +1,6 @@
+<!-- in case you're wondering if this should be a span. Atm, 
+	this div's css is set to inline-block
+-->
 <div [class]="containerClass" 
 	[tabindex]="tabNum" 
 	role="listbox"
@@ -5,12 +8,12 @@
 	(focusout)="onFocusOut()"
 	[id]="topId"
 >
-<app-tag-list *ngIf="showSelectedList()" 
+<app-tag-list *ngIf="showTagList()" 
 	[value]="selectedItems"
 	(onRemoved)="onTagXClicked($event)"
 >
 </app-tag-list>
-	<span *ngIf="!showSelectedList() && !isOpen" class="select-picked-value">
+	<span *ngIf="!showTagList()" class="select-picked-value">
 		{{getSingularDisplayValue()}}
 	</span>
 	<ds-hide-icon 

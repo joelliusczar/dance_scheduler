@@ -20,4 +20,7 @@ export class EditSchoolModalComponent implements OnInit {
 		this.dialogRef.close();
 	}
 
+	ngOnDestroy(): void {
+	}
+
 }
