@@ -88,6 +88,7 @@ export interface Competition extends DataBasic, TouchedTimestamp {
 	heats: Heat[],
 	judges: Person[],
 	dateOfComp: Date,
+	deadline: Date,
 	finished: boolean,
 };
 

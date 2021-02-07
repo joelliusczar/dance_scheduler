@@ -2,7 +2,42 @@
 	<mat-spinner></mat-spinner>
 </div>
 <div *ngIf="!loading">
-	<form>
-		
-	</form>
+	<h1>Copy Previous Competition</h1>
+	<div>
+		<label for="compName">Name:</label>
+		<input 
+			type="text"
+			name="compName"
+			placeholder="Competition Name:"
+			[(ngModel)]="data.name"
+		/>
+	</div>
+	<div>
+		<label for="competitionId">Competition to copy:</label>
+		<app-select
+			name="competitionId"
+			[(ngModel)]="data.id"
+		>
+			<app-select-option
+				[value]="default"
+			>
+				Default
+			</app-select-option>
+			<app-select-option
+				[value]="empty"
+			>
+				Blank Competition
+			</app-select-option>
+			<app-select-option
+				*ngFor="let competition of options" 
+				[value]="competition.id"
+			>
+				{{competition.name}}
+			</app-select-option>
+		</app-select>
+	</div>
+	<div>
+		<button class="add-btn" (click)="onCancel()">Cancel</button>
+		<button class="add-btn" [mat-dialog-close]="data">Add Person</button>
+	</div>
 </div>

@@ -35,6 +35,7 @@ const compBaseShape : Competition = {
 	heats: [],
 	judges: [],
 	dateOfComp: null,
+	deadline: null,
 	lastUpdated: null,
 	finished: false,
 }
