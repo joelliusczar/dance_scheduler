@@ -90,6 +90,7 @@ export interface Competition extends DataBasic, TouchedTimestamp {
 	dateOfComp: Date,
 	deadline: Date,
 	finished: boolean,
+	createDate: Date,
 };
 
 

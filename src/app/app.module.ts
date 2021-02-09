@@ -27,7 +27,7 @@ import { EditPersonModalComponent }
 	from './person-list/edit-person-modal/edit-person-modal.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -44,8 +44,13 @@ import { TagListComponent }
 	from './shared/components/tag-list/tag-list.component';
 import { SkillLevelFormComponent } 
 	from './comp-rules-setup/skill-level-form/skill-level-form.component';
-import { MultiDanceFormComponent } from './comp-rules-setup/multi-dance-form/multi-dance-form.component';
-import { AddCompModalComponent } from './add-comp-modal/add-comp-modal.component';
+import { MultiDanceFormComponent } 
+	from './comp-rules-setup/multi-dance-form/multi-dance-form.component';
+import { AddCompModalComponent } 
+	from './add-comp-modal/add-comp-modal.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 
 
@@ -88,9 +93,11 @@ import { AddCompModalComponent } from './add-comp-modal/add-comp-modal.component
 		MatTableModule,
 		MatProgressSpinnerModule,
 		MatSelectModule,
-		MatPaginatorModule
+		MatPaginatorModule,
+		MatDatepickerModule,
+		MatNativeDateModule,
   ],
-  providers: [],
+	providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

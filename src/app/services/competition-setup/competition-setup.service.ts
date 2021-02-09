@@ -41,6 +41,7 @@ const compBaseShape : Competition = {
 	deadline: null,
 	lastUpdated: null,
 	finished: false,
+	createDate: null,
 }
 
 @Injectable({
@@ -78,7 +79,8 @@ export class CompetitionSetupService {
 			this.competitions = [
 				{ ...compBaseShape, 
 					id: v4(),
-					lastUpdated: new Date()
+					createDate: new Date(),
+					lastUpdated: new Date(),
 				}
 			];
 		}
