@@ -2,7 +2,7 @@
 	<mat-spinner></mat-spinner>
 </div>
 <div *ngIf="!loading">
-	<h1>Copy Previous Competition</h1>
+	<h1>Copy Previous Competition?</h1>
 	<div>
 		<label for="compName">Name:</label>
 		<input 
@@ -18,13 +18,14 @@
 			name="competitionId"
 			[(ngModel)]="data.id"
 		>
+			Select Competition to copy...
 			<app-select-option
-				[value]="default"
+				[value]="DEFAULT_COMPETITION"
 			>
 				Default
 			</app-select-option>
 			<app-select-option
-				[value]="empty"
+				[value]="EMPTY_COMPETITION"
 			>
 				Blank Competition
 			</app-select-option>

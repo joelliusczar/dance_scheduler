@@ -13,7 +13,13 @@
 	(onRemoved)="onTagXClicked($event)"
 >
 </app-tag-list>
-	<span *ngIf="!showTagList()" class="select-picked-value">
+	<span #custom>
+		<ng-content></ng-content>
+	</span>
+	<span 
+		*ngIf="!showTagList() && custom.childNodes.length === 0" 
+		class="select-picked-value"
+	>
 		{{getSingularDisplayValue()}}
 	</span>
 	<ds-hide-icon 

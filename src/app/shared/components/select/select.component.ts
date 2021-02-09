@@ -71,12 +71,12 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	@Input('value') selectedItems: DataBasic[];
 	@Input('multiple') allowMultiSelect: boolean = false;
 	@Input('disabled') isDisabled: boolean;
+	@Input('defaultDisplay') defaultDisplay: string = 'Select...';
 	@Output('onSelected') onSelected = new EventEmitter<DataBasic[]>(); 
 	isOpen: boolean = false;
 	topId: string = '';
 	selectedSet: Set<DataBasic>;
 	containerClass: string = closedMenuClass;
-	defaultDisplay: string = 'Select...';
 	highlightedMenuItemIdx: number = -1;
 	tabNum: number;
 	propagateChange: (_: any) => {};

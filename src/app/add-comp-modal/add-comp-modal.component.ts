@@ -4,6 +4,7 @@ import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService } from '../services/competition-setup/competition-setup.service';
 import { Competition } from '../types/data-shape';
 import { DataBasic } from '../types/IdSelectable';
+import { DEFAULT_COMPETITION, EMPTY_COMPETITION } from '../types/constants';
 
 
 @Component({

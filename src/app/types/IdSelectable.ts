@@ -1,7 +1,7 @@
-export type KeyType = string | number;
+export type DataKey = string | number;
 
 export interface IdSelectable {
-	id: KeyType
+	id: DataKey
 };
 
 export interface NameDisplayable {

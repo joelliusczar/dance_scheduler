@@ -1,5 +1,5 @@
 import { Sortable } from './sortable';
-import { IdSelectable, KeyType, DataBasic, NameDisplayable, TouchedTimestamp } 
+import { IdSelectable, DataKey, DataBasic, NameDisplayable, TouchedTimestamp } 
 	from './IdSelectable';
 
 export type plus = '+'
@@ -13,7 +13,7 @@ export interface Category extends Sortable, DataBasic {
 };
 
 export interface DanceCommon extends Sortable, IdSelectable {
-	categoryId: KeyType,
+	categoryId: DataKey,
 	linkedDanceIds: string[],
 }
 
@@ -52,7 +52,7 @@ export interface PersonBase extends IdSelectable {
 }
 
 export interface Person extends PersonBase {
-	schoolId: KeyType,
+	schoolId: DataKey,
 }
 
 export interface PersonDto extends PersonBase {

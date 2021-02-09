@@ -5,7 +5,7 @@ import { CompetitionSetupService, CompKeys }
 	from 'src/app/services/competition-setup/competition-setup.service';
 import { first } from 'src/app/shared/utils/arrayHelpers';
 import { Category, Competition, Dance, DanceDto } from 'src/app/types/data-shape';
-import { KeyType } from 'src/app/types/IdSelectable';
+import { DataKey } from 'src/app/types/IdSelectable';
 import { DirectionEventArg } from '../../types/directions';
 
 
@@ -20,7 +20,7 @@ export class DanceFormComponent implements OnInit {
 	dances: DanceDto[] = [];
 	linkedDances: Dance[] = [];
 	categories: Category[] = [];
-	multiDanceDanceIds: Set<KeyType> = new Set();
+	multiDanceDanceIds: Set<DataKey> = new Set();
 
 	@ViewChild('firstInput') firstInput: ElementRef;
 
@@ -40,7 +40,7 @@ export class DanceFormComponent implements OnInit {
 				this.categories = value.categories;
 				this.linkedDances = value.dances;
 				value.multiDances.flatMap(md => md.linkedDanceIds)
-					.forEach(id => this.multiDanceDanceIds.add(id as KeyType));
+					.forEach(id => this.multiDanceDanceIds.add(id as DataKey));
 			}
 		);
 	}
@@ -86,7 +86,7 @@ export class DanceFormComponent implements OnInit {
 	}
 
 	onRowRemoveClick(dance: DanceDto) {
-		const hasDependants = this.multiDanceDanceIds.has(dance.id as KeyType);
+		const hasDependants = this.multiDanceDanceIds.has(dance.id as DataKey);
 		if(hasDependants) {
 			alert('Dance could not be removed because some multi dances are using it');
 			return;
@@ -97,13 +97,11 @@ export class DanceFormComponent implements OnInit {
 	}
 
 	removeDance(dance: DanceDto): void {
-		
-		
 		const dances: Dance[] = this.competitionSetup$.get(CompKeys.dances);
 		const filtered = dances
 			.filter(i => i.id != dance.id);
 		if(dance.linkedDances?.length > 0) {
-			const keySet = new Set<KeyType>(dance.linkedDances.map(d => d.id));
+			const keySet = new Set<DataKey>(dance.linkedDances.map(d => d.id));
 			const filteredModified = filtered.map(d => {
 				if(keySet.has(d.id)) {
 					return { ...d, 

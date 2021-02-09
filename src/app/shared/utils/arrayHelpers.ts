@@ -28,10 +28,23 @@ export function last<T>(value: T[]): T | null {
 	return null;
 }
 
-export function getLatest<T extends TouchedTimestamp>(value: T[]): T | null {
-	if(value === null || value === undefined) return null;
+export function getLatestIdx<T extends TouchedTimestamp>(value: T[]): number {
+	if(value === null || value === undefined) return -1;
 	if(value.length > 0) { 
-		return value.reduce((a, v) => v.lastUpdated > a.lastUpdated ? v : a)
+		return value.reduce((a, _, i, arr) => 
+			arr[i].lastUpdated > arr[a].lastUpdated ? i : a, 0);
 	}
-	return null;
+	return -1;
+}
+
+export function getLatest<T extends TouchedTimestamp>(value: T[]): T | null {
+	const idx = getLatestIdx(value);
+	return idx > -1 ? value[idx] : null;
+}
+
+export function immutableReplace<T>(arr: T[], value: T, idx: number): T[] {
+	if(arr === null || arr === undefined) return null;
+	const replacement = [...arr];
+	replacement[idx] = value;
+	return replacement;
 }

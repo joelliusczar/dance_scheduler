@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Unsubscribable, PartialObserver, BehaviorSubject } from 'rxjs';
+import { Unsubscribable, PartialObserver, BehaviorSubject, Subject } from 'rxjs';
 import { Competition, CompSubType } 
 	from 'src/app/types/data-shape';
 import { BrowserDbService, COMPETITION_TABLE_NAME } 
 	from '../browser-Db/browser-db.service';
-import { getLatest, swap } from '../../shared/utils/arrayHelpers';
+import { getLatestIdx, immutableReplace, swap } from '../../shared/utils/arrayHelpers';
 import { Direction, ElevatorDir } from 'src/app/types/directions';
 import { v4 } from 'uuid';
 import { OpQueueService } from '../op-queue/op-queue.service';
+import { DEFAULT_COMPETITION, EMPTY_COMPETITION } from '../../types/constants';
+import { DataKey } from 'src/app/types/IdSelectable';
+
 
 export enum CompKeys {
 	ageGroups = 'ageGroups',
@@ -46,6 +49,7 @@ const compBaseShape : Competition = {
 export class CompetitionSetupService {
 
 	private competitions: Competition[];
+	private currentCompetitionIdx = -1;
 	private currentCompetition: Competition;
 	private competitions$ = new BehaviorSubject<Competition>({ ...compBaseShape});
 	private allCompetitions$ = new BehaviorSubject<Competition[]>([]);
@@ -54,9 +58,10 @@ export class CompetitionSetupService {
 		private opQueue: OpQueueService) 
 	{ 
 	}
+
 	
 	async _triggerLoadItems() : Promise<void> {
-		if(this.currentCompetition) {
+		if(this.currentCompetitionIdx > -1 && this.browserDb.isOpen) {
 			return;
 		}
 		if(!this.browserDb.isOpen) {
@@ -66,35 +71,51 @@ export class CompetitionSetupService {
 		this.competitions = values as Competition[];
 		if(this.competitions?.length) {
 			//get most recent
-			this.currentCompetition = getLatest(this.competitions);
+			this.currentCompetitionIdx = getLatestIdx(this.competitions);
 		}
 		else {
-			this.currentCompetition = { ...compBaseShape, 
-				id: v4(),
-				lastUpdated: new Date()
-			};
+			this.currentCompetitionIdx = 0;
+			this.competitions = [
+				{ ...compBaseShape, 
+					id: v4(),
+					lastUpdated: new Date()
+				}
+			];
 		}
-		this.competitions$.next(this.currentCompetition);
+		this.competitions$.next(this.competitions[this.currentCompetitionIdx]);
+		this.allCompetitions$.next(this.competitions);
 	}
+
+	private _subscribeCommon<T>(subject$: Subject<T>, 
+		observerOrNext?: PartialObserver<T> | 
+		((value: T) => void) | null,
+		error?: ((error: any) => void) | null,
+		complete?: (() => void) | null): Unsubscribable 
+	{
+		let unsub;
+		if(typeof observerOrNext === 'function') {
+			unsub = subject$.subscribe(observerOrNext, error, complete);
+		}
+		else if(typeof observerOrNext === 'object') {
+			unsub = subject$.subscribe(observerOrNext);
+		}
+		else {
+			throw new Error('Invalid argument.');
+		}
+		this.opQueue.enqueueOp(() => this._triggerLoadItems());
+		return unsub;
+	}
+	
 
 	subscribe(
 		observerOrNext?: PartialObserver<Competition> | 
 			((value: Competition) => void) | null,
 		error?: ((error: any) => void) | null,
 		complete?: (() => void) | null
-		): Unsubscribable {
-			let unsub;
-			if(typeof observerOrNext === 'function') {
-				unsub = this.competitions$.subscribe(observerOrNext, error, complete);
-			}
-			else if(typeof observerOrNext === 'object') {
-				unsub = this.competitions$.subscribe(observerOrNext);
-			}
-			else {
-				throw new Error('Invalid argument.');
-			}
-			this.opQueue.enqueueOp(() => this._triggerLoadItems());
-			return unsub;
+		): Unsubscribable 
+	{
+		return this._subscribeCommon(this.competitions$, 
+			observerOrNext, error, complete);
 	}
 
 	arraySubscribe(
@@ -103,40 +124,33 @@ export class CompetitionSetupService {
 		error?: ((error: any) => void) | null,
 		complete?: (() => void) | null
 		): Unsubscribable {
-			let unsub;
-			if(typeof observerOrNext === 'function') {
-				unsub = this.allCompetitions$.subscribe(observerOrNext, error, complete);
-			}
-			else if(typeof observerOrNext === 'object') {
-				unsub = this.allCompetitions$.subscribe(observerOrNext);
-			}
-			else {
-				throw new Error('Invalid argument.');
-			}
-			this.opQueue.enqueueOp(() => this._triggerLoadItems());
-			return unsub;
+			return this._subscribeCommon(this.allCompetitions$, 
+				observerOrNext, error, complete);
 	}
 
 	replaceAll<T extends CompSubType>(items: T[], key: CompKeyChoices): void {
-		this.currentCompetition[key] = (items as any);
-		this.browserDb.putValue(COMPETITION_TABLE_NAME, this.currentCompetition);
-		this.competitions$.next({
-			...this.currentCompetition,
+		const currentCompetition = {
+			...this.competitions[this.currentCompetitionIdx],
 			[key]: items,
 			lastUpdated: new Date()
-		});
+		};
+		this.browserDb.putValue(COMPETITION_TABLE_NAME, currentCompetition);
+		this.competitions$.next(currentCompetition);
+		this.competitions = immutableReplace(this.competitions, 
+			currentCompetition, 
+			this.currentCompetitionIdx);
+		this.allCompetitions$.next(this.competitions);
 	}
 
 	addItem<T extends CompSubType, U extends CompSubType>
 		(item: T, key: CompKeyChoices): U[]
 	{
-		if(!this.currentCompetition[key]) {
-			this.currentCompetition[key] = [];
-		}
-		item.order = this.currentCompetition[key].length;
+		const currentCompetition = this.competitions[this.currentCompetitionIdx];
+		const items = [...currentCompetition[key]] || [];
+		item.order = items.length;
 		item.id =  v4();
-		this.currentCompetition[key].push(item as any);
-		return this.currentCompetition[key] as unknown as U[];
+		items.push(item as any);
+		return items as unknown as U[];
 	}
 
 	saveItem<T extends CompSubType>
@@ -149,29 +163,40 @@ export class CompetitionSetupService {
 	moveItem<T extends CompSubType>(item: T, direction: ElevatorDir, 
 		key: CompKeyChoices): void 
 	{
+		const currentCompetition = this.competitions[this.currentCompetitionIdx];
+		const items = [...currentCompetition[key]];
 		const increment = direction === Direction.Up ? 1 : -1;
-		if(swap(this.currentCompetition[key], item.order, item.order + increment)) {
-			const swapped = this.currentCompetition[key][item.order];
+		if(swap(items, item.order, item.order + increment)) {
+			const swapped = items[item.order];
 			swapped.order -= increment;
 			item.order += increment;
-			this.replaceAll(this.currentCompetition[key] as any, key);
+			this.replaceAll(items, key);
 		}
 	}
 
 	removeItems<T extends CompSubType>(filter: (t:T) => boolean, 
 		key: CompKeyChoices): void 
 	{
-		const data = this.currentCompetition[key] as any;
+		const currentCompetition = this.competitions[this.currentCompetitionIdx];
+		const data = currentCompetition[key] as any;
 		if(data instanceof Array) {
 			this.replaceAll(data.filter(filter), key);
 		}
 	}
 
 	get<T extends CompSubType>(key: CompKeyChoices): T[] {
-		if(!this.currentCompetition[key]) {
+		const currentCompetition = this.competitions[this.currentCompetitionIdx];
+		if(!currentCompetition[key]) {
 			return [];
 		}
-		return this.currentCompetition[key] as unknown as T[];
+		return currentCompetition[key] as unknown as T[];
+	}
+
+	initializeNewComp(id: DataKey): Competition {
+		if(id === DEFAULT_COMPETITION) {}
+		else if(id === EMPTY_COMPETITION) {}
+		else {}
+		return null;
 	}
 
 }
