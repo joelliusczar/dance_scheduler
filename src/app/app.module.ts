@@ -50,6 +50,8 @@ import { AddCompModalComponent }
 	from './add-comp-modal/add-comp-modal.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ElementFilterPipe } 
+	from './shared/pipes/element-filter/element-filter.pipe';
 
 
 
@@ -79,6 +81,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 		SkillLevelFormComponent,
 		MultiDanceFormComponent,
 		AddCompModalComponent,
+		ElementFilterPipe,
   ],
   imports: [
     BrowserModule,

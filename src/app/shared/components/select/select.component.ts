@@ -1,4 +1,4 @@
-import { ContentChildren, Inject } from '@angular/core';
+import { ContentChildren, Inject, ViewChild } from '@angular/core';
 import { Component, 
 	ElementRef, 
 	EventEmitter, 
@@ -13,7 +13,7 @@ import { AbstractControl, ControlValueAccessor,
 	NG_VALIDATORS, 
 	NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BehaviorSubject, noop } from 'rxjs';
-import { DataBasic } from 'src/app/types/IdSelectable';
+import { DataBasic } from 'src/app/types/data-basic';
 import { isEmptyStr } from '../../utils/anyHelper';
 import { asArray } from '../../utils/arrayHelpers';
 import { focusNext } from '../../utils/domHelper';
@@ -68,10 +68,11 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
 	@Input('name') controlName: string = '';
 	@Input('options') options: DataBasic[];
-	@Input('value') selectedItems: DataBasic[];
+	@Input('value') selectedItems: DataBasic[] = [];
 	@Input('multiple') allowMultiSelect: boolean = false;
 	@Input('disabled') isDisabled: boolean;
 	@Input('defaultDisplay') defaultDisplay: string = 'Select...';
+	@Input('customStyle') customStyle: any = null;
 	@Output('onSelected') onSelected = new EventEmitter<DataBasic[]>(); 
 	isOpen: boolean = false;
 	topId: string = '';
@@ -88,6 +89,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
 	@ContentChildren(SelectOptionComponent) 
 	optionElements: QueryList<SelectOptionComponent>;
+	@ViewChild('custom') custom: ElementRef;
+	@ViewChild('optionsParent') optionsParent: ElementRef;
 
 	constructor(private elRef: ElementRef, 
 		@Inject(SELECT_CONFIG) 
@@ -126,11 +129,10 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 				this.selectedSet = new Set(selected);
 			}
 		}
-  }
+	}
 
 	writeValue(obj: any): void {
-		const valueAs = obj as DataBasic[] | DataBasic;
-		this._initializeSelectedValues(valueAs);
+		this._initializeSelectedValues(obj);
 	}
 
 	registerOnChange(fn: any): void {
@@ -152,7 +154,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		return validity;
 	}
 
-	private _initializeSelectedValues(selectedItems: DataBasic[] | any) {
+	private _initializeSelectedValues(selectedItems: any) {
 		if(this.allowMultiSelect) {
 			if(Array.isArray(selectedItems)) {
 				this.selectedItems = selectedItems;
@@ -192,6 +194,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		if(this.isDisabled || this.options?.length < 1) return;
 		this.isOpen = true;
 		this.containerClass = openMenuClass;
+		setTimeout(() => {
+			this.optionsParent.nativeElement.focus();
+		});
 	}
 
 	private _closeMenu(): void {
@@ -209,6 +214,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	//because we want to get the focus event of the options themselves
 	//otherwise, if an option is selected and we click out, this wont fire
 	onFocusOut(): void {
+		console.log('focus out');
 		//this timeout is a hack.
 		//we don't want the blur action to occur if a child is focused
 		//especially since it will occur as we tab through the options
@@ -217,8 +223,10 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		//of the queue so that by then the activeElement is our option
 
 		setTimeout(() => {
+			//reminder element is the whole thing
 			const element = this.elRef.nativeElement.children[0] as HTMLElement;
-			if(!element.contains(document.activeElement)) {
+			// document.activeElement is likely to be the one of the options
+			if(!element.contains(document.activeElement) || element === document.activeElement) {
 				this._closeMenu();
 			}
 		});
@@ -313,7 +321,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
 	showTagList(): boolean {
 		if(this.allowMultiSelect) {
-			return this.selectedItems && this.selectedItems.length > 0;
+			return this.hasSelectedValue();
 		}
 		return false;
 	}
@@ -362,6 +370,11 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	onTagXClicked(option: DataBasic) {
 		this._toggleOptionMulti(option);
 		this.propagateTouch && this.propagateTouch();
+	}
+
+	hasSelectedValue(): boolean {
+		console.log('yo!');
+		return this.selectedItems && this.selectedItems.length > 0;
 	}
 
 	getSingularDisplayValue(): string {

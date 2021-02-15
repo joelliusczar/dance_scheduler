@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DataBasic } from 'src/app/types/IdSelectable';
+import { DataBasic } from 'src/app/types/data-basic';
 
 export interface SelectRegistration {
 	idx: number

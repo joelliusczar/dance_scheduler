@@ -1,4 +1,4 @@
-import { IdSelectable } from './IdSelectable';
+import { IdSelectable } from './id-selectable';
 
 export interface OptionInfo<T = unknown>  extends IdSelectable {
 	associatedObject?: T,

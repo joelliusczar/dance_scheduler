@@ -1,6 +1,9 @@
 import { Sortable } from './sortable';
-import { IdSelectable, DataKey, DataBasic, NameDisplayable, TouchedTimestamp } 
-	from './IdSelectable';
+import { DataKey } from './data-key';
+import { IdSelectable } from './id-selectable';
+import { NameDisplayable } from './name-displayable';
+import { DataBasic } from './data-basic';
+import { SocialEvent } from './social-event';
 
 export type plus = '+'
 
@@ -76,7 +79,7 @@ export interface Heat {
 };
 
 
-export interface Competition extends DataBasic, TouchedTimestamp {
+export interface Competition extends SocialEvent {
 	ageGroups: AgeGroupType[],
 	multiEventAgeGroups: AgeGroupType[],
 	categories: Category[],
@@ -88,9 +91,7 @@ export interface Competition extends DataBasic, TouchedTimestamp {
 	heats: Heat[],
 	judges: Person[],
 	dateOfComp: Date,
-	deadline: Date,
 	finished: boolean,
-	createDate: Date,
 };
 
 

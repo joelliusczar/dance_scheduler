@@ -20,7 +20,6 @@
 	@extend %btn-common
 
 .menu-container-base, %menu-container-base
-	display: inline-block
 	font-size: styles.$data-font-size
 	max-width: 200px
 	border-width: styles.$input-border-width
@@ -58,5 +57,20 @@
 .select-open-icon
 	float: right
 
-.ng-invalid.ng-touched:host .select-picked-value
+.closed-select-default
+	color: #787878
+	
+.closed-select-default.select-picked-value
+	color: #000
+
+
+.ng-invalid.ng-touched:host .closed-select-default
 	color: red
+
+:host
+	display: inline-block
+	border-radius: styles.$rounding-standard
+	border-width: styles.$input-border-width
+	border-style: solid
+	border-color: #767676
+	padding: 2px 0

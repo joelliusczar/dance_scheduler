@@ -1,4 +1,4 @@
-import { TouchedTimestamp } from 'src/app/types/IdSelectable';
+import { TouchedTimestamp } from 'src/app/types/touch-timestamp';
 
 export function swap(array: any[], idx0: number, idx1: number): boolean {
 	if(idx0 < array.length && idx1 < array.length && idx0 >= 0 && idx1 >= 0) {

@@ -33,14 +33,16 @@
 				*ngFor="let competition of options" 
 				[value]="competition.id"
 			>
-				{{competition.name}}
+				{{getEventName(competition)}}
 			</app-select-option>
 		</app-select>
 	</div>
 	<div>
 		<mat-form-field>
 			<mat-label>Date of competition?</mat-label>
-			<input matInput [matDatepicker]="picker" />
+			<input matInput 
+				[matDatepicker]="picker" 
+			/>
 			<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 			<mat-datepicker touchUi #picker></mat-datepicker>
 		</mat-form-field>

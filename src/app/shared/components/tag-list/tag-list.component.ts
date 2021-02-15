@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DataBasic } from '../../../types/IdSelectable';
+import { DataBasic } from '../../../types/data-basic';
 
 @Component({
   selector: 'app-tag-list',
@@ -8,7 +8,7 @@ import { DataBasic } from '../../../types/IdSelectable';
 })
 export class TagListComponent implements OnInit {
 
-	@Input('value') tags: DataBasic[];
+	@Input('value') tags: any[];
 	@Input('readonly') readonly: boolean;
 	@Output('onRemoved') removedEvent = new EventEmitter<DataBasic>();
 	

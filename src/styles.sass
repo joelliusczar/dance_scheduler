@@ -32,6 +32,7 @@ $gradient-linear-bg: linear-gradient($bg-color-menu1 0%, $bg-color-menu2 50%)
 
 $rounding-standard: 0.12em
 $input-border-width: .125em
+$input-focus-border-width: .142em
 
 $top-bar-height: 2em
 
@@ -60,6 +61,18 @@ input[type="text"], input[type="number"]
 	border-width: $input-border-width
 	border-style: solid
 	border-color: #767676
+	
+
+.input-focus, %input-focus
+	box-sizing: border-box
+	outline-width: 0
+	border-radius: $rounding-standard
+	border-width: $input-focus-border-width
+	border-style: solid
+	border-color: #000
+
+input:focus
+	@extend %input-focus
 
 input[type="checkbox"]
 	visibility: hidden
@@ -68,6 +81,7 @@ input[type="checkbox"]
 
 input[type="checkbox"]:after
 	border: 1px solid #333
+	border-width: $input-border-width
 	content: "\00a0"
 	visibility: visible
 	display: inline-block
@@ -189,6 +203,9 @@ th
 	border-color: $border-color-error
 	border-width: $input-border-width
 	border-radius: $rounding-standard
+
+input:focus.ng-invalid.ng-touched:not(form)
+	@extend %input-focus
 
 .width-half
 	width: 50%

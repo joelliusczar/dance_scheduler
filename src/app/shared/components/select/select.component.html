@@ -1,11 +1,9 @@
-<!-- in case you're wondering if this should be a span. Atm, 
-	this div's css is set to inline-block
+<!-- I made this a div because I feel weird about having a div inside a span
 -->
 <div [class]="containerClass" 
 	[tabindex]="tabNum" 
 	role="listbox"
 	(focus)="onFocus()"
-	(focusout)="onFocusOut()"
 	[id]="topId"
 >
 <app-tag-list *ngIf="showTagList()" 
@@ -13,12 +11,19 @@
 	(onRemoved)="onTagXClicked($event)"
 >
 </app-tag-list>
-	<span #custom>
-		<ng-content></ng-content>
+	<span 
+		#custom 
+		class="closed-select-default" 
+		[ngStyle]="customStyle"
+	>
+		<ng-container>
+			<ng-content *ngIf="!showTagList()"></ng-content>
+		</ng-container>
 	</span>
 	<span 
-		*ngIf="!showTagList() && custom.childNodes.length === 0" 
-		class="select-picked-value"
+		*ngIf="!showTagList() && (custom.childNodes | elementFilter).length === 0" 
+		class="closed-select-default {{hasSelectedValue() && select-picked-value}}"
+		[ngStyle]="customStyle"
 	>
 		{{getSingularDisplayValue()}}
 	</span>
@@ -30,7 +35,14 @@
 		class="select-open-icon"
 	>
 	</ds-hide-icon>
-	<div [hidden]="!isOpen" class="option-menu">
+	<!-- the tabindex="-1" is needed so that it can be focused on-->
+	<div 
+		[hidden]="!isOpen" 
+		class="option-menu" 
+		(focusout)="onFocusOut()"
+		tabindex="-1" 
+		#optionsParent
+	>
 		<ng-content select="app-select-option"></ng-content>
 	</div>
 </div>

@@ -6,11 +6,12 @@ import {
 	PartialObserver,
 	from, 
 	BehaviorSubject } from 'rxjs';
-import { TableTypes } from 'src/app/types/data-shape';
+import { TableTypes } from '../../types/data-shape';
 import { BrowserDbService } from '../browser-Db/browser-db.service';
 import { v4 } from 'uuid';
-import { IdSelectable, DataKey } from 'src/app/types/IdSelectable';
-import { TableStats } from 'src/app/types/table-stats';
+import { IdSelectable } from '../../types/id-selectable';
+import { DataKey } from '../../types/data-key';
+import { TableStats } from '../../types/table-stats';
 import { OpQueueService } from '../op-queue/op-queue.service';
 
 

@@ -1,4 +1,5 @@
 export function focusNext(current: Element): void {
+	console.log('focus next');
 	/*
 		I was trying to use this in response to pressing enter on a 
 		certain control. But for reasons, I don't quite understand

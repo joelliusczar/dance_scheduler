@@ -2,10 +2,10 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService, CompKeys } 
-	from 'src/app/services/competition-setup/competition-setup.service';
-import { first } from 'src/app/shared/utils/arrayHelpers';
-import { Category, Competition, Dance, DanceDto } from 'src/app/types/data-shape';
-import { DataKey } from 'src/app/types/IdSelectable';
+	from '../../services/competition-setup/competition-setup.service';
+import { first } from '../../shared/utils/arrayHelpers';
+import { Category, Competition, Dance, DanceDto } from '../../types/data-shape';
+import { DataKey } from '../../types/data-key';
 import { DirectionEventArg } from '../../types/directions';
 
 

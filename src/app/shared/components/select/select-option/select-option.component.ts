@@ -1,14 +1,12 @@
 import { Component, 
 	ElementRef, 
-	Host, 
 	Inject, 
 	Input, 
-	OnInit,    
-	SimpleChanges,    
+	OnInit,      
 	ViewChild, 
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DataBasic } from 'src/app/types/IdSelectable';
+import { DataBasic } from '../../../../types/data-basic';
 import { SelectConfig, SELECT_CONFIG } from '../select-config';
 
 

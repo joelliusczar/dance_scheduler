@@ -2,8 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService } from '../services/competition-setup/competition-setup.service';
-import { Competition } from '../types/data-shape';
-import { DataBasic } from '../types/IdSelectable';
+import { SocialEvent } from '../types/social-event';
 import { DEFAULT_COMPETITION, EMPTY_COMPETITION } from '../types/constants';
 
 
@@ -15,19 +14,30 @@ import { DEFAULT_COMPETITION, EMPTY_COMPETITION } from '../types/constants';
 export class AddCompModalComponent implements OnInit {
 
 	loading = true;
-	options: DataBasic[] = [];
+	options: SocialEvent[] = [];
 	private serviceUnsub: Unsubscribable;
 
 	constructor(public dialogRef: MatDialogRef<AddCompModalComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: DataBasic,
+		@Inject(MAT_DIALOG_DATA) public data: SocialEvent,
 		private competitionService$: CompetitionSetupService) { }
 
   ngOnInit(): void {
 		this.serviceUnsub = this.competitionService$
-			.arraySubscribe((value: Competition[]) => {
+			.arraySubscribe((value: SocialEvent[]) => {
 				this.options = value;
 				this.loading = false;
 		});
+	}
+
+	getEventName(event: SocialEvent): string {
+		if(!event) return 'Invalid';
+		if(event.name) return event.name;
+		if(event.eventDate || event.createDate) {
+			const d = event.eventDate || event.createDate;
+			const s = `comp${d.getFullYear()}${d.getMonth()}${d.getDate}_${d.getTime()}`;
+			return s;
+		}
+		return 'Invalid';
 	}
 	
 	onCancel(): void {

@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Unsubscribable, PartialObserver, BehaviorSubject, Subject } from 'rxjs';
 import { Competition, CompSubType } 
-	from 'src/app/types/data-shape';
+	from '../../types/data-shape';
 import { BrowserDbService, COMPETITION_TABLE_NAME } 
 	from '../browser-Db/browser-db.service';
 import { getLatestIdx, immutableReplace, swap } from '../../shared/utils/arrayHelpers';
-import { Direction, ElevatorDir } from 'src/app/types/directions';
+import { Direction, ElevatorDir } from '../../types/directions';
 import { v4 } from 'uuid';
 import { OpQueueService } from '../op-queue/op-queue.service';
 import { DEFAULT_COMPETITION, EMPTY_COMPETITION } from '../../types/constants';
-import { DataKey } from 'src/app/types/IdSelectable';
+import { DataKey } from '../../types/data-key';
 
 
 export enum CompKeys {
@@ -38,7 +38,7 @@ const compBaseShape : Competition = {
 	heats: [],
 	judges: [],
 	dateOfComp: null,
-	deadline: null,
+	eventDate: null,
 	lastUpdated: null,
 	finished: false,
 	createDate: null,
