@@ -3879,6 +3879,95 @@
             }
         },
         {
+            "name": "CallCounterComponent",
+            "id": "component-CallCounterComponent-e7c6eae075232613fef020dfd190e070",
+            "file": "src/stories/callCounter.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "callCounter",
+            "styleUrls": [],
+            "styles": [
+                "\n      h1 {\n        font-family: Lato;\n      }\n      .brick {\n        width: 100px;\n        height: 100px;\n      }\n      #top {\n        background-color: #1ecbe1;\n      }\n      #tow {\n        background-color: #e1341e;\n      }\n      .brick:focus {\n        border-width: 1px;\n        border-style: solid;\n        border-color: black;\n      }\n    "
+            ],
+            "template": "{{ping()}}\n  <div id=\"top\" class=\"brick\" #topOne tabIndex=\"-1\"></div>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "name",
+                    "line": 33,
+                    "type": "string"
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "topOne",
+                    "type": "ElementRef",
+                    "optional": false,
+                    "description": "",
+                    "line": 34,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "'topOne'"
+                        }
+                    ]
+                },
+                {
+                    "name": "twoOne",
+                    "type": "ElementRef",
+                    "optional": false,
+                    "description": "",
+                    "line": 35,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "'twoOne'"
+                        }
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ping",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 47
+                },
+                {
+                    "name": "topOnClick",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 37
+                },
+                {
+                    "name": "twoOnClick",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 42
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, ElementRef, Input, ViewChild } from \"@angular/core\";\n\n@Component({\n  selector: \"callCounter\",\n\ttemplate: `\n\t\t{{ping()}}\n    <div id=\"top\" class=\"brick\" #topOne tabIndex=\"-1\"></div>\n  `,\n  styles: [\n    `\n      h1 {\n        font-family: Lato;\n      }\n      .brick {\n        width: 100px;\n        height: 100px;\n      }\n      #top {\n        background-color: #1ecbe1;\n      }\n      #tow {\n        background-color: #e1341e;\n      }\n      .brick:focus {\n        border-width: 1px;\n        border-style: solid;\n        border-color: black;\n      }\n    `\n  ]\n})\nexport class CallCounterComponent {\n  @Input() name: string;\n  @ViewChild(\"topOne\") topOne: ElementRef;\n  @ViewChild(\"twoOne\") twoOne: ElementRef;\n\n  topOnClick() {\n    console.log(\"top\");\n    this.topOne.nativeElement.focus();\n  }\n\n  twoOnClick() {\n    console.log(\"two\");\n    this.twoOne.nativeElement.focus();\n\t}\n\t\n\tping() {\n\t\tconsole.log('ping');\n\t}\n}",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "\n      h1 {\n        font-family: Lato;\n      }\n      .brick {\n        width: 100px;\n        height: 100px;\n      }\n      #top {\n        background-color: #1ecbe1;\n      }\n      #tow {\n        background-color: #e1341e;\n      }\n      .brick:focus {\n        border-width: 1px;\n        border-style: solid;\n        border-color: black;\n      }\n    \n"
+        },
+        {
             "name": "CategoryFormComponent",
             "id": "component-CategoryFormComponent-7f37f4626330391229786d5705e1930b",
             "file": "src/app/comp-rules-setup/category-form/category-form.component.ts",
@@ -7156,17 +7245,17 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.prod.ts",
+                "file": "src/environments/environment.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: true\n}"
+                "defaultValue": "{\n  production: false\n}"
             },
             {
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.ts",
+                "file": "src/environments/environment.prod.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: false\n}"
+                "defaultValue": "{\n  production: true\n}"
             },
             {
                 "name": "Example",
@@ -7180,6 +7269,14 @@
                 "name": "Example",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/callCounter.stories.ts",
+                "type": "Story<CallCounterComponent>",
+                "defaultValue": "(args: CallCounterComponent) => ({\n  component: CallCounterComponent,\n  props: args,\n})"
+            },
+            {
+                "name": "Example",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/taglist.stories.ts",
                 "type": "Story<TagListComponent>",
                 "defaultValue": "(args: TagListComponent) => ({\n\tcomponent: TagListComponent,\n\tprops: args\n})"
@@ -7188,7 +7285,7 @@
                 "name": "LoggedIn",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
+                "file": "src/stories/Page.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -7196,14 +7293,6 @@
                 "name": "LoggedIn",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Page.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "LoggedOut",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/stories/Header.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -7213,6 +7302,14 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/Page.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "LoggedOut",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Header.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -7237,6 +7334,14 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/Button.stories.ts",
+                "type": "",
+                "defaultValue": "Example.bind({})"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/callCounter.stories.ts",
                 "type": "",
                 "defaultValue": "Example.bind({})"
             },
@@ -7291,14 +7396,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
-                "type": "Story<Header>",
-                "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/stories/Page.stories.ts",
                 "type": "Story<Page>",
                 "defaultValue": "(args: Page) => ({\n  component: Page,\n  props: args,\n})"
@@ -7318,6 +7415,14 @@
                 "file": "src/stories/taglist.stories.ts",
                 "type": "Story",
                 "defaultValue": "(args) => ({\n\ttemplate: `<app-tag-list [value]=\"[{id: '234', name: 'value2'}]\"></app-tag-list>`\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Header.stories.ts",
+                "type": "Story<Header>",
+                "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
             },
             {
                 "name": "Top",
@@ -7948,16 +8053,6 @@
                     "defaultValue": "\"empty\""
                 }
             ],
-            "src/environments/environment.prod.ts": [
-                {
-                    "name": "environment",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/environments/environment.prod.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  production: true\n}"
-                }
-            ],
             "src/environments/environment.ts": [
                 {
                     "name": "environment",
@@ -7966,6 +8061,16 @@
                     "file": "src/environments/environment.ts",
                     "type": "object",
                     "defaultValue": "{\n  production: false\n}"
+                }
+            ],
+            "src/environments/environment.prod.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.prod.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: true\n}"
                 }
             ],
             "src/stories/Button.stories.ts": [
@@ -7994,6 +8099,24 @@
                     "defaultValue": "(args) => ({\n\ttemplate: `<storybook-button miText=\"howdy\"></storybook-button>`\n})"
                 }
             ],
+            "src/stories/callCounter.stories.ts": [
+                {
+                    "name": "Example",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/callCounter.stories.ts",
+                    "type": "Story<CallCounterComponent>",
+                    "defaultValue": "(args: CallCounterComponent) => ({\n  component: CallCounterComponent,\n  props: args,\n})"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/callCounter.stories.ts",
+                    "type": "",
+                    "defaultValue": "Example.bind({})"
+                }
+            ],
             "src/stories/taglist.stories.ts": [
                 {
                     "name": "Example",
@@ -8020,32 +8143,6 @@
                     "defaultValue": "Example.bind({})"
                 }
             ],
-            "src/stories/Header.stories.ts": [
-                {
-                    "name": "LoggedIn",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Header.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "LoggedOut",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Header.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Header.stories.ts",
-                    "type": "Story<Header>",
-                    "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
-                }
-            ],
             "src/stories/Page.stories.ts": [
                 {
                     "name": "LoggedIn",
@@ -8070,6 +8167,32 @@
                     "file": "src/stories/Page.stories.ts",
                     "type": "Story<Page>",
                     "defaultValue": "(args: Page) => ({\n  component: Page,\n  props: args,\n})"
+                }
+            ],
+            "src/stories/Header.stories.ts": [
+                {
+                    "name": "LoggedIn",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Header.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "LoggedOut",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Header.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Header.stories.ts",
+                    "type": "Story<Header>",
+                    "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
                 }
             ],
             "src/app/shared/components/select/select-config.ts": [
@@ -9581,6 +9704,35 @@
                 "coveragePercent": 83,
                 "coverageCount": "5/6",
                 "status": "very-good"
+            },
+            {
+                "filePath": "src/stories/callCounter.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CallCounterComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/7",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/callCounter.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Example",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/callCounter.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
             },
             {
                 "filePath": "src/stories/header.component.ts",

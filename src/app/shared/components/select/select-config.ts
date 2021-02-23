@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DataBasic } from 'src/app/types/data-basic';
+import { SelectOptionComponent } from './select-option/select-option.component';
 
 export interface SelectRegistration {
 	idx: number
@@ -9,9 +9,9 @@ export interface SelectRegistration {
 export interface SelectConfig {
 	allowMultiSelect: boolean,
 	controlName: string,
-	onClickCallback: (option: DataBasic) => void,
+	onClickCallback: (option: SelectOptionComponent) => void,
 	register: () => SelectRegistration,
-	selectedSet: Set<DataBasic>
+	selectedSet: Set<unknown>
 };
 
 export const SELECT_CONFIG = 

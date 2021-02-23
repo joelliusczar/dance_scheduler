@@ -1,35 +1,27 @@
 // also exported from '@storybook/angular' if you can deal with breaking changes in 6.1
 import { Story, Meta } from '@storybook/angular';
-import Button from './button.component';
+import {CallCounterComponent} from './callCounter.component'
 import { moduleMetadata } from '@storybook/angular';
 
 export default {
-  title: 'Example/Button',
-	component: Button,
+  title: 'Example/CallCounter',
+	component: CallCounterComponent,
 	decorators: [
 		moduleMetadata({
-			declarations: [Button]
+			declarations: [CallCounterComponent]
 		})
 	]
-  // argTypes: {
-  //   backgroundColor: { control: 'color' },
-  // },
 } as Meta;
 
-const Example: Story<Button> = (args: Button) => ({
-  component: Button,
+const Example: Story<CallCounterComponent> = (args: CallCounterComponent) => ({
+  component: CallCounterComponent,
   props: args,
 });
 
 export const Primary = Example.bind({});
 Primary.args = {
-  //primary: true,
-  //words: 'Button',
 };
 
 export const Template: Story = (args) => ({
-	template: `<storybook-button miText="howdy"></storybook-button>`
+	template: `<callCounter></callCounter>`
 });
-
-
-

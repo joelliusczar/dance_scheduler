@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DataBasic } from '../../../types/data-basic';
+import { Component, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList } from '@angular/core';
+import { Unsubscribable } from 'rxjs';
+import { DSInput } from 'src/app/types/ds-input';
+import { TagItemComponent } from '../select/tag-item/tag-item.component';
 
 @Component({
   selector: 'app-tag-list',
@@ -10,16 +12,16 @@ export class TagListComponent implements OnInit {
 
 	@Input('value') tags: any[];
 	@Input('readonly') readonly: boolean;
-	@Output('onRemoved') removedEvent = new EventEmitter<DataBasic>();
+	@Output('onRemoved') removedEvent = new EventEmitter<DSInput>();
+
 	
   constructor() { }
 
   ngOnInit(): void {
 	}
 	
-	onTagXClicked(e: MouseEvent, option: DataBasic) {
+	onTagXClicked(option: DSInput): void {
 		this.removedEvent.emit(option);
-		e.stopPropagation();
 	}
 
 }

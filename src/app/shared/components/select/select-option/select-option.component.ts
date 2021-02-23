@@ -6,7 +6,8 @@ import { Component,
 	ViewChild, 
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DataBasic } from '../../../../types/data-basic';
+import { nodeFirst } from 'src/app/shared/utils/domHelper';
+import { DSInput } from 'src/app/types/ds-input';
 import { SelectConfig, SELECT_CONFIG } from '../select-config';
 
 
@@ -15,15 +16,15 @@ import { SelectConfig, SELECT_CONFIG } from '../select-config';
   templateUrl: './select-option.component.html',
   styleUrls: ['./select-option.component.sass']
 })
-export class SelectOptionComponent implements OnInit {
+export class SelectOptionComponent implements OnInit, DSInput {
 
 	@Input('multiple') allowMultiSelect: boolean = false;
-	@Input('value') option: DataBasic;
+	@Input('value') value: unknown;
 	@Input('selected') selected: boolean;
 	@Input('name') controlName: string;
 	@Input('tabindex') tabNum = -1;
-	@Input('test') test: string;
-	onClickCallback: (option: DataBasic) => void = null;
+	content = '';
+	onClickCallback: (option: SelectOptionComponent) => void = null;
 
 	private inialized: boolean;
 
@@ -32,10 +33,9 @@ export class SelectOptionComponent implements OnInit {
 
   constructor(
 		@Inject(SELECT_CONFIG) 
-		private selectConfig$: BehaviorSubject<SelectConfig | null>) 
-	{ 
-		
-	}
+		private selectConfig$: BehaviorSubject<SelectConfig | null>,
+		private elRef: ElementRef) 
+	{}
 
   ngOnInit(): void {
 		this.selectConfig$.subscribe((config: SelectConfig) => {
@@ -47,12 +47,17 @@ export class SelectOptionComponent implements OnInit {
 				this.controlName = `option-${config.controlName}-${registration.idx}`;
 				this.onClickCallback = config.onClickCallback;
 			}
-			this.selected = config.selectedSet?.has(this.option);
+			this.selected = config.selectedSet?.has(this.value);
 		});
 	}
 
+	ngAfterViewChecked(): void {
+		const first = nodeFirst(this.elRef?.nativeElement?.children);
+		this.content = first?.textContent || '';
+	}
+
 	onClick(): void {
-		this.onClickCallback && this.onClickCallback(this.option);
+		this.onClickCallback && this.onClickCallback(this);
 	}
 	
 }

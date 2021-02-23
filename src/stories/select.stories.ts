@@ -5,10 +5,12 @@ import { TagListComponent }
 	from '../app/shared/components/tag-list/tag-list.component';
 import { ElementFilterPipe } 
 	from '../app/shared/pipes/element-filter/element-filter.pipe';
-import { UpDownComponent } 
-	from '../app/shared/components/up-down/up-down.component';
 import { HideIconComponent }
 	from '../app/shared/components/icons/icons.component';
+import { SelectOptionComponent }
+	from '../app/shared/components/select/select-option/select-option.component';
+import { TagItemComponent }
+	from '../app/shared/components/select/tag-item/tag-item.component';
 
 export default {
 	title: 'Example/Select',
@@ -19,17 +21,22 @@ export default {
 				TagListComponent, 
 				ElementFilterPipe,
 				HideIconComponent,
+				SelectOptionComponent,
+				TagItemComponent,
 			],
 		})
 	]
 } as Meta;
 
-const Template: Story<SelectComponent> = (args: SelectComponent) => ({
-	component: SelectComponent,
-	props: args
+export const Empty: Story = (args) => ({
+	template: `<app-select></app-select>`
 });
 
-export const Top = Template.bind({});
-Top.args = {
-	allowMultiSelect: false
-};
+export const HasOptions: Story = (args) => ({
+	template: `<app-select>
+		<app-select-option
+			value="123"
+		>Option 1</app-select-option>
+	</app-select>`
+});
+

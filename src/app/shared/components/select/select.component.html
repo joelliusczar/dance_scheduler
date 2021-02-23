@@ -1,15 +1,17 @@
 <!-- I made this a div because I feel weird about having a div inside a span
 -->
-<div [class]="containerClass" 
+<div class="ds-menu-button {{containerClass}}" 
 	[tabindex]="tabNum" 
 	role="listbox"
 	(focus)="onFocus()"
 	[id]="topId"
 >
 <app-tag-list *ngIf="showTagList()" 
-	[value]="selectedItems"
 	(onRemoved)="onTagXClicked($event)"
 >
+	<app-tag-item [value]="option" *ngFor="let option of selectedItems">
+		{{lookupContent(option)}}
+	</app-tag-item>
 </app-tag-list>
 	<span 
 		#custom 

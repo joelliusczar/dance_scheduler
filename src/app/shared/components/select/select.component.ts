@@ -12,8 +12,9 @@ import { Component,
 import { AbstractControl, ControlValueAccessor, 
 	NG_VALIDATORS, 
 	NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BehaviorSubject, noop } from 'rxjs';
+import { BehaviorSubject, noop, Unsubscribable } from 'rxjs';
 import { DataBasic } from 'src/app/types/data-basic';
+import { DSInput } from 'src/app/types/ds-input';
 import { isEmptyStr } from '../../utils/anyHelper';
 import { asArray } from '../../utils/arrayHelpers';
 import { focusNext } from '../../utils/domHelper';
@@ -67,16 +68,15 @@ const skippedKeys = new Set([
 export class SelectComponent implements OnInit, ControlValueAccessor {
 
 	@Input('name') controlName: string = '';
-	@Input('options') options: DataBasic[];
-	@Input('value') selectedItems: DataBasic[] = [];
+	@Input('value') selectedItems: unknown[] = [];
 	@Input('multiple') allowMultiSelect: boolean = false;
 	@Input('disabled') isDisabled: boolean;
 	@Input('defaultDisplay') defaultDisplay: string = 'Select...';
 	@Input('customStyle') customStyle: any = null;
-	@Output('onSelected') onSelected = new EventEmitter<DataBasic[]>(); 
+	@Output('onSelected') onSelected = new EventEmitter<unknown[]>(); 
 	isOpen: boolean = false;
 	topId: string = '';
-	selectedSet: Set<DataBasic>;
+	selectedSet: Set<unknown>;
 	containerClass: string = closedMenuClass;
 	highlightedMenuItemIdx: number = -1;
 	tabNum: number;
@@ -85,10 +85,12 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	hasError: boolean = false;
 	optionMaxIdx: number = 0; 
 	selectConfig: SelectConfig;
-
+	childrenChangeUnsub: Unsubscribable;
+	keyContentMap: Map<unknown, string> = new Map();
 
 	@ContentChildren(SelectOptionComponent) 
 	optionElements: QueryList<SelectOptionComponent>;
+
 	@ViewChild('custom') custom: ElementRef;
 	@ViewChild('optionsParent') optionsParent: ElementRef;
 
@@ -114,21 +116,29 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		}
 	}
 
-	ngOnChanges(changes: SimpleChange) {
-		const optionChanges = changes['options'];
-		if(optionChanges && !optionChanges.firstChange) {
-			const prevLength = optionChanges.previousValue?.length;
-			//if something was deleted
-			if(prevLength > optionChanges.currentValue?.length) {
-				const current = optionChanges.currentValue
-					.map(o => o.key);
-				const currentSet = new Set(current);
-				const selected = asArray(this.selectedItems)
-					.filter(o => currentSet.has(o.id));
-				this.selectedItems = selected;
-				this.selectedSet = new Set(selected);
-			}
-		}
+	// ngOnChanges(changes: SimpleChange) {
+	// 	const optionChanges = changes['options'];
+	// 	if(optionChanges && !optionChanges.firstChange) {
+	// 		const prevLength = optionChanges.previousValue?.length;
+	// 		//if something was deleted
+	// 		if(prevLength > optionChanges.currentValue?.length) {
+	// 			const current = optionChanges.currentValue
+	// 				.map(o => o.key);
+	// 			const currentSet = new Set(optionChanges.currentValue);
+	// 			const selected = asArray(this.selectedItems)
+	// 				.filter(o => currentSet.has(o.id));
+	// 			this.selectedItems = selected;
+	// 			this.selectedSet = new Set(selected);
+	// 		}
+	// 	}
+	// }
+
+	ngAfterViewInit(): void {
+		this.keyContentMap = new Map(this.optionElements.map(c => [c.value, c.content]));
+		this.childrenChangeUnsub = this.optionElements.changes.subscribe(
+			(changes: QueryList<SelectOptionComponent>) => {
+				this.keyContentMap = new Map(changes.map(c => [c.value, c.content]));
+		});
 	}
 
 	writeValue(obj: any): void {
@@ -191,7 +201,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	}
 
 	private _openMenu(): void {
-		if(this.isDisabled || this.options?.length < 1) return;
+		if(this.isDisabled || (this.optionElements?.length || 0) < 1) return;
+		console.log('here?');
 		this.isOpen = true;
 		this.containerClass = openMenuClass;
 		setTimeout(() => {
@@ -244,9 +255,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		const idx = this.highlightedMenuItemIdx;
 		const newIdx = optionElements.findIndex(
 			(option: SelectOptionComponent) => {
-				if(!option.option) return false;
+				if(!option.value) return false;
 				const upKey = e.key.toLocaleUpperCase();
-				const upStr = option.option.name.toLocaleUpperCase()
+				const upStr = option.content.toLocaleUpperCase()
 				return upStr.startsWith(upKey);
 		});
 		if(newIdx > -1) {
@@ -265,8 +276,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		const optionElements = this.optionElements.toArray();
 		const optionElement = optionElements[this.highlightedMenuItemIdx];
 		optionElement.selected = true;
-		const option = optionElement.option;
-		this.onChecked(option);
+		this.onChecked(optionElement);
 	}
 
 	private _openMenuKeydownEventBranches(e: KeyboardEvent) {
@@ -294,7 +304,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 			if(idx > 0) {
 				this._menuOptionHighlight(idx - 1);
 			}
-			e.preventDefault();	
+			e.preventDefault();
 		}
 		else if(e.key === 'ArrowDown') {
 			const idx = this.highlightedMenuItemIdx;
@@ -326,11 +336,11 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		return false;
 	}
 
-	isOptionChecked(option: DataBasic): boolean {
+	isOptionChecked(option: unknown): boolean {
 		return this.selectedSet && this.selectedSet.has(option);
 	}
 
-	private _replaceValues(selected: DataBasic[]): void {
+	private _replaceValues(selected: unknown[]): void {
 		this.selectedItems = selected;
 		this.selectedSet = new Set(selected);
 		this.onSelected.emit([...selected]);
@@ -341,9 +351,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		this.selectConfig$.next(this.selectConfig);
 	}
 
-	private _toggleOptionMulti(option: DataBasic): void {
-		const selectedArray = this.selectedItems as DataBasic[];
-		const items = selectedArray.filter(t => t.id !== option.id);
+	private _toggleOptionMulti(option: DSInput): void {
+		const selectedArray = this.selectedItems;
+		const items = selectedArray.filter(t => t !== option.value);
 		//if no items were matched to be removed, then add instead
 		if(items.length === selectedArray.length) {
 			items.push(option);
@@ -351,14 +361,12 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		this._replaceValues(items);
 	}
 
-	private _toggleOptionSingle(option: DataBasic): void {
-		this._replaceValues(option ? [option] : []);
+	private _toggleOptionSingle(option: SelectOptionComponent): void {
+		this._replaceValues(option ? [option.value] : []);
 		this._closeMenu();
 	}
 
-	onChecked(option: DataBasic): void {
-		console.log('onChecked');
-		console.log(option);
+	onChecked(option: SelectOptionComponent): void {
 		if(this.allowMultiSelect) {
 			this._toggleOptionMulti(option);
 		}
@@ -367,7 +375,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		}
 	}
 
-	onTagXClicked(option: DataBasic) {
+	onTagXClicked(option: DSInput) {
 		this._toggleOptionMulti(option);
 		this.propagateTouch && this.propagateTouch();
 	}
@@ -378,7 +386,23 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	}
 
 	getSingularDisplayValue(): string {
-		const selected = this.selectedItems as DataBasic[];
-		return selected[0] ? selected[0].name : this.defaultDisplay;
+		const selected = this.selectedItems[0];
+		if(!selected) return this.defaultDisplay;
+		if(this.keyContentMap.has(selected)) {
+			return this.lookupContent(selected);
+		};
+		return selected as string;
 	}
+
+	lookupContent(value: unknown): string {
+		if(this.keyContentMap.has(value)) {
+			return this.keyContentMap.get(value);
+		}
+		return value as string;
+	}
+
+	ngDestroy(): void {
+		this.childrenChangeUnsub?.unsubscribe();
+	}
+
 }

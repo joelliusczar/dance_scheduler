@@ -1,10 +1,3 @@
 <span class="tag-list">
-	<ng-container *ngIf="tags?.length > 0">
-		<span *ngFor="let option of tags" class="single-tag">
-			{{option.name}}
-			<button *ngIf="!readonly" (click)="onTagXClicked($event, option)">
-				X
-			</button>
-		</span>
-	</ng-container>
+	<ng-content select="app-select"></ng-content>
 </span>

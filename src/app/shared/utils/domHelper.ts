@@ -39,3 +39,8 @@ export function focusNext(current: Element): void {
 		}
 	});
 }
+
+export function nodeFirst(nodes: NodeList): Node {
+	if(!nodes || nodes.length < 1) return null;
+	return nodes[0];
+}

@@ -52,6 +52,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ElementFilterPipe } 
 	from './shared/pipes/element-filter/element-filter.pipe';
+import { TagItemComponent } 
+	from './shared/components/select/tag-item/tag-item.component';
 
 
 
@@ -82,6 +84,7 @@ import { ElementFilterPipe }
 		MultiDanceFormComponent,
 		AddCompModalComponent,
 		ElementFilterPipe,
+		TagItemComponent,
   ],
   imports: [
     BrowserModule,

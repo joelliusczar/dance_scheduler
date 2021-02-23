@@ -1,0 +1,6 @@
+<span class="single-tag">
+	<ng-content></ng-content>
+	<button *ngIf="!readonly" (click)="onTagXClicked($event)">
+		X
+	</button>
+</span>
