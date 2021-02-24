@@ -13,10 +13,8 @@ import { AbstractControl, ControlValueAccessor,
 	NG_VALIDATORS, 
 	NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BehaviorSubject, noop, Unsubscribable } from 'rxjs';
-import { DataBasic } from 'src/app/types/data-basic';
 import { DSInput } from 'src/app/types/ds-input';
 import { isEmptyStr } from '../../utils/anyHelper';
-import { asArray } from '../../utils/arrayHelpers';
 import { focusNext } from '../../utils/domHelper';
 import { SelectConfig, SELECT_CONFIG } from './select-config';
 import { 
@@ -356,7 +354,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 		const items = selectedArray.filter(t => t !== option.value);
 		//if no items were matched to be removed, then add instead
 		if(items.length === selectedArray.length) {
-			items.push(option);
+			items.push(option.value);
 		}
 		this._replaceValues(items);
 	}
@@ -381,8 +379,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	}
 
 	hasSelectedValue(): boolean {
-		console.log('yo!');
-		return this.selectedItems && this.selectedItems.length > 0;
+		return !!this.selectedItems && this.selectedItems.length > 0;
 	}
 
 	getSingularDisplayValue(): string {

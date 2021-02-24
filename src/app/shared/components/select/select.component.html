@@ -24,7 +24,7 @@
 	</span>
 	<span 
 		*ngIf="!showTagList() && (custom.childNodes | elementFilter).length === 0" 
-		class="closed-select-default {{hasSelectedValue() && select-picked-value}}"
+		class="closed-select-default {{hasSelectedValue() ? 'select-picked-value' : ''}}"
 		[ngStyle]="customStyle"
 	>
 		{{getSingularDisplayValue()}}
