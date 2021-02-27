@@ -207,7 +207,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
 	private _openMenu(): void {
 		if(this.isDisabled || (this.optionElements?.length || 0) < 1) return;
-		console.log('here?');
 		this.isOpen = true;
 		this.containerClass = openMenuClass;
 		setTimeout(() => {
@@ -230,7 +229,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	//because we want to get the focus event of the options themselves
 	//otherwise, if an option is selected and we click out, this wont fire
 	onFocusOut(): void {
-		console.log('focus out');
 		//this timeout is a hack.
 		//we don't want the blur action to occur if a child is focused
 		//especially since it will occur as we tab through the options
