@@ -30,7 +30,7 @@
 		{{getSingularDisplayValue()}}
 	</span>
 	<ds-hide-icon 
-		[hidden]="isOpen || isDisabled || options?.length < 1"
+		[hidden]="isOpen || isDisabled || (optionsParent.childNodes | elementFilter).length < 1"
 		[strokeColor]="hasError ? 'red' : 'black'" 
 		width=".8em" 
 		height=".8em"

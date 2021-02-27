@@ -31,3 +31,36 @@ export const Template: Story = (args) => ({
 		</app-tag-item>	
 	</app-tag-list>`
 });
+
+
+export const Multi: Story = (args) => ({
+	template: `
+	<div>
+		<app-tag-list name="alpha">
+			<app-tag-item value="123">
+				Option 1
+			</app-tag-item>
+			<app-tag-item value="234">
+				Option 2
+			</app-tag-item>
+			<app-tag-item value="345">
+				Option 3
+			</app-tag-item>	
+		</app-tag-list>
+	</div>
+	<div>
+	<app-tag-list name="bravo">
+		<app-tag-item value="123">
+			Option 1
+		</app-tag-item>
+		<app-tag-item value="234">
+			Option 2
+		</app-tag-item>
+		<app-tag-item value="345">
+			Option 3
+		</app-tag-item>	
+	</app-tag-list>
+	</div>
+	`
+});
+

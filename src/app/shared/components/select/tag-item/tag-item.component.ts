@@ -28,7 +28,7 @@ export class TagItemComponent implements OnInit, DSInput {
 			if(!this.inialized) {
 				this.inialized = true;
 				const registration = config.register();
-				this.controlName = `option-${config.controlName}-${registration.idx}`;
+				this.controlName = `tag-${config.controlName}-${registration.idx}`;
 				this.onClickCallback = config.onClickCallback;
 				this.readonly = !config.showXButton;
 			}

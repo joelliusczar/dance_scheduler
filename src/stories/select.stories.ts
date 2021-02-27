@@ -121,3 +121,90 @@ export const MultiSelectPreSelectStringValue: Story = (args) => ({
 		</app-select-option>
 	</app-select>`
 });
+
+
+export const HasOptionsMultiInstanceNoName: Story = (args) => ({
+	template: `
+	<div>
+		<app-select>
+			<app-select-option
+				value="123"
+			>
+				Option 1
+			</app-select-option>
+			<app-select-option
+				value="234"
+			>
+				Option 2
+			</app-select-option>
+			<app-select-option
+				value="345"
+			>
+				Option 3
+			</app-select-option>
+		</app-select>
+	</div>
+	<div>
+		<app-select>
+			<app-select-option
+				value="123"
+			>
+				Option 1
+			</app-select-option>
+			<app-select-option
+				value="234"
+			>
+				Option 2
+			</app-select-option>
+			<app-select-option
+				value="345"
+			>
+				Option 3
+			</app-select-option>
+		</app-select>
+	</div>
+	`
+});
+
+export const HasOptionsMultiInstanceName: Story = (args) => ({
+	template: `
+	<div>
+		<app-select name="alpha">
+			<app-select-option
+				value="123"
+			>
+				Option 1
+			</app-select-option>
+			<app-select-option
+				value="234"
+			>
+				Option 2
+			</app-select-option>
+			<app-select-option
+				value="345"
+			>
+				Option 3
+			</app-select-option>
+		</app-select>
+	</div>
+	<div>
+		<app-select name="bravo">
+			<app-select-option
+				value="123"
+			>
+				Option 1
+			</app-select-option>
+			<app-select-option
+				value="234"
+			>
+				Option 2
+			</app-select-option>
+			<app-select-option
+				value="345"
+			>
+				Option 3
+			</app-select-option>
+		</app-select>
+	</div>
+	`
+});

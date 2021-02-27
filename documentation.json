@@ -781,10 +781,10 @@
         },
         {
             "name": "TagsConfig",
-            "id": "interface-TagsConfig-6c1fcde2ce60f3a8dae02291610ad991",
+            "id": "interface-TagsConfig-e88075305dd67b90b72b44c742745b61",
             "file": "src/app/shared/components/select/tags-config.ts",
             "type": "interface",
-            "sourceCode": "import { InjectionToken } from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { SelectRegistration } from './select-registration';\n\n\nexport interface TagsConfig {\n\tcontrolName: string,\n\tonClickCallback: (option: DSInput) => void,\n\tregister: () => SelectRegistration,\n};\n\nexport const TAGS_CONFIG = \n\tnew InjectionToken<BehaviorSubject<TagsConfig>>(\n\t'tag config'\n);",
+            "sourceCode": "import { InjectionToken } from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { SelectRegistration } from './select-registration';\n\n\nexport interface TagsConfig {\n\tcontrolName: string,\n\tonClickCallback: (option: DSInput) => void,\n\tregister: () => SelectRegistration,\n\tshowXButton: boolean,\n};\n\nexport const TAGS_CONFIG = \n\tnew InjectionToken<BehaviorSubject<TagsConfig>>(\n\t'tag config'\n);",
             "properties": [
                 {
                     "name": "controlName",
@@ -806,6 +806,13 @@
                     "optional": false,
                     "description": "",
                     "line": 10
+                },
+                {
+                    "name": "showXButton",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 11
                 }
             ],
             "indexSignatures": [],
@@ -5771,7 +5778,7 @@
         },
         {
             "name": "SelectComponent",
-            "id": "component-SelectComponent-8a2f985189581264e8b34e6cb12ecd42",
+            "id": "component-SelectComponent-e7b3cee74f98108414b68da86dfb89b8",
             "file": "src/app/shared/components/select/select.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -5990,7 +5997,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 273,
+                    "line": 280,
                     "modifierKind": [
                         112
                     ]
@@ -6001,7 +6008,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 211,
+                    "line": 218,
                     "modifierKind": [
                         112
                     ]
@@ -6017,7 +6024,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 251,
+                    "line": 258,
                     "modifierKind": [
                         112
                     ],
@@ -6067,7 +6074,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 244,
+                    "line": 251,
                     "modifierKind": [
                         112
                     ],
@@ -6087,7 +6094,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 201,
+                    "line": 208,
                     "modifierKind": [
                         112
                     ]
@@ -6103,7 +6110,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 280,
+                    "line": 287,
                     "modifierKind": [
                         112
                     ],
@@ -6128,7 +6135,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 337,
+                    "line": 344,
                     "modifierKind": [
                         112
                     ],
@@ -6153,7 +6160,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 348,
+                    "line": 355,
                     "modifierKind": [
                         112
                     ],
@@ -6178,7 +6185,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 358,
+                    "line": 365,
                     "modifierKind": [
                         112
                     ],
@@ -6198,7 +6205,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 381
+                    "line": 388
                 },
                 {
                     "name": "hasSelectedValue",
@@ -6206,7 +6213,7 @@
                     "optional": false,
                     "returnType": "boolean",
                     "typeParameters": [],
-                    "line": 377
+                    "line": 384
                 },
                 {
                     "name": "lookupContent",
@@ -6219,7 +6226,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 390,
+                    "line": 397,
                     "jsdoctags": [
                         {
                             "name": "value",
@@ -6244,7 +6251,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 397
+                    "line": 404
                 },
                 {
                     "name": "ngOnInit",
@@ -6265,7 +6272,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 363,
+                    "line": 370,
                     "jsdoctags": [
                         {
                             "name": "option",
@@ -6282,7 +6289,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 218
+                    "line": 225
                 },
                 {
                     "name": "onFocusOut",
@@ -6290,7 +6297,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 225
+                    "line": 232
                 },
                 {
                     "name": "onTagXClicked",
@@ -6303,7 +6310,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 372,
+                    "line": 379,
                     "jsdoctags": [
                         {
                             "name": "option",
@@ -6386,7 +6393,7 @@
                     "optional": false,
                     "returnType": "boolean",
                     "typeParameters": [],
-                    "line": 330
+                    "line": 337
                 },
                 {
                     "name": "validate",
@@ -6446,13 +6453,13 @@
                     "argsDecorator": [
                         "$event"
                     ],
-                    "line": 324
+                    "line": 331
                 }
             ],
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { ContentChildren, Inject, ViewChild } from '@angular/core';\nimport { Component, \n\tElementRef, \n\tEventEmitter, \n\tforwardRef, \n\tHostListener, \n\tInput, \n\tOnInit, \n\tOutput, \n\tQueryList, \n\tSimpleChange } from '@angular/core';\nimport { AbstractControl, ControlValueAccessor, \n\tNG_VALIDATORS, \n\tNG_VALUE_ACCESSOR } from '@angular/forms';\nimport { BehaviorSubject, noop, Unsubscribable } from 'rxjs';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { isEmptyStr } from '../../utils/anyHelper';\nimport { focusNext } from '../../utils/domHelper';\nimport { SelectConfig, SELECT_CONFIG } from './select-config';\nimport { \n\tSelectOptionComponent } \nfrom './select-option/select-option.component';\n\nconst closedMenuClass = 'menu-container-closed ds-select';\nconst openMenuClass = 'menu-container-open ds-select';\nconst disabledMenuClass = 'menu-container-disabled';\n\nconst skippedKeys = new Set([\n\t'Backspace',\n\t'Tab',\n\t'F1',\n\t'F1',\n\t'F2',\n\t'F3',\n\t'F4',\n\t'F5',\n\t'F6',\n\t'F7',\n\t'F8',\n\t'F9',\n\t'F10',\n\t'F11',\n\t'F12'\n]);\n\n@Component({\n  selector: 'app-select',\n  templateUrl: './select.component.html',\n\tstyleUrls: ['./select.component.sass'],\n\tproviders: [{\n\t\tprovide: NG_VALUE_ACCESSOR,\n\t\tuseExisting: forwardRef(() => SelectComponent),\n\t\tmulti: true,\n\t},\n\t{\n\t\tprovide: SELECT_CONFIG,\n\t\tuseFactory: () => new BehaviorSubject<SelectConfig | null>(null)\n\t},\n\t{\n\t\tprovide: NG_VALIDATORS,\n\t\tuseExisting: forwardRef(() => SelectComponent),\n\t\tmulti: true,\n\t}\n]\n})\nexport class SelectComponent implements OnInit, ControlValueAccessor {\n\n\t@Input('name') controlName: string = '';\n\t@Input('value') selectedItems: unknown[] = [];\n\t@Input('multiple') allowMultiSelect: boolean = false;\n\t@Input('disabled') isDisabled: boolean;\n\t@Input('defaultDisplay') defaultDisplay: string = 'Select...';\n\t@Input('customStyle') customStyle: any = null;\n\t@Output('onSelected') onSelected = new EventEmitter<unknown[]>(); \n\tisOpen: boolean = false;\n\ttopId: string = '';\n\tselectedSet: Set<unknown>;\n\tcontainerClass: string = closedMenuClass;\n\thighlightedMenuItemIdx: number = -1;\n\ttabNum: number;\n\tpropagateChange: (_: any) => {};\n\tpropagateTouch: () => void;\n\thasError: boolean = false;\n\toptionMaxIdx: number = 0; \n\tselectConfig: SelectConfig;\n\tchildrenChangeUnsub: Unsubscribable;\n\tkeyContentMap: Map<unknown, string> = new Map();\n\n\t@ContentChildren(SelectOptionComponent) \n\toptionElements: QueryList<SelectOptionComponent>;\n\n\t@ViewChild('custom') custom: ElementRef;\n\t@ViewChild('optionsParent') optionsParent: ElementRef;\n\n\tconstructor(private elRef: ElementRef, \n\t\t@Inject(SELECT_CONFIG) \n\t\tprivate selectConfig$: BehaviorSubject<SelectConfig>) \n\t{ }\n\t\n\tngOnInit(): void {\n\t\tthis._initializeSelectedValues(this.selectedItems);\n\t\tthis.topId = `ds-select-top-${this.controlName}`;\n\t\tthis.selectConfig = {\n\t\t\tallowMultiSelect: this.allowMultiSelect,\n\t\t\tcontrolName: this.controlName,\n\t\t\tonClickCallback: this.onChecked.bind(this),\n\t\t\tregister: () => ({ idx: this.optionMaxIdx++ }),\n\t\t\tselectedSet: this.selectedSet,\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t\tif(this.isDisabled) {\n\t\t\tthis.tabNum = -1;\n\t\t\tthis.containerClass = disabledMenuClass;\n\t\t}\n\t}\n\n\t// ngOnChanges(changes: SimpleChange) {\n\t// \tconst optionChanges = changes['options'];\n\t// \tif(optionChanges && !optionChanges.firstChange) {\n\t// \t\tconst prevLength = optionChanges.previousValue?.length;\n\t// \t\t//if something was deleted\n\t// \t\tif(prevLength > optionChanges.currentValue?.length) {\n\t// \t\t\tconst current = optionChanges.currentValue\n\t// \t\t\t\t.map(o => o.key);\n\t// \t\t\tconst currentSet = new Set(optionChanges.currentValue);\n\t// \t\t\tconst selected = asArray(this.selectedItems)\n\t// \t\t\t\t.filter(o => currentSet.has(o.id));\n\t// \t\t\tthis.selectedItems = selected;\n\t// \t\t\tthis.selectedSet = new Set(selected);\n\t// \t\t}\n\t// \t}\n\t// }\n\n\tngAfterViewInit(): void {\n\t\tthis.keyContentMap = new Map(this.optionElements.map(c => [c.value, c.content]));\n\t\tthis.childrenChangeUnsub = this.optionElements.changes.subscribe(\n\t\t\t(changes: QueryList<SelectOptionComponent>) => {\n\t\t\t\tthis.keyContentMap = new Map(changes.map(c => [c.value, c.content]));\n\t\t});\n\t}\n\n\twriteValue(obj: any): void {\n\t\tthis._initializeSelectedValues(obj);\n\t}\n\n\tregisterOnChange(fn: any): void {\n\t\tthis.propagateChange = fn;\n\t}\n\n\tregisterOnTouched(fn: any): void {\n\t\tthis.propagateTouch = fn;\n\t}\n\n\tsetDisabledState?(isDisabled: boolean): void {\n\t\tthis.isDisabled = isDisabled;\n\t\tthis.tabNum = isDisabled ? -1 : 0;\n\t\tthis.containerClass = disabledMenuClass;\n\t}\n\n\tvalidate(control: AbstractControl): any {\n\t\tconst validity = (control.value as [])?.length < 1 ? {} : null;\n\t\treturn validity;\n\t}\n\n\tprivate _initializeSelectedValues(selectedItems: any) {\n\t\tif(this.allowMultiSelect) {\n\t\t\tif(Array.isArray(selectedItems)) {\n\t\t\t\tthis.selectedItems = selectedItems;\n\t\t\t\tthis.selectedSet = new Set(selectedItems);\n\t\t\t}\n\t\t\telse if(isEmptyStr(selectedItems)) {\n\t\t\t\tthis.selectedItems = [];\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t\tthis.propagateChange && this.propagateChange([]);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tthrow Error('When using multi-select, provided value must be array');\n\t\t\t}\n\t\t}\n\t\telse {\n\t\t\tif(!Array.isArray(selectedItems)) {\n\t\t\t\t//I've arbitrarily decided I want the internal representation \n\t\t\t\t//to always be an array \n\t\t\t\tthis.selectedItems = !isEmptyStr(selectedItems) ? [selectedItems] : [];\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t}\n\t\t\telse if(selectedItems.length <= 1) {\n\t\t\t\tthis.selectedSet = new Set(selectedItems);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tthrow Error('When not using multi-select, '\n\t\t\t\t\t+ 'provided value cannot be array with more than 1 item.');\n\t\t\t}\n\t\t}\n\t\tthis.selectConfig = {...this.selectConfig,\n\t\t\tselectedSet: this.selectedSet\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t}\n\n\tprivate _openMenu(): void {\n\t\tif(this.isDisabled || (this.optionElements?.length || 0) < 1) return;\n\t\tconsole.log('here?');\n\t\tthis.isOpen = true;\n\t\tthis.containerClass = openMenuClass;\n\t\tsetTimeout(() => {\n\t\t\tthis.optionsParent.nativeElement.focus();\n\t\t});\n\t}\n\n\tprivate _closeMenu(): void {\n\t\tthis.isOpen = false;\n\t\tthis.containerClass = closedMenuClass;\n\t\tthis.highlightedMenuItemIdx = -1;\n\t\tthis.propagateTouch && this.propagateTouch();\n\t}\n\t\n\tonFocus(): void {\n\t\tthis._openMenu();\n\t}\n\n\t//this needs to be a focusout rather than a simple blur\n\t//because we want to get the focus event of the options themselves\n\t//otherwise, if an option is selected and we click out, this wont fire\n\tonFocusOut(): void {\n\t\tconsole.log('focus out');\n\t\t//this timeout is a hack.\n\t\t//we don't want the blur action to occur if a child is focused\n\t\t//especially since it will occur as we tab through the options\n\t\t//we can check for active element, but first focus goes to body\n\t\t//before switching to our element. the setTimeout tosses our work to the end \n\t\t//of the queue so that by then the activeElement is our option\n\n\t\tsetTimeout(() => {\n\t\t\t//reminder element is the whole thing\n\t\t\tconst element = this.elRef.nativeElement.children[0] as HTMLElement;\n\t\t\t// document.activeElement is likely to be the one of the options\n\t\t\tif(!element.contains(document.activeElement) || element === document.activeElement) {\n\t\t\t\tthis._closeMenu();\n\t\t\t}\n\t\t});\n\t}\n\n\tprivate _menuOptionHighlight(newIdx: number): void {\n\t\tconst optionsElementsArr = this.optionElements.toArray();\n\t\tconst nextHighlighted = optionsElementsArr[newIdx];\n\t\tnextHighlighted.elementRef.nativeElement.focus();\n\t\tthis.highlightedMenuItemIdx = newIdx;\n\t}\n\n\tprivate _highlightSearchedOption(e: KeyboardEvent) {\n\t\tconst optionElements = this.optionElements.toArray();\n\t\tconst idx = this.highlightedMenuItemIdx;\n\t\tconst newIdx = optionElements.findIndex(\n\t\t\t(option: SelectOptionComponent) => {\n\t\t\t\tif(!option.value) return false;\n\t\t\t\tconst upKey = e.key.toLocaleUpperCase();\n\t\t\t\tconst upStr = option.content.toLocaleUpperCase()\n\t\t\t\treturn upStr.startsWith(upKey);\n\t\t});\n\t\tif(newIdx > -1) {\n\t\t\tif(idx > -1) {\n\t\t\t\tthis._menuOptionHighlight(newIdx);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tconst option = optionElements[newIdx];\n\t\t\t\toption.elementRef.nativeElement.focus();\n\t\t\t\tthis.highlightedMenuItemIdx = newIdx;\n\t\t\t}\n\t\t}\n\t}\n\n\tprivate _chooseOption(): void {\n\t\tconst optionElements = this.optionElements.toArray();\n\t\tconst optionElement = optionElements[this.highlightedMenuItemIdx];\n\t\toptionElement.selected = true;\n\t\tthis.onChecked(optionElement);\n\t}\n\n\tprivate _openMenuKeydownEventBranches(e: KeyboardEvent) {\n\t\t\n\t\tif((e.key === ' ') && this.highlightedMenuItemIdx > -1) {\n\t\t\tthis._chooseOption();\n\t\t\tif(!this.allowMultiSelect) {\n\t\t\t\tconst element = this.elRef.nativeElement.children[0];\n\t\t\t\tfocusNext(element);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(e.key === 'Enter') {\n\t\t\tif(this.allowMultiSelect) {\n\t\t\t\tthis._closeMenu();\n\t\t\t}\n\t\t\telse if(this.highlightedMenuItemIdx > -1) {\n\t\t\t\tthis._chooseOption();\n\t\t\t}\n\t\t\tconst element = this.elRef.nativeElement.children[0];\n\t\t\tfocusNext(element);\n\t\t}\n\t\telse if(e.key === 'ArrowUp') {\n\t\t\tconst idx = this.highlightedMenuItemIdx;\n\t\t\tif(idx > 0) {\n\t\t\t\tthis._menuOptionHighlight(idx - 1);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(e.key === 'ArrowDown') {\n\t\t\tconst idx = this.highlightedMenuItemIdx;\n\t\t\tif(idx < this.optionElements.length -1) {\n\t\t\t\tthis._menuOptionHighlight(idx + 1);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(skippedKeys.has(e.key)) {\n\t\t\tnoop();\n\t\t}\n\t\telse {\n\t\t\tthis._highlightSearchedOption(e);\n\t\t}\n\t}\n\n\n\t@HostListener('window:keydown',['$event'])\n\tonKeyDown(e: KeyboardEvent): void {\n\t\tif(this.isOpen && this.optionElements?.length > 0) {\n\t\t\tthis._openMenuKeydownEventBranches(e);\n\t\t}\n\t}\n\n\tshowTagList(): boolean {\n\t\tif(this.allowMultiSelect) {\n\t\t\treturn this.hasSelectedValue();\n\t\t}\n\t\treturn false;\n\t}\n\n\tprivate _replaceValues(selected: unknown[]): void {\n\t\tthis.selectedItems = selected;\n\t\tthis.selectedSet = new Set(selected);\n\t\tthis.onSelected.emit([...selected]);\n\t\tthis.propagateChange && this.propagateChange([...selected]);\n\t\tthis.selectConfig = {...this.selectConfig,\n\t\t\tselectedSet: this.selectedSet\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t}\n\n\tprivate _toggleOptionMulti(option: DSInput): void {\n\t\tconst selectedArray = this.selectedItems;\n\t\tconst items = selectedArray.filter(t => t !== option.value);\n\t\t//if no items were matched to be removed, then add instead\n\t\tif(items.length === selectedArray.length) {\n\t\t\titems.push(option.value);\n\t\t}\n\t\tthis._replaceValues(items);\n\t}\n\n\tprivate _toggleOptionSingle(option: SelectOptionComponent): void {\n\t\tthis._replaceValues(option ? [option.value] : []);\n\t\tthis._closeMenu();\n\t}\n\n\tonChecked(option: SelectOptionComponent): void {\n\t\tif(this.allowMultiSelect) {\n\t\t\tthis._toggleOptionMulti(option);\n\t\t}\n\t\telse {\n\t\t\tthis._toggleOptionSingle(option);\n\t\t}\n\t}\n\n\tonTagXClicked(option: DSInput) {\n\t\tthis._toggleOptionMulti(option);\n\t\tthis.propagateTouch && this.propagateTouch();\n\t}\n\n\thasSelectedValue(): boolean {\n\t\treturn !!this.selectedItems && this.selectedItems.length > 0;\n\t}\n\n\tgetSingularDisplayValue(): string {\n\t\tconst selected = this.selectedItems[0];\n\t\tif(!selected) return this.defaultDisplay;\n\t\tif(this.keyContentMap.has(selected)) {\n\t\t\treturn this.lookupContent(selected);\n\t\t};\n\t\treturn selected as string;\n\t}\n\n\tlookupContent(value: unknown): string {\n\t\tif(this.keyContentMap.has(value)) {\n\t\t\treturn this.keyContentMap.get(value);\n\t\t}\n\t\treturn value as string;\n\t}\n\n\tngDestroy(): void {\n\t\tthis.childrenChangeUnsub?.unsubscribe();\n\t}\n\n}\n",
+            "sourceCode": "import { ContentChildren, Inject, ViewChild } from '@angular/core';\nimport { Component, \n\tElementRef, \n\tEventEmitter, \n\tforwardRef, \n\tHostListener, \n\tInput, \n\tOnInit, \n\tOutput, \n\tQueryList, \n\tSimpleChange } from '@angular/core';\nimport { AbstractControl, ControlValueAccessor, \n\tNG_VALIDATORS, \n\tNG_VALUE_ACCESSOR } from '@angular/forms';\nimport { BehaviorSubject, noop, Unsubscribable } from 'rxjs';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { isEmptyStr } from '../../utils/anyHelper';\nimport { focusNext } from '../../utils/domHelper';\nimport { SelectConfig, SELECT_CONFIG } from './select-config';\nimport { \n\tSelectOptionComponent } \nfrom './select-option/select-option.component';\n\nconst closedMenuClass = 'menu-container-closed ds-select';\nconst openMenuClass = 'menu-container-open ds-select';\nconst disabledMenuClass = 'menu-container-disabled';\n\nconst skippedKeys = new Set([\n\t'Backspace',\n\t'Tab',\n\t'F1',\n\t'F1',\n\t'F2',\n\t'F3',\n\t'F4',\n\t'F5',\n\t'F6',\n\t'F7',\n\t'F8',\n\t'F9',\n\t'F10',\n\t'F11',\n\t'F12'\n]);\n\n@Component({\n  selector: 'app-select',\n  templateUrl: './select.component.html',\n\tstyleUrls: ['./select.component.sass'],\n\tproviders: [{\n\t\tprovide: NG_VALUE_ACCESSOR,\n\t\tuseExisting: forwardRef(() => SelectComponent),\n\t\tmulti: true,\n\t},\n\t{\n\t\tprovide: SELECT_CONFIG,\n\t\tuseFactory: () => new BehaviorSubject<SelectConfig | null>(null)\n\t},\n\t{\n\t\tprovide: NG_VALIDATORS,\n\t\tuseExisting: forwardRef(() => SelectComponent),\n\t\tmulti: true,\n\t}\n]\n})\nexport class SelectComponent implements OnInit, ControlValueAccessor {\n\n\t@Input('name') controlName: string = '';\n\t@Input('value') selectedItems: unknown[] = [];\n\t@Input('multiple') allowMultiSelect: boolean = false;\n\t@Input('disabled') isDisabled: boolean;\n\t@Input('defaultDisplay') defaultDisplay: string = 'Select...';\n\t@Input('customStyle') customStyle: any = null;\n\t@Output('onSelected') onSelected = new EventEmitter<unknown[]>(); \n\tisOpen: boolean = false;\n\ttopId: string = '';\n\tselectedSet: Set<unknown>;\n\tcontainerClass: string = closedMenuClass;\n\thighlightedMenuItemIdx: number = -1;\n\ttabNum: number;\n\tpropagateChange: (_: any) => {};\n\tpropagateTouch: () => void;\n\thasError: boolean = false;\n\toptionMaxIdx: number = 0; \n\tselectConfig: SelectConfig;\n\tchildrenChangeUnsub: Unsubscribable;\n\tkeyContentMap: Map<unknown, string> = new Map();\n\n\t@ContentChildren(SelectOptionComponent) \n\toptionElements: QueryList<SelectOptionComponent>;\n\n\t@ViewChild('custom') custom: ElementRef;\n\t@ViewChild('optionsParent') optionsParent: ElementRef;\n\n\tconstructor(private elRef: ElementRef, \n\t\t@Inject(SELECT_CONFIG) \n\t\tprivate selectConfig$: BehaviorSubject<SelectConfig>) \n\t{ }\n\t\n\tngOnInit(): void {\n\t\tthis._initializeSelectedValues(this.selectedItems);\n\t\tthis.topId = `ds-select-top-${this.controlName}`;\n\t\tthis.selectConfig = {\n\t\t\tallowMultiSelect: this.allowMultiSelect,\n\t\t\tcontrolName: this.controlName,\n\t\t\tonClickCallback: this.onChecked.bind(this),\n\t\t\tregister: () => ({ idx: this.optionMaxIdx++ }),\n\t\t\tselectedSet: this.selectedSet,\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t\tif(this.isDisabled) {\n\t\t\tthis.tabNum = -1;\n\t\t\tthis.containerClass = disabledMenuClass;\n\t\t}\n\t}\n\n\t// ngOnChanges(changes: SimpleChange) {\n\t// \tconst optionChanges = changes['options'];\n\t// \tif(optionChanges && !optionChanges.firstChange) {\n\t// \t\tconst prevLength = optionChanges.previousValue?.length;\n\t// \t\t//if something was deleted\n\t// \t\tif(prevLength > optionChanges.currentValue?.length) {\n\t// \t\t\tconst current = optionChanges.currentValue\n\t// \t\t\t\t.map(o => o.key);\n\t// \t\t\tconst currentSet = new Set(optionChanges.currentValue);\n\t// \t\t\tconst selected = asArray(this.selectedItems)\n\t// \t\t\t\t.filter(o => currentSet.has(o.id));\n\t// \t\t\tthis.selectedItems = selected;\n\t// \t\t\tthis.selectedSet = new Set(selected);\n\t// \t\t}\n\t// \t}\n\t// }\n\n\tngAfterViewInit(): void {\n\t\tthis.keyContentMap = new Map(this.optionElements.map(c => [c.value, c.content]));\n\t\tthis.childrenChangeUnsub = this.optionElements.changes.subscribe(\n\t\t\t(changes: QueryList<SelectOptionComponent>) => {\n\t\t\t\tthis.keyContentMap = new Map(changes.map(c => [c.value, c.content]));\n\t\t});\n\t}\n\n\twriteValue(obj: any): void {\n\t\tthis._initializeSelectedValues(obj);\n\t}\n\n\tregisterOnChange(fn: any): void {\n\t\tthis.propagateChange = fn;\n\t}\n\n\tregisterOnTouched(fn: any): void {\n\t\tthis.propagateTouch = fn;\n\t}\n\n\tsetDisabledState?(isDisabled: boolean): void {\n\t\tthis.isDisabled = isDisabled;\n\t\tthis.tabNum = isDisabled ? -1 : 0;\n\t\tthis.containerClass = disabledMenuClass;\n\t}\n\n\tvalidate(control: AbstractControl): any {\n\t\tconst validity = (control.value as [])?.length < 1 ? {} : null;\n\t\treturn validity;\n\t}\n\n\tprivate _initializeSelectedValues(selectedItems: any) {\n\t\tif(this.allowMultiSelect) {\n\t\t\tif(Array.isArray(selectedItems)) {\n\t\t\t\tthis.selectedItems = selectedItems;\n\t\t\t\tthis.selectedSet = new Set(selectedItems);\n\t\t\t}\n\t\t\telse if(isEmptyStr(selectedItems)) {\n\t\t\t\tthis.selectedItems = [];\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t\t//I'm only doing this in select places because I fear an infinite loop\n\t\t\t\tthis.propagateChange && this.propagateChange([]);\n\t\t\t}\n\t\t\telse if(typeof selectedItems === 'string') {\n\t\t\t\tthis.selectedItems = selectedItems.split(',');\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t\tthis.propagateChange && this.propagateChange(this.selectedItems);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tthrow Error('When using multi-select, provided value must be array');\n\t\t\t}\n\t\t}\n\t\telse {\n\t\t\tif(!Array.isArray(selectedItems)) {\n\t\t\t\t//I've arbitrarily decided I want the internal representation \n\t\t\t\t//to always be an array \n\t\t\t\tthis.selectedItems = !isEmptyStr(selectedItems) ? [selectedItems] : [];\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t\tthis.propagateChange && this.propagateChange(this.selectedItems);\n\t\t\t}\n\t\t\telse if(selectedItems.length <= 1) {\n\t\t\t\tthis.selectedSet = new Set(selectedItems);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tthrow Error('When not using multi-select, '\n\t\t\t\t\t+ 'provided value cannot be array with more than 1 item.');\n\t\t\t}\n\t\t}\n\t\tthis.selectConfig = {...this.selectConfig,\n\t\t\tselectedSet: this.selectedSet\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t}\n\n\tprivate _openMenu(): void {\n\t\tif(this.isDisabled || (this.optionElements?.length || 0) < 1) return;\n\t\tconsole.log('here?');\n\t\tthis.isOpen = true;\n\t\tthis.containerClass = openMenuClass;\n\t\tsetTimeout(() => {\n\t\t\tthis.optionsParent.nativeElement.focus();\n\t\t});\n\t}\n\n\tprivate _closeMenu(): void {\n\t\tthis.isOpen = false;\n\t\tthis.containerClass = closedMenuClass;\n\t\tthis.highlightedMenuItemIdx = -1;\n\t\tthis.propagateTouch && this.propagateTouch();\n\t}\n\t\n\tonFocus(): void {\n\t\tthis._openMenu();\n\t}\n\n\t//this needs to be a focusout rather than a simple blur\n\t//because we want to get the focus event of the options themselves\n\t//otherwise, if an option is selected and we click out, this wont fire\n\tonFocusOut(): void {\n\t\tconsole.log('focus out');\n\t\t//this timeout is a hack.\n\t\t//we don't want the blur action to occur if a child is focused\n\t\t//especially since it will occur as we tab through the options\n\t\t//we can check for active element, but first focus goes to body\n\t\t//before switching to our element. the setTimeout tosses our work to the end \n\t\t//of the queue so that by then the activeElement is our option\n\n\t\tsetTimeout(() => {\n\t\t\t//reminder element is the whole thing\n\t\t\tconst element = this.elRef.nativeElement.children[0] as HTMLElement;\n\t\t\t// document.activeElement is likely to be the one of the options\n\t\t\tif(!element.contains(document.activeElement) || element === document.activeElement) {\n\t\t\t\tthis._closeMenu();\n\t\t\t}\n\t\t});\n\t}\n\n\tprivate _menuOptionHighlight(newIdx: number): void {\n\t\tconst optionsElementsArr = this.optionElements.toArray();\n\t\tconst nextHighlighted = optionsElementsArr[newIdx];\n\t\tnextHighlighted.elementRef.nativeElement.focus();\n\t\tthis.highlightedMenuItemIdx = newIdx;\n\t}\n\n\tprivate _highlightSearchedOption(e: KeyboardEvent) {\n\t\tconst optionElements = this.optionElements.toArray();\n\t\tconst idx = this.highlightedMenuItemIdx;\n\t\tconst newIdx = optionElements.findIndex(\n\t\t\t(option: SelectOptionComponent) => {\n\t\t\t\tif(!option.value) return false;\n\t\t\t\tconst upKey = e.key.toLocaleUpperCase();\n\t\t\t\tconst upStr = option.content.toLocaleUpperCase()\n\t\t\t\treturn upStr.startsWith(upKey);\n\t\t});\n\t\tif(newIdx > -1) {\n\t\t\tif(idx > -1) {\n\t\t\t\tthis._menuOptionHighlight(newIdx);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tconst option = optionElements[newIdx];\n\t\t\t\toption.elementRef.nativeElement.focus();\n\t\t\t\tthis.highlightedMenuItemIdx = newIdx;\n\t\t\t}\n\t\t}\n\t}\n\n\tprivate _chooseOption(): void {\n\t\tconst optionElements = this.optionElements.toArray();\n\t\tconst optionElement = optionElements[this.highlightedMenuItemIdx];\n\t\toptionElement.selected = true;\n\t\tthis.onChecked(optionElement);\n\t}\n\n\tprivate _openMenuKeydownEventBranches(e: KeyboardEvent) {\n\t\t\n\t\tif((e.key === ' ') && this.highlightedMenuItemIdx > -1) {\n\t\t\tthis._chooseOption();\n\t\t\tif(!this.allowMultiSelect) {\n\t\t\t\tconst element = this.elRef.nativeElement.children[0];\n\t\t\t\tfocusNext(element);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(e.key === 'Enter') {\n\t\t\tif(this.allowMultiSelect) {\n\t\t\t\tthis._closeMenu();\n\t\t\t}\n\t\t\telse if(this.highlightedMenuItemIdx > -1) {\n\t\t\t\tthis._chooseOption();\n\t\t\t}\n\t\t\tconst element = this.elRef.nativeElement.children[0];\n\t\t\tfocusNext(element);\n\t\t}\n\t\telse if(e.key === 'ArrowUp') {\n\t\t\tconst idx = this.highlightedMenuItemIdx;\n\t\t\tif(idx > 0) {\n\t\t\t\tthis._menuOptionHighlight(idx - 1);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(e.key === 'ArrowDown') {\n\t\t\tconst idx = this.highlightedMenuItemIdx;\n\t\t\tif(idx < this.optionElements.length -1) {\n\t\t\t\tthis._menuOptionHighlight(idx + 1);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(skippedKeys.has(e.key)) {\n\t\t\tnoop();\n\t\t}\n\t\telse {\n\t\t\tthis._highlightSearchedOption(e);\n\t\t}\n\t}\n\n\n\t@HostListener('window:keydown',['$event'])\n\tonKeyDown(e: KeyboardEvent): void {\n\t\tif(this.isOpen && this.optionElements?.length > 0) {\n\t\t\tthis._openMenuKeydownEventBranches(e);\n\t\t}\n\t}\n\n\tshowTagList(): boolean {\n\t\tif(this.allowMultiSelect) {\n\t\t\treturn this.hasSelectedValue();\n\t\t}\n\t\treturn false;\n\t}\n\n\tprivate _replaceValues(selected: unknown[]): void {\n\t\tthis.selectedItems = selected;\n\t\tthis.selectedSet = new Set(selected);\n\t\tthis.onSelected.emit([...selected]);\n\t\tthis.propagateChange && this.propagateChange([...selected]);\n\t\tthis.selectConfig = {...this.selectConfig,\n\t\t\tselectedSet: this.selectedSet\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t}\n\n\tprivate _toggleOptionMulti(option: DSInput): void {\n\t\tconst selectedArray = this.selectedItems;\n\t\tconst items = selectedArray.filter(t => t !== option.value);\n\t\t//if no items were matched to be removed, then add instead\n\t\tif(items.length === selectedArray.length) {\n\t\t\titems.push(option.value);\n\t\t}\n\t\tthis._replaceValues(items);\n\t}\n\n\tprivate _toggleOptionSingle(option: SelectOptionComponent): void {\n\t\tthis._replaceValues(option ? [option.value] : []);\n\t\tthis._closeMenu();\n\t}\n\n\tonChecked(option: SelectOptionComponent): void {\n\t\tif(this.allowMultiSelect) {\n\t\t\tthis._toggleOptionMulti(option);\n\t\t}\n\t\telse {\n\t\t\tthis._toggleOptionSingle(option);\n\t\t}\n\t}\n\n\tonTagXClicked(option: DSInput) {\n\t\tthis._toggleOptionMulti(option);\n\t\tthis.propagateTouch && this.propagateTouch();\n\t}\n\n\thasSelectedValue(): boolean {\n\t\treturn !!this.selectedItems && this.selectedItems.length > 0;\n\t}\n\n\tgetSingularDisplayValue(): string {\n\t\tconst selected = this.selectedItems[0];\n\t\tif(!selected) return this.defaultDisplay;\n\t\tif(this.keyContentMap.has(selected)) {\n\t\t\treturn this.lookupContent(selected);\n\t\t};\n\t\treturn selected as string;\n\t}\n\n\tlookupContent(value: unknown): string {\n\t\tif(this.keyContentMap.has(value)) {\n\t\t\treturn this.keyContentMap.get(value);\n\t\t}\n\t\treturn value as string;\n\t}\n\n\tngDestroy(): void {\n\t\tthis.childrenChangeUnsub?.unsubscribe();\n\t}\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -6496,11 +6503,11 @@
                 "OnInit",
                 "ControlValueAccessor"
             ],
-            "templateData": "<!-- I made this a div because I feel weird about having a div inside a span\n-->\n<div class=\"ds-menu-button {{containerClass}}\" \n\t[tabindex]=\"tabNum\" \n\trole=\"listbox\"\n\t(focus)=\"onFocus()\"\n\t[id]=\"topId\"\n>\n<app-tag-list *ngIf=\"showTagList()\" \n\t(onRemoved)=\"onTagXClicked($event)\"\n>\n\t<app-tag-item [value]=\"option\" *ngFor=\"let option of selectedItems\">\n\t\t{{lookupContent(option)}}\n\t</app-tag-item>\n</app-tag-list>\n\t<span \n\t\t#custom \n\t\tclass=\"closed-select-default\" \n\t\t[ngStyle]=\"customStyle\"\n\t>\n\t\t<ng-container>\n\t\t\t<ng-content *ngIf=\"!showTagList()\"></ng-content>\n\t\t</ng-container>\n\t</span>\n\t<span \n\t\t*ngIf=\"!showTagList() && (custom.childNodes | elementFilter).length === 0\" \n\t\tclass=\"closed-select-default {{hasSelectedValue() ? 'select-picked-value' : ''}}\"\n\t\t[ngStyle]=\"customStyle\"\n\t>\n\t\t{{getSingularDisplayValue()}}\n\t</span>\n\t<ds-hide-icon \n\t\t[hidden]=\"isOpen || isDisabled || options?.length < 1\"\n\t\t[strokeColor]=\"hasError ? 'red' : 'black'\" \n\t\twidth=\".8em\" \n\t\theight=\".8em\"\n\t\tclass=\"select-open-icon\"\n\t>\n\t</ds-hide-icon>\n\t<!-- the tabindex=\"-1\" is needed so that it can be focused on-->\n\t<div \n\t\t[hidden]=\"!isOpen\" \n\t\tclass=\"option-menu\" \n\t\t(focusout)=\"onFocusOut()\"\n\t\ttabindex=\"-1\" \n\t\t#optionsParent\n\t>\n\t\t<ng-content select=\"app-select-option\"></ng-content>\n\t</div>\n</div>"
+            "templateData": "<!-- I made this a div because I feel weird about having a div inside a span\n-->\n<div class=\"ds-menu-button {{containerClass}}\" \n\t[tabindex]=\"tabNum\" \n\trole=\"listbox\"\n\t(focus)=\"onFocus()\"\n\t[id]=\"topId\"\n>\n<app-tag-list *ngIf=\"showTagList()\" \n\t(onRemoved)=\"onTagXClicked($event)\"\n>\n\t<app-tag-item [value]=\"option\" *ngFor=\"let option of selectedItems\">\n\t\t{{lookupContent(option)}}\n\t</app-tag-item>\n</app-tag-list>\n\t<span \n\t\t#custom \n\t\tclass=\"closed-select-default\" \n\t\t[ngStyle]=\"customStyle\"\n\t>\n\t\t<ng-container>\n\t\t\t<ng-content *ngIf=\"!showTagList()\"></ng-content>\n\t\t</ng-container>\n\t</span>\n\t<span \n\t\t*ngIf=\"!showTagList() && (custom.childNodes | elementFilter).length === 0\" \n\t\tclass=\"closed-select-default {{hasSelectedValue() ? 'select-picked-value' : ''}}\"\n\t\t[ngStyle]=\"customStyle\"\n\t>\n\t\t{{getSingularDisplayValue()}}\n\t</span>\n\t<ds-hide-icon \n\t\t[hidden]=\"isOpen || isDisabled || (optionsParent.childNodes | elementFilter).length < 1\"\n\t\t[strokeColor]=\"hasError ? 'red' : 'black'\" \n\t\twidth=\".8em\" \n\t\theight=\".8em\"\n\t\tclass=\"select-open-icon\"\n\t>\n\t</ds-hide-icon>\n\t<!-- the tabindex=\"-1\" is needed so that it can be focused on-->\n\t<div \n\t\t[hidden]=\"!isOpen\" \n\t\tclass=\"option-menu\" \n\t\t(focusout)=\"onFocusOut()\"\n\t\ttabindex=\"-1\" \n\t\t#optionsParent\n\t>\n\t\t<ng-content select=\"app-select-option\"></ng-content>\n\t</div>\n</div>"
         },
         {
             "name": "SelectOptionComponent",
-            "id": "component-SelectOptionComponent-b6753c0c105ee60a99236e14670afa88",
+            "id": "component-SelectOptionComponent-21565ae952183e50b2f7416876033477",
             "file": "src/app/shared/components/select/select-option/select-option.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -6579,7 +6586,6 @@
                 },
                 {
                     "name": "onClickCallback",
-                    "defaultValue": "null",
                     "type": "function",
                     "optional": false,
                     "description": "",
@@ -6593,7 +6599,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 54
+                    "line": 53
                 },
                 {
                     "name": "ngOnInit",
@@ -6601,7 +6607,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 40
+                    "line": 39
                 },
                 {
                     "name": "onClick",
@@ -6609,7 +6615,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 59
+                    "line": 58
                 }
             ],
             "hostBindings": [],
@@ -6617,7 +6623,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, \n\tElementRef, \n\tInject, \n\tInput, \n\tOnInit,      \n\tViewChild, \n} from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { nodeFirst } from 'src/app/shared/utils/domHelper';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { SelectConfig, SELECT_CONFIG } from '../select-config';\n\n\n@Component({\n  selector: 'app-select-option',\n  templateUrl: './select-option.component.html',\n  styleUrls: ['./select-option.component.sass']\n})\nexport class SelectOptionComponent implements OnInit, DSInput {\n\n\t@Input('multiple') allowMultiSelect: boolean = false;\n\t@Input('value') value: unknown;\n\t@Input('selected') selected: boolean;\n\t@Input('name') controlName: string;\n\t@Input('tabindex') tabNum = -1;\n\tcontent = '';\n\tonClickCallback: (option: SelectOptionComponent) => void = null;\n\n\tprivate inialized: boolean;\n\n\t//this is for outside to mess with\n\t@ViewChild('optionElement') elementRef: ElementRef;\n\n  constructor(\n\t\t@Inject(SELECT_CONFIG) \n\t\tprivate selectConfig$: BehaviorSubject<SelectConfig | null>,\n\t\tprivate elRef: ElementRef) \n\t{}\n\n  ngOnInit(): void {\n\t\tthis.selectConfig$.subscribe((config: SelectConfig) => {\n\t\t\tif(!config) return;\n\t\t\tif(!this.inialized) {\n\t\t\t\tthis.inialized = true;\n\t\t\t\tconst registration = config.register();\n\t\t\t\tthis.allowMultiSelect = config.allowMultiSelect;\n\t\t\t\tthis.controlName = `option-${config.controlName}-${registration.idx}`;\n\t\t\t\tthis.onClickCallback = config.onClickCallback;\n\t\t\t}\n\t\t\tthis.selected = config.selectedSet?.has(this.value);\n\t\t});\n\t}\n\n\tngAfterViewChecked(): void {\n\t\tconst first = nodeFirst(this.elRef?.nativeElement?.children);\n\t\tthis.content = first?.textContent || '';\n\t}\n\n\tonClick(): void {\n\t\tthis.onClickCallback && this.onClickCallback(this);\n\t}\n\t\n}\n",
+            "sourceCode": "import { Component, \n\tElementRef, \n\tInject, \n\tInput, \n\tOnInit,      \n\tViewChild, \n} from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { nodeFirst } from 'src/app/shared/utils/domHelper';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { SelectConfig, SELECT_CONFIG } from '../select-config';\n\n\n@Component({\n  selector: 'app-select-option',\n  templateUrl: './select-option.component.html',\n  styleUrls: ['./select-option.component.sass']\n})\nexport class SelectOptionComponent implements OnInit, DSInput {\n\n\t@Input('multiple') allowMultiSelect: boolean = false;\n\t@Input('value') value: unknown;\n\t@Input('selected') selected: boolean;\n\t@Input('name') controlName: string;\n\t@Input('tabindex') tabNum = -1;\n\tcontent = '';\n\tonClickCallback: (option: SelectOptionComponent) => void;\n\n\tprivate inialized: boolean;\n\n\t//this is for outside to mess with\n\t@ViewChild('optionElement') elementRef: ElementRef;\n\n  constructor(private elRef: ElementRef,\n\t\t@Inject(SELECT_CONFIG) \n\t\tprivate selectConfig$: BehaviorSubject<SelectConfig | null>) \n\t{}\n\n  ngOnInit(): void {\n\t\tthis.selectConfig$.subscribe((config: SelectConfig) => {\n\t\t\tif(!config) return;\n\t\t\tif(!this.inialized) {\n\t\t\t\tthis.inialized = true;\n\t\t\t\tconst registration = config.register();\n\t\t\t\tthis.allowMultiSelect = config.allowMultiSelect;\n\t\t\t\tthis.controlName = `option-${config.controlName}-${registration.idx}`;\n\t\t\t\tthis.onClickCallback = config.onClickCallback;\n\t\t\t}\n\t\t\tthis.selected = config.selectedSet?.has(this.value);\n\t\t});\n\t}\n\n\tngAfterViewChecked(): void {\n\t\tconst first = nodeFirst(this.elRef?.nativeElement?.children);\n\t\tthis.content = first?.textContent || '';\n\t}\n\n\tonClick(): void {\n\t\tthis.onClickCallback && this.onClickCallback(this);\n\t}\n\t\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -6631,26 +6637,26 @@
                 "description": "",
                 "args": [
                     {
-                        "name": "selectConfig$",
-                        "type": "BehaviorSubject<SelectConfig | null>"
-                    },
-                    {
                         "name": "elRef",
                         "type": "ElementRef"
+                    },
+                    {
+                        "name": "selectConfig$",
+                        "type": "BehaviorSubject<SelectConfig | null>"
                     }
                 ],
                 "line": 32,
                 "jsdoctags": [
                     {
-                        "name": "selectConfig$",
-                        "type": "BehaviorSubject<SelectConfig | null>",
+                        "name": "elRef",
+                        "type": "ElementRef",
                         "tagName": {
                             "text": "param"
                         }
                     },
                     {
-                        "name": "elRef",
-                        "type": "ElementRef",
+                        "name": "selectConfig$",
+                        "type": "BehaviorSubject<SelectConfig | null>",
                         "tagName": {
                             "text": "param"
                         }
@@ -6845,7 +6851,7 @@
         },
         {
             "name": "TagItemComponent",
-            "id": "component-TagItemComponent-78469f14cd91182cb25bfcb70c0e4286",
+            "id": "component-TagItemComponent-793f1386c7a436ad40894a627ab81a3d",
             "file": "src/app/shared/components/select/tag-item/tag-item.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -6863,29 +6869,27 @@
             "viewProviders": [],
             "inputsClass": [
                 {
+                    "name": "name",
+                    "line": 16,
+                    "type": "string"
+                },
+                {
                     "name": "readonly",
-                    "line": 13,
+                    "line": 15,
                     "type": "boolean"
                 },
                 {
                     "name": "tabindex",
                     "defaultValue": "-1",
-                    "line": 15
+                    "line": 18
                 },
                 {
                     "name": "value",
-                    "line": 12,
+                    "line": 14,
                     "type": "unknown"
                 }
             ],
-            "outputsClass": [
-                {
-                    "name": "onXClicked",
-                    "defaultValue": "new EventEmitter<DSInput>()",
-                    "line": 14,
-                    "type": "EventEmitter"
-                }
-            ],
+            "outputsClass": [],
             "propertiesClass": [
                 {
                     "name": "content",
@@ -6893,7 +6897,24 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 16
+                    "line": 19
+                },
+                {
+                    "name": "inialized",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 20,
+                    "modifierKind": [
+                        112
+                    ]
+                },
+                {
+                    "name": "onClickCallback",
+                    "type": "function",
+                    "optional": false,
+                    "description": "",
+                    "line": 17
                 }
             ],
             "methodsClass": [
@@ -6903,7 +6924,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 28
+                    "line": 43
                 },
                 {
                     "name": "ngOnInit",
@@ -6911,7 +6932,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 20
+                    "line": 25
                 },
                 {
                     "name": "onTagXClicked",
@@ -6924,7 +6945,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 23,
+                    "line": 38,
                     "jsdoctags": [
                         {
                             "name": "e",
@@ -6934,14 +6955,6 @@
                             }
                         }
                     ]
-                },
-                {
-                    "name": "showXButton",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "boolean",
-                    "typeParameters": [],
-                    "line": 33
                 }
             ],
             "hostBindings": [],
@@ -6949,11 +6962,11 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { nodeFirst } from 'src/app/shared/utils/domHelper';\nimport { DSInput } from 'src/app/types/ds-input';\n\n@Component({\n  selector: 'app-tag-item',\n  templateUrl: './tag-item.component.html',\n  styleUrls: ['./tag-item.component.sass']\n})\nexport class TagItemComponent implements OnInit, DSInput {\n\n\t@Input('value') value: unknown;\n\t@Input('readonly') readonly: boolean;\n\t@Output('onXClicked') onXClickedEvent = new EventEmitter<DSInput>();\n\t@Input('tabindex') tabNum = -1;\n\tcontent = '';\n\t\n  constructor(private elRef: ElementRef) { }\n\n  ngOnInit(): void {\n\t}\n\t\n\tonTagXClicked(e: MouseEvent) {\n\t\tthis.onXClickedEvent.emit(this);\n\t\te.stopPropagation();\n\t}\n\n\tngAfterViewChecked(): void {\n\t\tconst first = nodeFirst(this.elRef?.nativeElement?.children);\n\t\tthis.content = first?.textContent || '';\n\t}\n\n\tshowXButton(): boolean {\n\t\tconsole.log(this.onXClickedEvent.observers);\n\t\treturn true;\n\t}\n\n}\n",
+            "sourceCode": "import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { nodeFirst } from 'src/app/shared/utils/domHelper';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { TagsConfig, TAGS_CONFIG } from '../tags-config';\n\n@Component({\n  selector: 'app-tag-item',\n  templateUrl: './tag-item.component.html',\n  styleUrls: ['./tag-item.component.sass']\n})\nexport class TagItemComponent implements OnInit, DSInput {\n\n\t@Input('value') value: unknown;\n\t@Input('readonly') readonly: boolean;\n\t@Input('name') controlName: string;\n\tonClickCallback: (option: TagItemComponent) => void;\n\t@Input('tabindex') tabNum = -1;\n\tcontent = '';\n\tprivate inialized: boolean;\n\t\n\tconstructor(private elRef: ElementRef, \n\t\t@Inject(TAGS_CONFIG) private tagsConfig$: BehaviorSubject<TagsConfig>) { }\n\n  ngOnInit(): void {\n\t\tthis.tagsConfig$.subscribe((config: TagsConfig) => {\n\t\t\tif(!config) return;\n\t\t\tif(!this.inialized) {\n\t\t\t\tthis.inialized = true;\n\t\t\t\tconst registration = config.register();\n\t\t\t\tthis.controlName = `option-${config.controlName}-${registration.idx}`;\n\t\t\t\tthis.onClickCallback = config.onClickCallback;\n\t\t\t\tthis.readonly = !config.showXButton;\n\t\t\t}\n\t\t});\n\t}\n\t\n\tonTagXClicked(e: MouseEvent) {\n\t\tthis.onClickCallback && this.onClickCallback(this);\n\t\te.stopPropagation();\n\t}\n\n\tngAfterViewChecked(): void {\n\t\tconst first = nodeFirst(this.elRef?.nativeElement?.children);\n\t\tthis.content = first?.textContent || '';\n\t}\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@use '../../../../../styles'\n\t\n.single-tag\n\tbackground-color: styles.$bg-color-menu1\n\tcolor: styles.$fg-color-menu-text\n\tpadding: .2em\n\tmargin: .2em\n\tcursor: default\n\tborder-radius: styles.$rounding-standard\n\tfont-size: 12px\n\tdisplay: inline-flex\n\n.single-tag button\n\tmargin: .2em\n\t@extend %btn-common",
+                    "data": "@use '../../../../../styles'\n\t\n.single-tag\n\tbackground-color: styles.$bg-color-menu1\n\tcolor: styles.$fg-color-menu-text\n\tpadding: .2em .2em .2em .4em\n\tmargin: .2em\n\tcursor: default\n\tborder-radius: styles.$rounding-standard\n\tfont-size: 12px\n\tdisplay: inline-flex\n\talign-items: center\n\n.single-tag button\n\tmargin: .2em\n\t@extend %btn-common",
                     "styleUrl": "./tag-item.component.sass"
                 }
             ],
@@ -6965,13 +6978,24 @@
                     {
                         "name": "elRef",
                         "type": "ElementRef"
+                    },
+                    {
+                        "name": "tagsConfig$",
+                        "type": "BehaviorSubject<TagsConfig>"
                     }
                 ],
-                "line": 16,
+                "line": 20,
                 "jsdoctags": [
                     {
                         "name": "elRef",
                         "type": "ElementRef",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "tagsConfig$",
+                        "type": "BehaviorSubject<TagsConfig>",
                         "tagName": {
                             "text": "param"
                         }
@@ -6982,17 +7006,21 @@
                 "OnInit",
                 "DSInput"
             ],
-            "templateData": "<span class=\"single-tag\">\n\t<ng-content></ng-content>\n\t<button *ngIf=\"!readonly && showXButton()\" (click)=\"onTagXClicked($event)\">\n\t\tX\n\t</button>\n</span>"
+            "templateData": "<span class=\"single-tag\" [id]=\"controlName\">\n\t<span class=\"tag-content\">\n\t\t<ng-content></ng-content>\n\t</span>\n\t<button *ngIf=\"!readonly\" (click)=\"onTagXClicked($event)\">\n\t\tX\n\t</button>\n</span>"
         },
         {
             "name": "TagListComponent",
-            "id": "component-TagListComponent-735dc60721ce28a2afc85dad7bf91f50",
+            "id": "component-TagListComponent-196a5eb9e4b9e2ce82bf28734bb5e6a9",
             "file": "src/app/shared/components/tag-list/tag-list.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
-            "providers": [],
+            "providers": [
+                {
+                    "name": "{\n    provide: TAGS_CONFIG, useFactory: () => new BehaviorSubject<TagsConfig>(null)\n}"
+                }
+            ],
             "selector": "app-tag-list",
             "styleUrls": [
                 "./tag-list.component.sass"
@@ -7004,13 +7032,18 @@
             "viewProviders": [],
             "inputsClass": [
                 {
+                    "name": "name",
+                    "defaultValue": "''",
+                    "line": 20
+                },
+                {
                     "name": "readonly",
-                    "line": 15,
+                    "line": 22,
                     "type": "boolean"
                 },
                 {
                     "name": "value",
-                    "line": 14,
+                    "line": 21,
                     "type": "any[]"
                 }
             ],
@@ -7018,17 +7051,25 @@
                 {
                     "name": "onRemoved",
                     "defaultValue": "new EventEmitter<DSInput>()",
-                    "line": 16,
+                    "line": 23,
                     "type": "EventEmitter"
                 }
             ],
             "propertiesClass": [
                 {
+                    "name": "optionMaxIdx",
+                    "defaultValue": "0",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 24
+                },
+                {
                     "name": "tagConfig",
                     "type": "TagsConfig",
                     "optional": false,
                     "description": "",
-                    "line": 17
+                    "line": 25
                 }
             ],
             "methodsClass": [
@@ -7038,7 +7079,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 22
+                    "line": 30
                 },
                 {
                     "name": "onTagXClicked",
@@ -7051,7 +7092,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 25,
+                    "line": 40,
                     "jsdoctags": [
                         {
                             "name": "option",
@@ -7068,7 +7109,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Inject, Input, OnInit, Output } \n\tfrom '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { TagsConfig, TAGS_CONFIG } from '../select/tags-config';\n\n@Component({\n  selector: 'app-tag-list',\n  templateUrl: './tag-list.component.html',\n  styleUrls: ['./tag-list.component.sass']\n})\nexport class TagListComponent implements OnInit {\n\n\t@Input('value') tags: any[];\n\t@Input('readonly') readonly: boolean;\n\t@Output('onRemoved') removedEvent = new EventEmitter<DSInput>();\n\ttagConfig: TagsConfig;\n\n\t\n  constructor(@Inject(TAGS_CONFIG) private tagConfig$: BehaviorSubject<TagsConfig>) { }\n\n  ngOnInit(): void {\n\t}\n\t\n\tonTagXClicked(option: DSInput): void {\n\t\tthis.removedEvent.emit(option);\n\t}\n\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Inject, Input, OnInit, Output } \n\tfrom '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { TagsConfig, TAGS_CONFIG } from '../select/tags-config';\n\n@Component({\n  selector: 'app-tag-list',\n  templateUrl: './tag-list.component.html',\n\tstyleUrls: ['./tag-list.component.sass'],\n\tproviders: [\n\t\t{\n\t\t\tprovide: TAGS_CONFIG,\n\t\t\tuseFactory: () => new BehaviorSubject<TagsConfig>(null)\n\t\t},\n\t]\n})\nexport class TagListComponent implements OnInit {\n\n\t@Input('name') controlName = '';\n\t@Input('value') tags: any[];\n\t@Input('readonly') readonly: boolean;\n\t@Output('onRemoved') removedEvent = new EventEmitter<DSInput>();\n\toptionMaxIdx: number = 0; \n\ttagConfig: TagsConfig;\n\n\t\n  constructor(@Inject(TAGS_CONFIG) private tagConfig$: BehaviorSubject<TagsConfig>) { }\n\n  ngOnInit(): void {\n\t\tthis.tagConfig = {\n\t\t\tonClickCallback: this.onTagXClicked.bind(this),\n\t\t\tcontrolName: this.controlName,\n\t\t\tregister: () => ({ idx: this.optionMaxIdx++ }),\n\t\t\tshowXButton: this.removedEvent.observers.length > 0.\n\t\t};\n\t\tthis.tagConfig$.next(this.tagConfig);\n\t}\n\t\n\tonTagXClicked(option: DSInput): void {\n\t\tthis.removedEvent.emit(option);\n\t}\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -7086,7 +7127,7 @@
                         "type": "BehaviorSubject<TagsConfig>"
                     }
                 ],
-                "line": 17,
+                "line": 25,
                 "jsdoctags": [
                     {
                         "name": "tagConfig$",
@@ -7547,7 +7588,23 @@
                 "subtype": "variable",
                 "file": "src/stories/select.stories.ts",
                 "type": "Story",
-                "defaultValue": "(args) => ({\n\ttemplate: `<app-select\n\t\tmultiple={true}\n\t>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
+                "defaultValue": "(args) => ({\n\ttemplate: `<app-select\n\t\tmultiple=\"true\"\n\t>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
+            },
+            {
+                "name": "MultiSelectPreSelect",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/select.stories.ts",
+                "type": "Story",
+                "defaultValue": "(args) => ({\n\ttemplate: `<app-select\n\t\tmultiple=\"true\"\n\t\t[value]=\"['123','234']\"\n\t>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
+            },
+            {
+                "name": "MultiSelectPreSelectStringValue",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/select.stories.ts",
+                "type": "Story",
+                "defaultValue": "(args) => ({\n\ttemplate: `<app-select\n\t\tmultiple=\"true\"\n\t\tvalue=\"123,234\"\n\t>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
             },
             {
                 "name": "openMenuClass",
@@ -8343,7 +8400,23 @@
                     "subtype": "variable",
                     "file": "src/stories/select.stories.ts",
                     "type": "Story",
-                    "defaultValue": "(args) => ({\n\ttemplate: `<app-select\n\t\tmultiple={true}\n\t>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
+                    "defaultValue": "(args) => ({\n\ttemplate: `<app-select\n\t\tmultiple=\"true\"\n\t>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
+                },
+                {
+                    "name": "MultiSelectPreSelect",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/select.stories.ts",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\n\ttemplate: `<app-select\n\t\tmultiple=\"true\"\n\t\t[value]=\"['123','234']\"\n\t>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
+                },
+                {
+                    "name": "MultiSelectPreSelectStringValue",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/select.stories.ts",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\n\ttemplate: `<app-select\n\t\tmultiple=\"true\"\n\t\tvalue=\"123,234\"\n\t>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -9465,7 +9538,7 @@
                 "linktype": "component",
                 "name": "TagItemComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/11",
+                "coverageCount": "0/12",
                 "status": "low"
             },
             {
@@ -9474,7 +9547,7 @@
                 "linktype": "interface",
                 "name": "TagsConfig",
                 "coveragePercent": 0,
-                "coverageCount": "0/4",
+                "coverageCount": "0/5",
                 "status": "low"
             },
             {
@@ -9493,7 +9566,7 @@
                 "linktype": "component",
                 "name": "TagListComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/8",
+                "coverageCount": "0/10",
                 "status": "low"
             },
             {
@@ -10144,6 +10217,26 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "MultiSelect",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/select.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "MultiSelectPreSelect",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/select.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "MultiSelectPreSelectStringValue",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
