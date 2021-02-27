@@ -677,64 +677,45 @@
         },
         {
             "name": "SelectConfig",
-            "id": "interface-SelectConfig-bfe292a7aeb27fa370e8e6c528b6aee4",
+            "id": "interface-SelectConfig-20a680dda1e2c75cbe050b4dab7d9a09",
             "file": "src/app/shared/components/select/select-config.ts",
             "type": "interface",
-            "sourceCode": "import { InjectionToken } from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { DataBasic } from 'src/app/types/data-basic';\n\nexport interface SelectRegistration {\n\tidx: number\n};\n\nexport interface SelectConfig {\n\tallowMultiSelect: boolean,\n\tcontrolName: string,\n\tonClickCallback: (option: DataBasic) => void,\n\tregister: () => SelectRegistration,\n\tselectedSet: Set<DataBasic>\n};\n\nexport const SELECT_CONFIG = \n\tnew InjectionToken<BehaviorSubject<SelectConfig | null>>(\n\t'select config'\n);",
+            "sourceCode": "import { InjectionToken } from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { SelectOptionComponent } from './select-option/select-option.component';\nimport { SelectRegistration } from './select-registration';\n\n\nexport interface SelectConfig {\n\tallowMultiSelect: boolean,\n\tcontrolName: string,\n\tonClickCallback: (option: SelectOptionComponent) => void,\n\tregister: () => SelectRegistration,\n\tselectedSet: Set<unknown>\n};\n\nexport const SELECT_CONFIG = \n\tnew InjectionToken<BehaviorSubject<SelectConfig>>(\n\t'select config'\n);",
             "properties": [
                 {
                     "name": "allowMultiSelect",
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 10
+                    "line": 8
                 },
                 {
                     "name": "controlName",
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 11
+                    "line": 9
                 },
                 {
                     "name": "onClickCallback",
                     "type": "function",
                     "optional": false,
                     "description": "",
-                    "line": 12
+                    "line": 10
                 },
                 {
                     "name": "register",
                     "type": "function",
                     "optional": false,
                     "description": "",
-                    "line": 13
+                    "line": 11
                 },
                 {
                     "name": "selectedSet",
-                    "type": "Set<DataBasic>",
+                    "type": "Set<unknown>",
                     "optional": false,
                     "description": "",
-                    "line": 14
-                }
-            ],
-            "indexSignatures": [],
-            "kind": 150,
-            "methods": []
-        },
-        {
-            "name": "SelectRegistration",
-            "id": "interface-SelectRegistration-bfe292a7aeb27fa370e8e6c528b6aee4",
-            "file": "src/app/shared/components/select/select-config.ts",
-            "type": "interface",
-            "sourceCode": "import { InjectionToken } from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { DataBasic } from 'src/app/types/data-basic';\n\nexport interface SelectRegistration {\n\tidx: number\n};\n\nexport interface SelectConfig {\n\tallowMultiSelect: boolean,\n\tcontrolName: string,\n\tonClickCallback: (option: DataBasic) => void,\n\tregister: () => SelectRegistration,\n\tselectedSet: Set<DataBasic>\n};\n\nexport const SELECT_CONFIG = \n\tnew InjectionToken<BehaviorSubject<SelectConfig | null>>(\n\t'select config'\n);",
-            "properties": [
-                {
-                    "name": "idx",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 6
+                    "line": 12
                 }
             ],
             "indexSignatures": [],
@@ -792,6 +773,39 @@
                     "optional": false,
                     "description": "",
                     "line": 3
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
+            "name": "TagsConfig",
+            "id": "interface-TagsConfig-6c1fcde2ce60f3a8dae02291610ad991",
+            "file": "src/app/shared/components/select/tags-config.ts",
+            "type": "interface",
+            "sourceCode": "import { InjectionToken } from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { SelectRegistration } from './select-registration';\n\n\nexport interface TagsConfig {\n\tcontrolName: string,\n\tonClickCallback: (option: DSInput) => void,\n\tregister: () => SelectRegistration,\n};\n\nexport const TAGS_CONFIG = \n\tnew InjectionToken<BehaviorSubject<TagsConfig>>(\n\t'tag config'\n);",
+            "properties": [
+                {
+                    "name": "controlName",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 8
+                },
+                {
+                    "name": "onClickCallback",
+                    "type": "function",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                },
+                {
+                    "name": "register",
+                    "type": "function",
+                    "optional": false,
+                    "description": "",
+                    "line": 10
                 }
             ],
             "indexSignatures": [],
@@ -3880,7 +3894,7 @@
         },
         {
             "name": "CallCounterComponent",
-            "id": "component-CallCounterComponent-e7c6eae075232613fef020dfd190e070",
+            "id": "component-CallCounterComponent-19b1251c71544928a56c0202d8d10095",
             "file": "src/stories/callCounter.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -3890,26 +3904,34 @@
             "selector": "callCounter",
             "styleUrls": [],
             "styles": [
-                "\n      h1 {\n        font-family: Lato;\n      }\n      .brick {\n        width: 100px;\n        height: 100px;\n      }\n      #top {\n        background-color: #1ecbe1;\n      }\n      #tow {\n        background-color: #e1341e;\n      }\n      .brick:focus {\n        border-width: 1px;\n        border-style: solid;\n        border-color: black;\n      }\n    "
+                "\n      h1 {\n        font-family: Lato;\n\t\t\t}\n\t\t\tbutton {\n\t\t\t\tmargin: 5px;\n\t\t\t}\n      .brick {\n        width: 100px;\n        height: 100px;\n\t\t\t}\n\t\t\t.volcano:after {\n\t\t\t\tcontent: 'hiya';\n\t\t\t\tcolor: #000;\n\t\t\t}\n      #top {\n        background-color: #1ecbe1;\n      }\n      #tow {\n        background-color: #e1341e;\n      }\n      .brick:focus {\n        border-width: 1px;\n        border-style: solid;\n        border-color: black;\n      }\n    "
             ],
-            "template": "{{ping()}}\n  <div id=\"top\" class=\"brick\" #topOne tabIndex=\"-1\"></div>\n",
+            "template": "{{ping()}}\n  <div id=\"top\" class=\"brick {{klass}}\" #topOne tabIndex=\"-1\"></div>\n  <div id=\"tow\" class=\"brick {{klass}}\" #twoOne tabIndex=\"-1\"></div>\n  <div>\n    <button (click)=\"topOnClick()\">Top</button>\n\t<button (click)=\"twoOnClick()\">Two</button>\n\t<button (click)=\"switchClass()\">Switch klass</button>\n  </div>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [
                 {
                     "name": "name",
-                    "line": 33,
+                    "line": 46,
                     "type": "string"
                 }
             ],
             "outputsClass": [],
             "propertiesClass": [
                 {
+                    "name": "klass",
+                    "defaultValue": "\"brick\"",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 49
+                },
+                {
                     "name": "topOne",
                     "type": "ElementRef",
                     "optional": false,
                     "description": "",
-                    "line": 34,
+                    "line": 47,
                     "decorators": [
                         {
                             "name": "ViewChild",
@@ -3922,7 +3944,7 @@
                     "type": "ElementRef",
                     "optional": false,
                     "description": "",
-                    "line": 35,
+                    "line": 48,
                     "decorators": [
                         {
                             "name": "ViewChild",
@@ -3938,7 +3960,15 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 47
+                    "line": 70
+                },
+                {
+                    "name": "switchClass",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 61
                 },
                 {
                     "name": "topOnClick",
@@ -3946,7 +3976,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 37
+                    "line": 51
                 },
                 {
                     "name": "twoOnClick",
@@ -3954,7 +3984,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 42
+                    "line": 56
                 }
             ],
             "hostBindings": [],
@@ -3962,10 +3992,10 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, ElementRef, Input, ViewChild } from \"@angular/core\";\n\n@Component({\n  selector: \"callCounter\",\n\ttemplate: `\n\t\t{{ping()}}\n    <div id=\"top\" class=\"brick\" #topOne tabIndex=\"-1\"></div>\n  `,\n  styles: [\n    `\n      h1 {\n        font-family: Lato;\n      }\n      .brick {\n        width: 100px;\n        height: 100px;\n      }\n      #top {\n        background-color: #1ecbe1;\n      }\n      #tow {\n        background-color: #e1341e;\n      }\n      .brick:focus {\n        border-width: 1px;\n        border-style: solid;\n        border-color: black;\n      }\n    `\n  ]\n})\nexport class CallCounterComponent {\n  @Input() name: string;\n  @ViewChild(\"topOne\") topOne: ElementRef;\n  @ViewChild(\"twoOne\") twoOne: ElementRef;\n\n  topOnClick() {\n    console.log(\"top\");\n    this.topOne.nativeElement.focus();\n  }\n\n  twoOnClick() {\n    console.log(\"two\");\n    this.twoOne.nativeElement.focus();\n\t}\n\t\n\tping() {\n\t\tconsole.log('ping');\n\t}\n}",
+            "sourceCode": "import { Component, ElementRef, Input, ViewChild } from \"@angular/core\";\n\n@Component({\n  selector: \"callCounter\",\n\ttemplate: `\n\t\t{{ping()}}\n    <div id=\"top\" class=\"brick {{klass}}\" #topOne tabIndex=\"-1\"></div>\n    <div id=\"tow\" class=\"brick {{klass}}\" #twoOne tabIndex=\"-1\"></div>\n    <div>\n      <button (click)=\"topOnClick()\">Top</button>\n\t\t\t<button (click)=\"twoOnClick()\">Two</button>\n\t\t\t<button (click)=\"switchClass()\">Switch klass</button>\n    </div>\n  `,\n  styles: [\n    `\n      h1 {\n        font-family: Lato;\n\t\t\t}\n\t\t\tbutton {\n\t\t\t\tmargin: 5px;\n\t\t\t}\n      .brick {\n        width: 100px;\n        height: 100px;\n\t\t\t}\n\t\t\t.volcano:after {\n\t\t\t\tcontent: 'hiya';\n\t\t\t\tcolor: #000;\n\t\t\t}\n      #top {\n        background-color: #1ecbe1;\n      }\n      #tow {\n        background-color: #e1341e;\n      }\n      .brick:focus {\n        border-width: 1px;\n        border-style: solid;\n        border-color: black;\n      }\n    `\n  ]\n})\nexport class CallCounterComponent {\n  @Input() name: string;\n  @ViewChild(\"topOne\") topOne: ElementRef;\n  @ViewChild(\"twoOne\") twoOne: ElementRef;\n\tklass = \"brick\";\n\n  topOnClick() {\n    console.log(\"top\");\n    this.topOne.nativeElement.focus();\n  }\n\n  twoOnClick() {\n    console.log(\"two\");\n    this.twoOne.nativeElement.focus();\n\t}\n\n\tswitchClass() {\n\t\tif(this.klass === 'volcano') {\n\t\t\tthis.klass = undefined;\n\t\t}\n\t\telse {\n\t\t\tthis.klass = 'volcano';\n\t\t}\n\t}\n\t\n\tping() {\n\t\tconsole.log('ping');\n\t}\n}",
             "assetsDirs": [],
             "styleUrlsData": "",
-            "stylesData": "\n      h1 {\n        font-family: Lato;\n      }\n      .brick {\n        width: 100px;\n        height: 100px;\n      }\n      #top {\n        background-color: #1ecbe1;\n      }\n      #tow {\n        background-color: #e1341e;\n      }\n      .brick:focus {\n        border-width: 1px;\n        border-style: solid;\n        border-color: black;\n      }\n    \n"
+            "stylesData": "\n      h1 {\n        font-family: Lato;\n\t\t\t}\n\t\t\tbutton {\n\t\t\t\tmargin: 5px;\n\t\t\t}\n      .brick {\n        width: 100px;\n        height: 100px;\n\t\t\t}\n\t\t\t.volcano:after {\n\t\t\t\tcontent: 'hiya';\n\t\t\t\tcolor: #000;\n\t\t\t}\n      #top {\n        background-color: #1ecbe1;\n      }\n      #tow {\n        background-color: #e1341e;\n      }\n      .brick:focus {\n        border-width: 1px;\n        border-style: solid;\n        border-color: black;\n      }\n    \n"
         },
         {
             "name": "CategoryFormComponent",
@@ -5741,7 +5771,7 @@
         },
         {
             "name": "SelectComponent",
-            "id": "component-SelectComponent-d428300270eb5b37eefa02ca43cfa6de",
+            "id": "component-SelectComponent-8a2f985189581264e8b34e6cb12ecd42",
             "file": "src/app/shared/components/select/select.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -5773,60 +5803,62 @@
                 {
                     "name": "customStyle",
                     "defaultValue": "null",
-                    "line": 75,
+                    "line": 73,
                     "type": "any"
                 },
                 {
                     "name": "defaultDisplay",
                     "defaultValue": "'Select...'",
-                    "line": 74,
+                    "line": 72,
                     "type": "string"
                 },
                 {
                     "name": "disabled",
-                    "line": 73,
+                    "line": 71,
                     "type": "boolean"
                 },
                 {
                     "name": "multiple",
                     "defaultValue": "false",
-                    "line": 72,
+                    "line": 70,
                     "type": "boolean"
                 },
                 {
                     "name": "name",
                     "defaultValue": "''",
-                    "line": 69,
+                    "line": 68,
                     "type": "string"
-                },
-                {
-                    "name": "options",
-                    "line": 70,
-                    "type": "DataBasic[]"
                 },
                 {
                     "name": "value",
                     "defaultValue": "[]",
-                    "line": 71,
-                    "type": "DataBasic[]"
+                    "line": 69,
+                    "type": "unknown[]"
                 }
             ],
             "outputsClass": [
                 {
                     "name": "onSelected",
-                    "defaultValue": "new EventEmitter<DataBasic[]>()",
-                    "line": 76,
+                    "defaultValue": "new EventEmitter<unknown[]>()",
+                    "line": 74,
                     "type": "EventEmitter"
                 }
             ],
             "propertiesClass": [
+                {
+                    "name": "childrenChangeUnsub",
+                    "type": "Unsubscribable",
+                    "optional": false,
+                    "description": "",
+                    "line": 86
+                },
                 {
                     "name": "containerClass",
                     "defaultValue": "closedMenuClass",
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 80
+                    "line": 78
                 },
                 {
                     "name": "custom",
@@ -5847,7 +5879,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 85
+                    "line": 83
                 },
                 {
                     "name": "highlightedMenuItemIdx",
@@ -5855,7 +5887,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 81
+                    "line": 79
                 },
                 {
                     "name": "isOpen",
@@ -5863,14 +5895,22 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 77
+                    "line": 75
+                },
+                {
+                    "name": "keyContentMap",
+                    "defaultValue": "new Map()",
+                    "type": "Map<unknown | string>",
+                    "optional": false,
+                    "description": "",
+                    "line": 87
                 },
                 {
                     "name": "optionElements",
                     "type": "QueryList<SelectOptionComponent>",
                     "optional": false,
                     "description": "",
-                    "line": 91,
+                    "line": 90,
                     "decorators": [
                         {
                             "name": "ContentChildren",
@@ -5884,7 +5924,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 86
+                    "line": 84
                 },
                 {
                     "name": "optionsParent",
@@ -5904,35 +5944,35 @@
                     "type": "function",
                     "optional": false,
                     "description": "",
-                    "line": 83
+                    "line": 81
                 },
                 {
                     "name": "propagateTouch",
                     "type": "function",
                     "optional": false,
                     "description": "",
-                    "line": 84
+                    "line": 82
                 },
                 {
                     "name": "selectConfig",
                     "type": "SelectConfig",
                     "optional": false,
                     "description": "",
-                    "line": 87
+                    "line": 85
                 },
                 {
                     "name": "selectedSet",
-                    "type": "Set<DataBasic>",
+                    "type": "Set<unknown>",
                     "optional": false,
                     "description": "",
-                    "line": 79
+                    "line": 77
                 },
                 {
                     "name": "tabNum",
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 82
+                    "line": 80
                 },
                 {
                     "name": "topId",
@@ -5940,7 +5980,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 78
+                    "line": 76
                 }
             ],
             "methodsClass": [
@@ -5950,7 +5990,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 264,
+                    "line": 273,
                     "modifierKind": [
                         112
                     ]
@@ -5961,7 +6001,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 202,
+                    "line": 211,
                     "modifierKind": [
                         112
                     ]
@@ -5977,7 +6017,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 242,
+                    "line": 251,
                     "modifierKind": [
                         112
                     ],
@@ -6002,7 +6042,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 157,
+                    "line": 165,
                     "modifierKind": [
                         112
                     ],
@@ -6027,7 +6067,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 235,
+                    "line": 244,
                     "modifierKind": [
                         112
                     ],
@@ -6047,7 +6087,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 193,
+                    "line": 201,
                     "modifierKind": [
                         112
                     ]
@@ -6063,7 +6103,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 272,
+                    "line": 280,
                     "modifierKind": [
                         112
                     ],
@@ -6082,20 +6122,20 @@
                     "args": [
                         {
                             "name": "selected",
-                            "type": "DataBasic[]"
+                            "type": "unknown[]"
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 333,
+                    "line": 337,
                     "modifierKind": [
                         112
                     ],
                     "jsdoctags": [
                         {
                             "name": "selected",
-                            "type": "DataBasic[]",
+                            "type": "unknown[]",
                             "tagName": {
                                 "text": "param"
                             }
@@ -6107,20 +6147,20 @@
                     "args": [
                         {
                             "name": "option",
-                            "type": "DataBasic"
+                            "type": "DSInput"
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 344,
+                    "line": 348,
                     "modifierKind": [
                         112
                     ],
                     "jsdoctags": [
                         {
                             "name": "option",
-                            "type": "DataBasic",
+                            "type": "DSInput",
                             "tagName": {
                                 "text": "param"
                             }
@@ -6132,20 +6172,20 @@
                     "args": [
                         {
                             "name": "option",
-                            "type": "DataBasic"
+                            "type": "SelectOptionComponent"
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 354,
+                    "line": 358,
                     "modifierKind": [
                         112
                     ],
                     "jsdoctags": [
                         {
                             "name": "option",
-                            "type": "DataBasic",
+                            "type": "SelectOptionComponent",
                             "tagName": {
                                 "text": "param"
                             }
@@ -6158,7 +6198,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 380
+                    "line": 381
                 },
                 {
                     "name": "hasSelectedValue",
@@ -6166,24 +6206,24 @@
                     "optional": false,
                     "returnType": "boolean",
                     "typeParameters": [],
-                    "line": 375
+                    "line": 377
                 },
                 {
-                    "name": "isOptionChecked",
+                    "name": "lookupContent",
                     "args": [
                         {
-                            "name": "option",
-                            "type": "DataBasic"
+                            "name": "value",
+                            "type": "unknown"
                         }
                     ],
                     "optional": false,
-                    "returnType": "boolean",
+                    "returnType": "string",
                     "typeParameters": [],
-                    "line": 329,
+                    "line": 390,
                     "jsdoctags": [
                         {
-                            "name": "option",
-                            "type": "DataBasic",
+                            "name": "value",
+                            "type": "unknown",
                             "tagName": {
                                 "text": "param"
                             }
@@ -6191,26 +6231,20 @@
                     ]
                 },
                 {
-                    "name": "ngOnChanges",
-                    "args": [
-                        {
-                            "name": "changes",
-                            "type": "SimpleChange"
-                        }
-                    ],
+                    "name": "ngAfterViewInit",
+                    "args": [],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 117,
-                    "jsdoctags": [
-                        {
-                            "name": "changes",
-                            "type": "SimpleChange",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        }
-                    ]
+                    "line": 134
+                },
+                {
+                    "name": "ngDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 397
                 },
                 {
                     "name": "ngOnInit",
@@ -6225,17 +6259,17 @@
                     "args": [
                         {
                             "name": "option",
-                            "type": "DataBasic"
+                            "type": "SelectOptionComponent"
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 359,
+                    "line": 363,
                     "jsdoctags": [
                         {
                             "name": "option",
-                            "type": "DataBasic",
+                            "type": "SelectOptionComponent",
                             "tagName": {
                                 "text": "param"
                             }
@@ -6248,7 +6282,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 209
+                    "line": 218
                 },
                 {
                     "name": "onFocusOut",
@@ -6256,24 +6290,24 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 216
+                    "line": 225
                 },
                 {
                     "name": "onTagXClicked",
                     "args": [
                         {
                             "name": "option",
-                            "type": "DataBasic"
+                            "type": "DSInput"
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 370,
+                    "line": 372,
                     "jsdoctags": [
                         {
                             "name": "option",
-                            "type": "DataBasic",
+                            "type": "DSInput",
                             "tagName": {
                                 "text": "param"
                             }
@@ -6291,7 +6325,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 138,
+                    "line": 146,
                     "jsdoctags": [
                         {
                             "name": "fn",
@@ -6313,7 +6347,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 142,
+                    "line": 150,
                     "jsdoctags": [
                         {
                             "name": "fn",
@@ -6335,7 +6369,7 @@
                     "optional": true,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 146,
+                    "line": 154,
                     "jsdoctags": [
                         {
                             "name": "isDisabled",
@@ -6352,7 +6386,7 @@
                     "optional": false,
                     "returnType": "boolean",
                     "typeParameters": [],
-                    "line": 322
+                    "line": 330
                 },
                 {
                     "name": "validate",
@@ -6365,7 +6399,7 @@
                     "optional": false,
                     "returnType": "any",
                     "typeParameters": [],
-                    "line": 152,
+                    "line": 160,
                     "jsdoctags": [
                         {
                             "name": "control",
@@ -6387,7 +6421,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 134,
+                    "line": 142,
                     "jsdoctags": [
                         {
                             "name": "obj",
@@ -6412,17 +6446,17 @@
                     "argsDecorator": [
                         "$event"
                     ],
-                    "line": 316
+                    "line": 324
                 }
             ],
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { ContentChildren, Inject, ViewChild } from '@angular/core';\nimport { Component, \n\tElementRef, \n\tEventEmitter, \n\tforwardRef, \n\tHostListener, \n\tInput, \n\tOnInit, \n\tOutput, \n\tQueryList, \n\tSimpleChange } from '@angular/core';\nimport { AbstractControl, ControlValueAccessor, \n\tNG_VALIDATORS, \n\tNG_VALUE_ACCESSOR } from '@angular/forms';\nimport { BehaviorSubject, noop } from 'rxjs';\nimport { DataBasic } from 'src/app/types/data-basic';\nimport { isEmptyStr } from '../../utils/anyHelper';\nimport { asArray } from '../../utils/arrayHelpers';\nimport { focusNext } from '../../utils/domHelper';\nimport { SelectConfig, SELECT_CONFIG } from './select-config';\nimport { \n\tSelectOptionComponent } \nfrom './select-option/select-option.component';\n\nconst closedMenuClass = 'menu-container-closed ds-select';\nconst openMenuClass = 'menu-container-open ds-select';\nconst disabledMenuClass = 'menu-container-disabled';\n\nconst skippedKeys = new Set([\n\t'Backspace',\n\t'Tab',\n\t'F1',\n\t'F1',\n\t'F2',\n\t'F3',\n\t'F4',\n\t'F5',\n\t'F6',\n\t'F7',\n\t'F8',\n\t'F9',\n\t'F10',\n\t'F11',\n\t'F12'\n]);\n\n@Component({\n  selector: 'app-select',\n  templateUrl: './select.component.html',\n\tstyleUrls: ['./select.component.sass'],\n\tproviders: [{\n\t\tprovide: NG_VALUE_ACCESSOR,\n\t\tuseExisting: forwardRef(() => SelectComponent),\n\t\tmulti: true,\n\t},\n\t{\n\t\tprovide: SELECT_CONFIG,\n\t\tuseFactory: () => new BehaviorSubject<SelectConfig | null>(null)\n\t},\n\t{\n\t\tprovide: NG_VALIDATORS,\n\t\tuseExisting: forwardRef(() => SelectComponent),\n\t\tmulti: true,\n\t}\n]\n})\nexport class SelectComponent implements OnInit, ControlValueAccessor {\n\n\t@Input('name') controlName: string = '';\n\t@Input('options') options: DataBasic[];\n\t@Input('value') selectedItems: DataBasic[] = [];\n\t@Input('multiple') allowMultiSelect: boolean = false;\n\t@Input('disabled') isDisabled: boolean;\n\t@Input('defaultDisplay') defaultDisplay: string = 'Select...';\n\t@Input('customStyle') customStyle: any = null;\n\t@Output('onSelected') onSelected = new EventEmitter<DataBasic[]>(); \n\tisOpen: boolean = false;\n\ttopId: string = '';\n\tselectedSet: Set<DataBasic>;\n\tcontainerClass: string = closedMenuClass;\n\thighlightedMenuItemIdx: number = -1;\n\ttabNum: number;\n\tpropagateChange: (_: any) => {};\n\tpropagateTouch: () => void;\n\thasError: boolean = false;\n\toptionMaxIdx: number = 0; \n\tselectConfig: SelectConfig;\n\n\n\t@ContentChildren(SelectOptionComponent) \n\toptionElements: QueryList<SelectOptionComponent>;\n\t@ViewChild('custom') custom: ElementRef;\n\t@ViewChild('optionsParent') optionsParent: ElementRef;\n\n\tconstructor(private elRef: ElementRef, \n\t\t@Inject(SELECT_CONFIG) \n\t\tprivate selectConfig$: BehaviorSubject<SelectConfig | null>) \n\t{ }\n\t\n\tngOnInit(): void {\n\t\tthis._initializeSelectedValues(this.selectedItems);\n\t\tthis.topId = `ds-select-top-${this.controlName}`;\n\t\tthis.selectConfig = {\n\t\t\tallowMultiSelect: this.allowMultiSelect,\n\t\t\tcontrolName: this.controlName,\n\t\t\tonClickCallback: this.onChecked.bind(this),\n\t\t\tregister: () => ({ idx: this.optionMaxIdx++ }),\n\t\t\tselectedSet: this.selectedSet,\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t\tif(this.isDisabled) {\n\t\t\tthis.tabNum = -1;\n\t\t\tthis.containerClass = disabledMenuClass;\n\t\t}\n\t}\n\n\tngOnChanges(changes: SimpleChange) {\n\t\tconst optionChanges = changes['options'];\n\t\tif(optionChanges && !optionChanges.firstChange) {\n\t\t\tconst prevLength = optionChanges.previousValue?.length;\n\t\t\t//if something was deleted\n\t\t\tif(prevLength > optionChanges.currentValue?.length) {\n\t\t\t\tconst current = optionChanges.currentValue\n\t\t\t\t\t.map(o => o.key);\n\t\t\t\tconst currentSet = new Set(current);\n\t\t\t\tconst selected = asArray(this.selectedItems)\n\t\t\t\t\t.filter(o => currentSet.has(o.id));\n\t\t\t\tthis.selectedItems = selected;\n\t\t\t\tthis.selectedSet = new Set(selected);\n\t\t\t}\n\t\t}\n\t}\n\n\twriteValue(obj: any): void {\n\t\tthis._initializeSelectedValues(obj);\n\t}\n\n\tregisterOnChange(fn: any): void {\n\t\tthis.propagateChange = fn;\n\t}\n\n\tregisterOnTouched(fn: any): void {\n\t\tthis.propagateTouch = fn;\n\t}\n\n\tsetDisabledState?(isDisabled: boolean): void {\n\t\tthis.isDisabled = isDisabled;\n\t\tthis.tabNum = isDisabled ? -1 : 0;\n\t\tthis.containerClass = disabledMenuClass;\n\t}\n\n\tvalidate(control: AbstractControl): any {\n\t\tconst validity = (control.value as [])?.length < 1 ? {} : null;\n\t\treturn validity;\n\t}\n\n\tprivate _initializeSelectedValues(selectedItems: any) {\n\t\tif(this.allowMultiSelect) {\n\t\t\tif(Array.isArray(selectedItems)) {\n\t\t\t\tthis.selectedItems = selectedItems;\n\t\t\t\tthis.selectedSet = new Set(selectedItems);\n\t\t\t}\n\t\t\telse if(isEmptyStr(selectedItems)) {\n\t\t\t\tthis.selectedItems = [];\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t\tthis.propagateChange && this.propagateChange([]);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tthrow Error('When using multi-select, provided value must be array');\n\t\t\t}\n\t\t}\n\t\telse {\n\t\t\tif(!Array.isArray(selectedItems)) {\n\t\t\t\t//I've arbitrarily decided I want the internal representation \n\t\t\t\t//to always be an array \n\t\t\t\tthis.selectedItems = !isEmptyStr(selectedItems) ? [selectedItems] : [];\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t}\n\t\t\telse if(selectedItems.length <= 1) {\n\t\t\t\tthis.selectedSet = new Set(selectedItems);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tthrow Error('When not using multi-select, '\n\t\t\t\t\t+ 'provided value cannot be array with more than 1 item.');\n\t\t\t}\n\t\t}\n\t\tthis.selectConfig = {...this.selectConfig,\n\t\t\tselectedSet: this.selectedSet\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t}\n\n\tprivate _openMenu(): void {\n\t\tif(this.isDisabled || this.options?.length < 1) return;\n\t\tthis.isOpen = true;\n\t\tthis.containerClass = openMenuClass;\n\t\tsetTimeout(() => {\n\t\t\tthis.optionsParent.nativeElement.focus();\n\t\t});\n\t}\n\n\tprivate _closeMenu(): void {\n\t\tthis.isOpen = false;\n\t\tthis.containerClass = closedMenuClass;\n\t\tthis.highlightedMenuItemIdx = -1;\n\t\tthis.propagateTouch && this.propagateTouch();\n\t}\n\t\n\tonFocus(): void {\n\t\tthis._openMenu();\n\t}\n\n\t//this needs to be a focusout rather than a simple blur\n\t//because we want to get the focus event of the options themselves\n\t//otherwise, if an option is selected and we click out, this wont fire\n\tonFocusOut(): void {\n\t\tconsole.log('focus out');\n\t\t//this timeout is a hack.\n\t\t//we don't want the blur action to occur if a child is focused\n\t\t//especially since it will occur as we tab through the options\n\t\t//we can check for active element, but first focus goes to body\n\t\t//before switching to our element. the setTimeout tosses our work to the end \n\t\t//of the queue so that by then the activeElement is our option\n\n\t\tsetTimeout(() => {\n\t\t\t//reminder element is the whole thing\n\t\t\tconst element = this.elRef.nativeElement.children[0] as HTMLElement;\n\t\t\t// document.activeElement is likely to be the one of the options\n\t\t\tif(!element.contains(document.activeElement) || element === document.activeElement) {\n\t\t\t\tthis._closeMenu();\n\t\t\t}\n\t\t});\n\t}\n\n\tprivate _menuOptionHighlight(newIdx: number): void {\n\t\tconst optionsElementsArr = this.optionElements.toArray();\n\t\tconst nextHighlighted = optionsElementsArr[newIdx];\n\t\tnextHighlighted.elementRef.nativeElement.focus();\n\t\tthis.highlightedMenuItemIdx = newIdx;\n\t}\n\n\tprivate _highlightSearchedOption(e: KeyboardEvent) {\n\t\tconst optionElements = this.optionElements.toArray();\n\t\tconst idx = this.highlightedMenuItemIdx;\n\t\tconst newIdx = optionElements.findIndex(\n\t\t\t(option: SelectOptionComponent) => {\n\t\t\t\tif(!option.option) return false;\n\t\t\t\tconst upKey = e.key.toLocaleUpperCase();\n\t\t\t\tconst upStr = option.option.name.toLocaleUpperCase()\n\t\t\t\treturn upStr.startsWith(upKey);\n\t\t});\n\t\tif(newIdx > -1) {\n\t\t\tif(idx > -1) {\n\t\t\t\tthis._menuOptionHighlight(newIdx);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tconst option = optionElements[newIdx];\n\t\t\t\toption.elementRef.nativeElement.focus();\n\t\t\t\tthis.highlightedMenuItemIdx = newIdx;\n\t\t\t}\n\t\t}\n\t}\n\n\tprivate _chooseOption(): void {\n\t\tconst optionElements = this.optionElements.toArray();\n\t\tconst optionElement = optionElements[this.highlightedMenuItemIdx];\n\t\toptionElement.selected = true;\n\t\tconst option = optionElement.option;\n\t\tthis.onChecked(option);\n\t}\n\n\tprivate _openMenuKeydownEventBranches(e: KeyboardEvent) {\n\t\t\n\t\tif((e.key === ' ') && this.highlightedMenuItemIdx > -1) {\n\t\t\tthis._chooseOption();\n\t\t\tif(!this.allowMultiSelect) {\n\t\t\t\tconst element = this.elRef.nativeElement.children[0];\n\t\t\t\tfocusNext(element);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(e.key === 'Enter') {\n\t\t\tif(this.allowMultiSelect) {\n\t\t\t\tthis._closeMenu();\n\t\t\t}\n\t\t\telse if(this.highlightedMenuItemIdx > -1) {\n\t\t\t\tthis._chooseOption();\n\t\t\t}\n\t\t\tconst element = this.elRef.nativeElement.children[0];\n\t\t\tfocusNext(element);\n\t\t}\n\t\telse if(e.key === 'ArrowUp') {\n\t\t\tconst idx = this.highlightedMenuItemIdx;\n\t\t\tif(idx > 0) {\n\t\t\t\tthis._menuOptionHighlight(idx - 1);\n\t\t\t}\n\t\t\te.preventDefault();\t\n\t\t}\n\t\telse if(e.key === 'ArrowDown') {\n\t\t\tconst idx = this.highlightedMenuItemIdx;\n\t\t\tif(idx < this.optionElements.length -1) {\n\t\t\t\tthis._menuOptionHighlight(idx + 1);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(skippedKeys.has(e.key)) {\n\t\t\tnoop();\n\t\t}\n\t\telse {\n\t\t\tthis._highlightSearchedOption(e);\n\t\t}\n\t}\n\n\n\t@HostListener('window:keydown',['$event'])\n\tonKeyDown(e: KeyboardEvent): void {\n\t\tif(this.isOpen && this.optionElements?.length > 0) {\n\t\t\tthis._openMenuKeydownEventBranches(e);\n\t\t}\n\t}\n\n\tshowTagList(): boolean {\n\t\tif(this.allowMultiSelect) {\n\t\t\treturn this.hasSelectedValue();\n\t\t}\n\t\treturn false;\n\t}\n\n\tisOptionChecked(option: DataBasic): boolean {\n\t\treturn this.selectedSet && this.selectedSet.has(option);\n\t}\n\n\tprivate _replaceValues(selected: DataBasic[]): void {\n\t\tthis.selectedItems = selected;\n\t\tthis.selectedSet = new Set(selected);\n\t\tthis.onSelected.emit([...selected]);\n\t\tthis.propagateChange && this.propagateChange([...selected]);\n\t\tthis.selectConfig = {...this.selectConfig,\n\t\t\tselectedSet: this.selectedSet\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t}\n\n\tprivate _toggleOptionMulti(option: DataBasic): void {\n\t\tconst selectedArray = this.selectedItems as DataBasic[];\n\t\tconst items = selectedArray.filter(t => t.id !== option.id);\n\t\t//if no items were matched to be removed, then add instead\n\t\tif(items.length === selectedArray.length) {\n\t\t\titems.push(option);\n\t\t}\n\t\tthis._replaceValues(items);\n\t}\n\n\tprivate _toggleOptionSingle(option: DataBasic): void {\n\t\tthis._replaceValues(option ? [option] : []);\n\t\tthis._closeMenu();\n\t}\n\n\tonChecked(option: DataBasic): void {\n\t\tconsole.log('onChecked');\n\t\tconsole.log(option);\n\t\tif(this.allowMultiSelect) {\n\t\t\tthis._toggleOptionMulti(option);\n\t\t}\n\t\telse {\n\t\t\tthis._toggleOptionSingle(option);\n\t\t}\n\t}\n\n\tonTagXClicked(option: DataBasic) {\n\t\tthis._toggleOptionMulti(option);\n\t\tthis.propagateTouch && this.propagateTouch();\n\t}\n\n\thasSelectedValue(): boolean {\n\t\tconsole.log('yo!');\n\t\treturn this.selectedItems && this.selectedItems.length > 0;\n\t}\n\n\tgetSingularDisplayValue(): string {\n\t\tconst selected = this.selectedItems as DataBasic[];\n\t\treturn selected[0] ? selected[0].name : this.defaultDisplay;\n\t}\n}\n",
+            "sourceCode": "import { ContentChildren, Inject, ViewChild } from '@angular/core';\nimport { Component, \n\tElementRef, \n\tEventEmitter, \n\tforwardRef, \n\tHostListener, \n\tInput, \n\tOnInit, \n\tOutput, \n\tQueryList, \n\tSimpleChange } from '@angular/core';\nimport { AbstractControl, ControlValueAccessor, \n\tNG_VALIDATORS, \n\tNG_VALUE_ACCESSOR } from '@angular/forms';\nimport { BehaviorSubject, noop, Unsubscribable } from 'rxjs';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { isEmptyStr } from '../../utils/anyHelper';\nimport { focusNext } from '../../utils/domHelper';\nimport { SelectConfig, SELECT_CONFIG } from './select-config';\nimport { \n\tSelectOptionComponent } \nfrom './select-option/select-option.component';\n\nconst closedMenuClass = 'menu-container-closed ds-select';\nconst openMenuClass = 'menu-container-open ds-select';\nconst disabledMenuClass = 'menu-container-disabled';\n\nconst skippedKeys = new Set([\n\t'Backspace',\n\t'Tab',\n\t'F1',\n\t'F1',\n\t'F2',\n\t'F3',\n\t'F4',\n\t'F5',\n\t'F6',\n\t'F7',\n\t'F8',\n\t'F9',\n\t'F10',\n\t'F11',\n\t'F12'\n]);\n\n@Component({\n  selector: 'app-select',\n  templateUrl: './select.component.html',\n\tstyleUrls: ['./select.component.sass'],\n\tproviders: [{\n\t\tprovide: NG_VALUE_ACCESSOR,\n\t\tuseExisting: forwardRef(() => SelectComponent),\n\t\tmulti: true,\n\t},\n\t{\n\t\tprovide: SELECT_CONFIG,\n\t\tuseFactory: () => new BehaviorSubject<SelectConfig | null>(null)\n\t},\n\t{\n\t\tprovide: NG_VALIDATORS,\n\t\tuseExisting: forwardRef(() => SelectComponent),\n\t\tmulti: true,\n\t}\n]\n})\nexport class SelectComponent implements OnInit, ControlValueAccessor {\n\n\t@Input('name') controlName: string = '';\n\t@Input('value') selectedItems: unknown[] = [];\n\t@Input('multiple') allowMultiSelect: boolean = false;\n\t@Input('disabled') isDisabled: boolean;\n\t@Input('defaultDisplay') defaultDisplay: string = 'Select...';\n\t@Input('customStyle') customStyle: any = null;\n\t@Output('onSelected') onSelected = new EventEmitter<unknown[]>(); \n\tisOpen: boolean = false;\n\ttopId: string = '';\n\tselectedSet: Set<unknown>;\n\tcontainerClass: string = closedMenuClass;\n\thighlightedMenuItemIdx: number = -1;\n\ttabNum: number;\n\tpropagateChange: (_: any) => {};\n\tpropagateTouch: () => void;\n\thasError: boolean = false;\n\toptionMaxIdx: number = 0; \n\tselectConfig: SelectConfig;\n\tchildrenChangeUnsub: Unsubscribable;\n\tkeyContentMap: Map<unknown, string> = new Map();\n\n\t@ContentChildren(SelectOptionComponent) \n\toptionElements: QueryList<SelectOptionComponent>;\n\n\t@ViewChild('custom') custom: ElementRef;\n\t@ViewChild('optionsParent') optionsParent: ElementRef;\n\n\tconstructor(private elRef: ElementRef, \n\t\t@Inject(SELECT_CONFIG) \n\t\tprivate selectConfig$: BehaviorSubject<SelectConfig>) \n\t{ }\n\t\n\tngOnInit(): void {\n\t\tthis._initializeSelectedValues(this.selectedItems);\n\t\tthis.topId = `ds-select-top-${this.controlName}`;\n\t\tthis.selectConfig = {\n\t\t\tallowMultiSelect: this.allowMultiSelect,\n\t\t\tcontrolName: this.controlName,\n\t\t\tonClickCallback: this.onChecked.bind(this),\n\t\t\tregister: () => ({ idx: this.optionMaxIdx++ }),\n\t\t\tselectedSet: this.selectedSet,\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t\tif(this.isDisabled) {\n\t\t\tthis.tabNum = -1;\n\t\t\tthis.containerClass = disabledMenuClass;\n\t\t}\n\t}\n\n\t// ngOnChanges(changes: SimpleChange) {\n\t// \tconst optionChanges = changes['options'];\n\t// \tif(optionChanges && !optionChanges.firstChange) {\n\t// \t\tconst prevLength = optionChanges.previousValue?.length;\n\t// \t\t//if something was deleted\n\t// \t\tif(prevLength > optionChanges.currentValue?.length) {\n\t// \t\t\tconst current = optionChanges.currentValue\n\t// \t\t\t\t.map(o => o.key);\n\t// \t\t\tconst currentSet = new Set(optionChanges.currentValue);\n\t// \t\t\tconst selected = asArray(this.selectedItems)\n\t// \t\t\t\t.filter(o => currentSet.has(o.id));\n\t// \t\t\tthis.selectedItems = selected;\n\t// \t\t\tthis.selectedSet = new Set(selected);\n\t// \t\t}\n\t// \t}\n\t// }\n\n\tngAfterViewInit(): void {\n\t\tthis.keyContentMap = new Map(this.optionElements.map(c => [c.value, c.content]));\n\t\tthis.childrenChangeUnsub = this.optionElements.changes.subscribe(\n\t\t\t(changes: QueryList<SelectOptionComponent>) => {\n\t\t\t\tthis.keyContentMap = new Map(changes.map(c => [c.value, c.content]));\n\t\t});\n\t}\n\n\twriteValue(obj: any): void {\n\t\tthis._initializeSelectedValues(obj);\n\t}\n\n\tregisterOnChange(fn: any): void {\n\t\tthis.propagateChange = fn;\n\t}\n\n\tregisterOnTouched(fn: any): void {\n\t\tthis.propagateTouch = fn;\n\t}\n\n\tsetDisabledState?(isDisabled: boolean): void {\n\t\tthis.isDisabled = isDisabled;\n\t\tthis.tabNum = isDisabled ? -1 : 0;\n\t\tthis.containerClass = disabledMenuClass;\n\t}\n\n\tvalidate(control: AbstractControl): any {\n\t\tconst validity = (control.value as [])?.length < 1 ? {} : null;\n\t\treturn validity;\n\t}\n\n\tprivate _initializeSelectedValues(selectedItems: any) {\n\t\tif(this.allowMultiSelect) {\n\t\t\tif(Array.isArray(selectedItems)) {\n\t\t\t\tthis.selectedItems = selectedItems;\n\t\t\t\tthis.selectedSet = new Set(selectedItems);\n\t\t\t}\n\t\t\telse if(isEmptyStr(selectedItems)) {\n\t\t\t\tthis.selectedItems = [];\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t\tthis.propagateChange && this.propagateChange([]);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tthrow Error('When using multi-select, provided value must be array');\n\t\t\t}\n\t\t}\n\t\telse {\n\t\t\tif(!Array.isArray(selectedItems)) {\n\t\t\t\t//I've arbitrarily decided I want the internal representation \n\t\t\t\t//to always be an array \n\t\t\t\tthis.selectedItems = !isEmptyStr(selectedItems) ? [selectedItems] : [];\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t}\n\t\t\telse if(selectedItems.length <= 1) {\n\t\t\t\tthis.selectedSet = new Set(selectedItems);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tthrow Error('When not using multi-select, '\n\t\t\t\t\t+ 'provided value cannot be array with more than 1 item.');\n\t\t\t}\n\t\t}\n\t\tthis.selectConfig = {...this.selectConfig,\n\t\t\tselectedSet: this.selectedSet\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t}\n\n\tprivate _openMenu(): void {\n\t\tif(this.isDisabled || (this.optionElements?.length || 0) < 1) return;\n\t\tconsole.log('here?');\n\t\tthis.isOpen = true;\n\t\tthis.containerClass = openMenuClass;\n\t\tsetTimeout(() => {\n\t\t\tthis.optionsParent.nativeElement.focus();\n\t\t});\n\t}\n\n\tprivate _closeMenu(): void {\n\t\tthis.isOpen = false;\n\t\tthis.containerClass = closedMenuClass;\n\t\tthis.highlightedMenuItemIdx = -1;\n\t\tthis.propagateTouch && this.propagateTouch();\n\t}\n\t\n\tonFocus(): void {\n\t\tthis._openMenu();\n\t}\n\n\t//this needs to be a focusout rather than a simple blur\n\t//because we want to get the focus event of the options themselves\n\t//otherwise, if an option is selected and we click out, this wont fire\n\tonFocusOut(): void {\n\t\tconsole.log('focus out');\n\t\t//this timeout is a hack.\n\t\t//we don't want the blur action to occur if a child is focused\n\t\t//especially since it will occur as we tab through the options\n\t\t//we can check for active element, but first focus goes to body\n\t\t//before switching to our element. the setTimeout tosses our work to the end \n\t\t//of the queue so that by then the activeElement is our option\n\n\t\tsetTimeout(() => {\n\t\t\t//reminder element is the whole thing\n\t\t\tconst element = this.elRef.nativeElement.children[0] as HTMLElement;\n\t\t\t// document.activeElement is likely to be the one of the options\n\t\t\tif(!element.contains(document.activeElement) || element === document.activeElement) {\n\t\t\t\tthis._closeMenu();\n\t\t\t}\n\t\t});\n\t}\n\n\tprivate _menuOptionHighlight(newIdx: number): void {\n\t\tconst optionsElementsArr = this.optionElements.toArray();\n\t\tconst nextHighlighted = optionsElementsArr[newIdx];\n\t\tnextHighlighted.elementRef.nativeElement.focus();\n\t\tthis.highlightedMenuItemIdx = newIdx;\n\t}\n\n\tprivate _highlightSearchedOption(e: KeyboardEvent) {\n\t\tconst optionElements = this.optionElements.toArray();\n\t\tconst idx = this.highlightedMenuItemIdx;\n\t\tconst newIdx = optionElements.findIndex(\n\t\t\t(option: SelectOptionComponent) => {\n\t\t\t\tif(!option.value) return false;\n\t\t\t\tconst upKey = e.key.toLocaleUpperCase();\n\t\t\t\tconst upStr = option.content.toLocaleUpperCase()\n\t\t\t\treturn upStr.startsWith(upKey);\n\t\t});\n\t\tif(newIdx > -1) {\n\t\t\tif(idx > -1) {\n\t\t\t\tthis._menuOptionHighlight(newIdx);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tconst option = optionElements[newIdx];\n\t\t\t\toption.elementRef.nativeElement.focus();\n\t\t\t\tthis.highlightedMenuItemIdx = newIdx;\n\t\t\t}\n\t\t}\n\t}\n\n\tprivate _chooseOption(): void {\n\t\tconst optionElements = this.optionElements.toArray();\n\t\tconst optionElement = optionElements[this.highlightedMenuItemIdx];\n\t\toptionElement.selected = true;\n\t\tthis.onChecked(optionElement);\n\t}\n\n\tprivate _openMenuKeydownEventBranches(e: KeyboardEvent) {\n\t\t\n\t\tif((e.key === ' ') && this.highlightedMenuItemIdx > -1) {\n\t\t\tthis._chooseOption();\n\t\t\tif(!this.allowMultiSelect) {\n\t\t\t\tconst element = this.elRef.nativeElement.children[0];\n\t\t\t\tfocusNext(element);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(e.key === 'Enter') {\n\t\t\tif(this.allowMultiSelect) {\n\t\t\t\tthis._closeMenu();\n\t\t\t}\n\t\t\telse if(this.highlightedMenuItemIdx > -1) {\n\t\t\t\tthis._chooseOption();\n\t\t\t}\n\t\t\tconst element = this.elRef.nativeElement.children[0];\n\t\t\tfocusNext(element);\n\t\t}\n\t\telse if(e.key === 'ArrowUp') {\n\t\t\tconst idx = this.highlightedMenuItemIdx;\n\t\t\tif(idx > 0) {\n\t\t\t\tthis._menuOptionHighlight(idx - 1);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(e.key === 'ArrowDown') {\n\t\t\tconst idx = this.highlightedMenuItemIdx;\n\t\t\tif(idx < this.optionElements.length -1) {\n\t\t\t\tthis._menuOptionHighlight(idx + 1);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(skippedKeys.has(e.key)) {\n\t\t\tnoop();\n\t\t}\n\t\telse {\n\t\t\tthis._highlightSearchedOption(e);\n\t\t}\n\t}\n\n\n\t@HostListener('window:keydown',['$event'])\n\tonKeyDown(e: KeyboardEvent): void {\n\t\tif(this.isOpen && this.optionElements?.length > 0) {\n\t\t\tthis._openMenuKeydownEventBranches(e);\n\t\t}\n\t}\n\n\tshowTagList(): boolean {\n\t\tif(this.allowMultiSelect) {\n\t\t\treturn this.hasSelectedValue();\n\t\t}\n\t\treturn false;\n\t}\n\n\tprivate _replaceValues(selected: unknown[]): void {\n\t\tthis.selectedItems = selected;\n\t\tthis.selectedSet = new Set(selected);\n\t\tthis.onSelected.emit([...selected]);\n\t\tthis.propagateChange && this.propagateChange([...selected]);\n\t\tthis.selectConfig = {...this.selectConfig,\n\t\t\tselectedSet: this.selectedSet\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t}\n\n\tprivate _toggleOptionMulti(option: DSInput): void {\n\t\tconst selectedArray = this.selectedItems;\n\t\tconst items = selectedArray.filter(t => t !== option.value);\n\t\t//if no items were matched to be removed, then add instead\n\t\tif(items.length === selectedArray.length) {\n\t\t\titems.push(option.value);\n\t\t}\n\t\tthis._replaceValues(items);\n\t}\n\n\tprivate _toggleOptionSingle(option: SelectOptionComponent): void {\n\t\tthis._replaceValues(option ? [option.value] : []);\n\t\tthis._closeMenu();\n\t}\n\n\tonChecked(option: SelectOptionComponent): void {\n\t\tif(this.allowMultiSelect) {\n\t\t\tthis._toggleOptionMulti(option);\n\t\t}\n\t\telse {\n\t\t\tthis._toggleOptionSingle(option);\n\t\t}\n\t}\n\n\tonTagXClicked(option: DSInput) {\n\t\tthis._toggleOptionMulti(option);\n\t\tthis.propagateTouch && this.propagateTouch();\n\t}\n\n\thasSelectedValue(): boolean {\n\t\treturn !!this.selectedItems && this.selectedItems.length > 0;\n\t}\n\n\tgetSingularDisplayValue(): string {\n\t\tconst selected = this.selectedItems[0];\n\t\tif(!selected) return this.defaultDisplay;\n\t\tif(this.keyContentMap.has(selected)) {\n\t\t\treturn this.lookupContent(selected);\n\t\t};\n\t\treturn selected as string;\n\t}\n\n\tlookupContent(value: unknown): string {\n\t\tif(this.keyContentMap.has(value)) {\n\t\t\treturn this.keyContentMap.get(value);\n\t\t}\n\t\treturn value as string;\n\t}\n\n\tngDestroy(): void {\n\t\tthis.childrenChangeUnsub?.unsubscribe();\n\t}\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@use '../../../../styles'\n\n:host \n\tvertical-align: middle\n\tborder-radius: styles.$rounding-standard\n\n.tag-list\n\tmargin-top: .2em\n\n.single-tag\n\tbackground-color: styles.$bg-color-menu1\n\tcolor: styles.$fg-color-menu-text\n\tpadding: .2em\n\tmargin: .2em\n\tcursor: default\n\tborder-radius: styles.$rounding-standard\n\tfont-size: 12px\n\n.single-tag button\n\t@extend %btn-common\n\n.menu-container-base, %menu-container-base\n\tfont-size: styles.$data-font-size\n\tmax-width: 200px\n\tborder-width: styles.$input-border-width\n\tposition: relative\n\n.menu-container-closed\n\t@extend %menu-container-base\n\n.menu-container-open\n\t@extend %menu-container-base\n\t\n\t\n\t&:focus\n\t\toutline-style: none\n\n.option-menu\n\tbackground-color: styles.$bg-color-content \n\tbox-shadow: -1px 3px 8px 0px black\n\tborder-radius: styles.$rounding-standard\n\tposition: absolute\n\ttop: -.5em\n\tleft: .08em\n\tpadding: .1em 0\n\tz-index: 1\n\tmin-width: 200px\n\n\n.menu-container-disabled\n\tcolor: styles.$fg-color-disabled-text\n\n\t&:focus\n\t\toutline-style: none\n\n\n.select-open-icon\n\tfloat: right\n\n.closed-select-default\n\tcolor: #787878\n\t\n.closed-select-default.select-picked-value\n\tcolor: #000\n\n\n.ng-invalid.ng-touched:host .closed-select-default\n\tcolor: red\n\n:host\n\tdisplay: inline-block\n\tborder-radius: styles.$rounding-standard\n\tborder-width: styles.$input-border-width\n\tborder-style: solid\n\tborder-color: #767676\n\tpadding: 2px 0",
+                    "data": "@use '../../../../styles'\n\n:host \n\tvertical-align: middle\n\tborder-radius: styles.$rounding-standard\n\n.ds-menu-button \n\toutline-width: 0\n\n.tag-list\n\tmargin-top: .2em\n\n.single-tag\n\tbackground-color: styles.$bg-color-menu1\n\tcolor: styles.$fg-color-menu-text\n\tpadding: .2em\n\tmargin: .2em\n\tcursor: default\n\tborder-radius: styles.$rounding-standard\n\tfont-size: 12px\n\n.single-tag button\n\t@extend %btn-common\n\n.menu-container-base, %menu-container-base\n\tfont-size: styles.$data-font-size\n\tmax-width: 200px\n\tborder-width: styles.$input-border-width\n\tposition: relative\n\n.menu-container-closed\n\t@extend %menu-container-base\n\n.menu-container-open\n\t@extend %menu-container-base\n\t\n\t\n\t&:focus\n\t\toutline-style: none\n\n.option-menu\n\tbackground-color: styles.$bg-color-content \n\tbox-shadow: -1px 3px 8px 0px black\n\tborder-radius: styles.$rounding-standard\n\tposition: absolute\n\ttop: -.5em\n\tleft: .08em\n\tpadding: .1em 0\n\tz-index: 1\n\tmin-width: 200px\n\n\n.menu-container-disabled\n\tcolor: styles.$fg-color-disabled-text\n\n\t&:focus\n\t\toutline-style: none\n\n\n.select-open-icon\n\tfloat: right\n\n.closed-select-default\n\tcolor: #787878\n\t\n.closed-select-default.select-picked-value\n\tcolor: #000\n\n\n.ng-invalid.ng-touched:host .closed-select-default\n\tcolor: red\n\n:host\n\tdisplay: inline-block\n\tborder-radius: styles.$rounding-standard\n\tborder-width: styles.$input-border-width\n\tborder-style: solid\n\tborder-color: #767676\n\tpadding: 2px 0",
                     "styleUrl": "./select.component.sass"
                 }
             ],
@@ -6437,7 +6471,7 @@
                     },
                     {
                         "name": "selectConfig$",
-                        "type": "BehaviorSubject<SelectConfig | null>"
+                        "type": "BehaviorSubject<SelectConfig>"
                     }
                 ],
                 "line": 93,
@@ -6451,7 +6485,7 @@
                     },
                     {
                         "name": "selectConfig$",
-                        "type": "BehaviorSubject<SelectConfig | null>",
+                        "type": "BehaviorSubject<SelectConfig>",
                         "tagName": {
                             "text": "param"
                         }
@@ -6462,11 +6496,11 @@
                 "OnInit",
                 "ControlValueAccessor"
             ],
-            "templateData": "<!-- I made this a div because I feel weird about having a div inside a span\n-->\n<div [class]=\"containerClass\" \n\t[tabindex]=\"tabNum\" \n\trole=\"listbox\"\n\t(focus)=\"onFocus()\"\n\t[id]=\"topId\"\n>\n<app-tag-list *ngIf=\"showTagList()\" \n\t[value]=\"selectedItems\"\n\t(onRemoved)=\"onTagXClicked($event)\"\n>\n</app-tag-list>\n\t<span \n\t\t#custom \n\t\tclass=\"closed-select-default\" \n\t\t[ngStyle]=\"customStyle\"\n\t>\n\t\t<ng-container>\n\t\t\t<ng-content *ngIf=\"!showTagList()\"></ng-content>\n\t\t</ng-container>\n\t</span>\n\t<span \n\t\t*ngIf=\"!showTagList() && (custom.childNodes | elementFilter).length === 0\" \n\t\tclass=\"closed-select-default {{hasSelectedValue() && select-picked-value}}\"\n\t\t[ngStyle]=\"customStyle\"\n\t>\n\t\t{{getSingularDisplayValue()}}\n\t</span>\n\t<ds-hide-icon \n\t\t[hidden]=\"isOpen || isDisabled || options?.length < 1\"\n\t\t[strokeColor]=\"hasError ? 'red' : 'black'\" \n\t\twidth=\".8em\" \n\t\theight=\".8em\"\n\t\tclass=\"select-open-icon\"\n\t>\n\t</ds-hide-icon>\n\t<!-- the tabindex=\"-1\" is needed so that it can be focused on-->\n\t<div \n\t\t[hidden]=\"!isOpen\" \n\t\tclass=\"option-menu\" \n\t\t(focusout)=\"onFocusOut()\"\n\t\ttabindex=\"-1\" \n\t\t#optionsParent\n\t>\n\t\t<ng-content select=\"app-select-option\"></ng-content>\n\t</div>\n</div>"
+            "templateData": "<!-- I made this a div because I feel weird about having a div inside a span\n-->\n<div class=\"ds-menu-button {{containerClass}}\" \n\t[tabindex]=\"tabNum\" \n\trole=\"listbox\"\n\t(focus)=\"onFocus()\"\n\t[id]=\"topId\"\n>\n<app-tag-list *ngIf=\"showTagList()\" \n\t(onRemoved)=\"onTagXClicked($event)\"\n>\n\t<app-tag-item [value]=\"option\" *ngFor=\"let option of selectedItems\">\n\t\t{{lookupContent(option)}}\n\t</app-tag-item>\n</app-tag-list>\n\t<span \n\t\t#custom \n\t\tclass=\"closed-select-default\" \n\t\t[ngStyle]=\"customStyle\"\n\t>\n\t\t<ng-container>\n\t\t\t<ng-content *ngIf=\"!showTagList()\"></ng-content>\n\t\t</ng-container>\n\t</span>\n\t<span \n\t\t*ngIf=\"!showTagList() && (custom.childNodes | elementFilter).length === 0\" \n\t\tclass=\"closed-select-default {{hasSelectedValue() ? 'select-picked-value' : ''}}\"\n\t\t[ngStyle]=\"customStyle\"\n\t>\n\t\t{{getSingularDisplayValue()}}\n\t</span>\n\t<ds-hide-icon \n\t\t[hidden]=\"isOpen || isDisabled || options?.length < 1\"\n\t\t[strokeColor]=\"hasError ? 'red' : 'black'\" \n\t\twidth=\".8em\" \n\t\theight=\".8em\"\n\t\tclass=\"select-open-icon\"\n\t>\n\t</ds-hide-icon>\n\t<!-- the tabindex=\"-1\" is needed so that it can be focused on-->\n\t<div \n\t\t[hidden]=\"!isOpen\" \n\t\tclass=\"option-menu\" \n\t\t(focusout)=\"onFocusOut()\"\n\t\ttabindex=\"-1\" \n\t\t#optionsParent\n\t>\n\t\t<ng-content select=\"app-select-option\"></ng-content>\n\t</div>\n</div>"
         },
         {
             "name": "SelectOptionComponent",
-            "id": "component-SelectOptionComponent-db6868b2f8d2bef6511bd2a0141f0079",
+            "id": "component-SelectOptionComponent-b6753c0c105ee60a99236e14670afa88",
             "file": "src/app/shared/components/select/select-option/select-option.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -6486,43 +6520,46 @@
                 {
                     "name": "multiple",
                     "defaultValue": "false",
-                    "line": 20,
+                    "line": 21,
                     "type": "boolean"
                 },
                 {
                     "name": "name",
-                    "line": 23,
+                    "line": 24,
                     "type": "string"
                 },
                 {
                     "name": "selected",
-                    "line": 22,
+                    "line": 23,
                     "type": "boolean"
                 },
                 {
                     "name": "tabindex",
                     "defaultValue": "-1",
-                    "line": 24
-                },
-                {
-                    "name": "test",
-                    "line": 25,
-                    "type": "string"
+                    "line": 25
                 },
                 {
                     "name": "value",
-                    "line": 21,
-                    "type": "DataBasic"
+                    "line": 22,
+                    "type": "unknown"
                 }
             ],
             "outputsClass": [],
             "propertiesClass": [
                 {
+                    "name": "content",
+                    "defaultValue": "''",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 26
+                },
+                {
                     "name": "elementRef",
                     "type": "ElementRef",
                     "optional": false,
                     "description": "",
-                    "line": 31,
+                    "line": 32,
                     "decorators": [
                         {
                             "name": "ViewChild",
@@ -6535,7 +6572,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 28,
+                    "line": 29,
                     "modifierKind": [
                         112
                     ]
@@ -6546,10 +6583,18 @@
                     "type": "function",
                     "optional": false,
                     "description": "",
-                    "line": 26
+                    "line": 27
                 }
             ],
             "methodsClass": [
+                {
+                    "name": "ngAfterViewChecked",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 54
+                },
                 {
                     "name": "ngOnInit",
                     "args": [],
@@ -6564,7 +6609,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 54
+                    "line": 59
                 }
             ],
             "hostBindings": [],
@@ -6572,7 +6617,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, \n\tElementRef, \n\tInject, \n\tInput, \n\tOnInit,      \n\tViewChild, \n} from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { DataBasic } from '../../../../types/data-basic';\nimport { SelectConfig, SELECT_CONFIG } from '../select-config';\n\n\n@Component({\n  selector: 'app-select-option',\n  templateUrl: './select-option.component.html',\n  styleUrls: ['./select-option.component.sass']\n})\nexport class SelectOptionComponent implements OnInit {\n\n\t@Input('multiple') allowMultiSelect: boolean = false;\n\t@Input('value') option: DataBasic;\n\t@Input('selected') selected: boolean;\n\t@Input('name') controlName: string;\n\t@Input('tabindex') tabNum = -1;\n\t@Input('test') test: string;\n\tonClickCallback: (option: DataBasic) => void = null;\n\n\tprivate inialized: boolean;\n\n\t//this is for outside to mess with\n\t@ViewChild('optionElement') elementRef: ElementRef;\n\n  constructor(\n\t\t@Inject(SELECT_CONFIG) \n\t\tprivate selectConfig$: BehaviorSubject<SelectConfig | null>) \n\t{ \n\t\t\n\t}\n\n  ngOnInit(): void {\n\t\tthis.selectConfig$.subscribe((config: SelectConfig) => {\n\t\t\tif(!config) return;\n\t\t\tif(!this.inialized) {\n\t\t\t\tthis.inialized = true;\n\t\t\t\tconst registration = config.register();\n\t\t\t\tthis.allowMultiSelect = config.allowMultiSelect;\n\t\t\t\tthis.controlName = `option-${config.controlName}-${registration.idx}`;\n\t\t\t\tthis.onClickCallback = config.onClickCallback;\n\t\t\t}\n\t\t\tthis.selected = config.selectedSet?.has(this.option);\n\t\t});\n\t}\n\n\tonClick(): void {\n\t\tthis.onClickCallback && this.onClickCallback(this.option);\n\t}\n\t\n}\n",
+            "sourceCode": "import { Component, \n\tElementRef, \n\tInject, \n\tInput, \n\tOnInit,      \n\tViewChild, \n} from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { nodeFirst } from 'src/app/shared/utils/domHelper';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { SelectConfig, SELECT_CONFIG } from '../select-config';\n\n\n@Component({\n  selector: 'app-select-option',\n  templateUrl: './select-option.component.html',\n  styleUrls: ['./select-option.component.sass']\n})\nexport class SelectOptionComponent implements OnInit, DSInput {\n\n\t@Input('multiple') allowMultiSelect: boolean = false;\n\t@Input('value') value: unknown;\n\t@Input('selected') selected: boolean;\n\t@Input('name') controlName: string;\n\t@Input('tabindex') tabNum = -1;\n\tcontent = '';\n\tonClickCallback: (option: SelectOptionComponent) => void = null;\n\n\tprivate inialized: boolean;\n\n\t//this is for outside to mess with\n\t@ViewChild('optionElement') elementRef: ElementRef;\n\n  constructor(\n\t\t@Inject(SELECT_CONFIG) \n\t\tprivate selectConfig$: BehaviorSubject<SelectConfig | null>,\n\t\tprivate elRef: ElementRef) \n\t{}\n\n  ngOnInit(): void {\n\t\tthis.selectConfig$.subscribe((config: SelectConfig) => {\n\t\t\tif(!config) return;\n\t\t\tif(!this.inialized) {\n\t\t\t\tthis.inialized = true;\n\t\t\t\tconst registration = config.register();\n\t\t\t\tthis.allowMultiSelect = config.allowMultiSelect;\n\t\t\t\tthis.controlName = `option-${config.controlName}-${registration.idx}`;\n\t\t\t\tthis.onClickCallback = config.onClickCallback;\n\t\t\t}\n\t\t\tthis.selected = config.selectedSet?.has(this.value);\n\t\t});\n\t}\n\n\tngAfterViewChecked(): void {\n\t\tconst first = nodeFirst(this.elRef?.nativeElement?.children);\n\t\tthis.content = first?.textContent || '';\n\t}\n\n\tonClick(): void {\n\t\tthis.onClickCallback && this.onClickCallback(this);\n\t}\n\t\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -6588,9 +6633,13 @@
                     {
                         "name": "selectConfig$",
                         "type": "BehaviorSubject<SelectConfig | null>"
+                    },
+                    {
+                        "name": "elRef",
+                        "type": "ElementRef"
                     }
                 ],
-                "line": 31,
+                "line": 32,
                 "jsdoctags": [
                     {
                         "name": "selectConfig$",
@@ -6598,11 +6647,19 @@
                         "tagName": {
                             "text": "param"
                         }
+                    },
+                    {
+                        "name": "elRef",
+                        "type": "ElementRef",
+                        "tagName": {
+                            "text": "param"
+                        }
                     }
                 ]
             },
             "implements": [
-                "OnInit"
+                "OnInit",
+                "DSInput"
             ],
             "templateData": "<div \n\t#optionElement\n\tclass=\"menu-item\"\t\n\t[tabindex]=\"tabNum\"\n\trole=\"option\"\n\t(click)=\"onClick()\"\n>\n\t<span class=\"menu-item-content\">\n\t\t\t<input \n\t\t\t\ttabindex=\"-1\"\n\t\t\t\t*ngIf=\"allowMultiSelect\"\n\t\t\t\ttype=\"checkbox\" \n\t\t\t\t[name]=\"name\"\n\t\t\t\t[checked]=\"selected\"\n\t\t\t/>\n\t\t\t<span *ngIf=\"!allowMultiSelect\">\n\t\t\t\t<span *ngIf=\"selected\">&#10003;</span>\n\t\t\t</span>\n\t\t\t<span>\n\t\t\t\t<ng-content></ng-content>\n\t\t\t</span>\n\t</span>\n</div>"
         },
@@ -6787,8 +6844,149 @@
             "templateData": "<form \n\t#skillLevelForm=\"ngForm\" \n\t(ngSubmit)=\"onSubmit(skillLevelForm.form)\" \n\tdsAgeRangeValidator\n\tautocomplete=\"off\"\n>\n\t<table>\n\t\t<thead>\n\t\t\t<tr>\n\t\t\t\t<th></th>\n\t\t\t\t<th>Name</th>\n\t\t\t\t<th></th>\n\t\t\t</tr>\n\t\t</thead>\n\t\t<tbody>\n\t\t\t<tr *ngFor=\"let skillLevel of skillLevels\">\n\t\t\t\t<td>\n\t\t\t\t\t<ds-up-down (reorderClick)=\"reorderClick($event)\" \n\t\t\t\t\t\t[associatedItem]=\"skillLevel\"\n\t\t\t\t\t\t[size]=\"skillLevels.length\"\n\t\t\t\t\t>\n\t\t\t\t\t</ds-up-down>\n\t\t\t\t</td>\n\t\t\t\t<td>{{skillLevel.name}}</td>\n\t\t\t\t<td><button (click)=\"onRowRemoveClick(skillLevel)\" \n\t\t\t\t\ttype=\"button\" \n\t\t\t\t\tclass=\"add-row-btn\">-</button>\n\t\t\t\t</td>\n\t\t\t</tr>\n\t\t</tbody>\n\t\t<tfoot>\n\t\t\t<tr>\n\t\t\t\t<td></td>\n\t\t\t\t<td>\n\t\t\t\t\t<label for=\"name\">Name</label>\n\t\t\t\t\t<input \n\t\t\t\t\t\tname=\"name\" \n\t\t\t\t\t\tngModel \n\t\t\t\t\t\ttype=\"text\" \n\t\t\t\t\t\tclass=\"age-group-width\"\n\t\t\t\t\t\t#name=\"ngModel\"\n\t\t\t\t\t\t#firstInput\n\t\t\t\t\t\trequired\n\t\t\t\t\t/>\n\t\t\t\t\t<div \n\t\t\t\t\t\t*ngIf=\"!(name.valid || name.untouched)\" \n\t\t\t\t\t\tclass=\"input-error-label\"\n\t\t\t\t\t>\n\t\t\t\t\t\tName is required\n\t\t\t\t\t</div>\n\t\t\t\t</td>\n\t\t\t\t<td>\n\t\t\t\t\t<button class=\"add-row-btn\">+</button>\n\t\t\t\t</td>\n\t\t\t</tr>\n\t\t</tfoot>\n\t</table>\n</form>"
         },
         {
+            "name": "TagItemComponent",
+            "id": "component-TagItemComponent-78469f14cd91182cb25bfcb70c0e4286",
+            "file": "src/app/shared/components/select/tag-item/tag-item.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-tag-item",
+            "styleUrls": [
+                "./tag-item.component.sass"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./tag-item.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "readonly",
+                    "line": 13,
+                    "type": "boolean"
+                },
+                {
+                    "name": "tabindex",
+                    "defaultValue": "-1",
+                    "line": 15
+                },
+                {
+                    "name": "value",
+                    "line": 12,
+                    "type": "unknown"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "onXClicked",
+                    "defaultValue": "new EventEmitter<DSInput>()",
+                    "line": 14,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "content",
+                    "defaultValue": "''",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 16
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngAfterViewChecked",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 28
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 20
+                },
+                {
+                    "name": "onTagXClicked",
+                    "args": [
+                        {
+                            "name": "e",
+                            "type": "MouseEvent"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 23,
+                    "jsdoctags": [
+                        {
+                            "name": "e",
+                            "type": "MouseEvent",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "showXButton",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 33
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { nodeFirst } from 'src/app/shared/utils/domHelper';\nimport { DSInput } from 'src/app/types/ds-input';\n\n@Component({\n  selector: 'app-tag-item',\n  templateUrl: './tag-item.component.html',\n  styleUrls: ['./tag-item.component.sass']\n})\nexport class TagItemComponent implements OnInit, DSInput {\n\n\t@Input('value') value: unknown;\n\t@Input('readonly') readonly: boolean;\n\t@Output('onXClicked') onXClickedEvent = new EventEmitter<DSInput>();\n\t@Input('tabindex') tabNum = -1;\n\tcontent = '';\n\t\n  constructor(private elRef: ElementRef) { }\n\n  ngOnInit(): void {\n\t}\n\t\n\tonTagXClicked(e: MouseEvent) {\n\t\tthis.onXClickedEvent.emit(this);\n\t\te.stopPropagation();\n\t}\n\n\tngAfterViewChecked(): void {\n\t\tconst first = nodeFirst(this.elRef?.nativeElement?.children);\n\t\tthis.content = first?.textContent || '';\n\t}\n\n\tshowXButton(): boolean {\n\t\tconsole.log(this.onXClickedEvent.observers);\n\t\treturn true;\n\t}\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "@use '../../../../../styles'\n\t\n.single-tag\n\tbackground-color: styles.$bg-color-menu1\n\tcolor: styles.$fg-color-menu-text\n\tpadding: .2em\n\tmargin: .2em\n\tcursor: default\n\tborder-radius: styles.$rounding-standard\n\tfont-size: 12px\n\tdisplay: inline-flex\n\n.single-tag button\n\tmargin: .2em\n\t@extend %btn-common",
+                    "styleUrl": "./tag-item.component.sass"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "elRef",
+                        "type": "ElementRef"
+                    }
+                ],
+                "line": 16,
+                "jsdoctags": [
+                    {
+                        "name": "elRef",
+                        "type": "ElementRef",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "OnInit",
+                "DSInput"
+            ],
+            "templateData": "<span class=\"single-tag\">\n\t<ng-content></ng-content>\n\t<button *ngIf=\"!readonly && showXButton()\" (click)=\"onTagXClicked($event)\">\n\t\tX\n\t</button>\n</span>"
+        },
+        {
             "name": "TagListComponent",
-            "id": "component-TagListComponent-096e42704b3d5d76148c4af9e5661dc4",
+            "id": "component-TagListComponent-735dc60721ce28a2afc85dad7bf91f50",
             "file": "src/app/shared/components/tag-list/tag-list.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -6807,24 +7005,32 @@
             "inputsClass": [
                 {
                     "name": "readonly",
-                    "line": 12,
+                    "line": 15,
                     "type": "boolean"
                 },
                 {
                     "name": "value",
-                    "line": 11,
+                    "line": 14,
                     "type": "any[]"
                 }
             ],
             "outputsClass": [
                 {
                     "name": "onRemoved",
-                    "defaultValue": "new EventEmitter<DataBasic>()",
-                    "line": 13,
+                    "defaultValue": "new EventEmitter<DSInput>()",
+                    "line": 16,
                     "type": "EventEmitter"
                 }
             ],
-            "propertiesClass": [],
+            "propertiesClass": [
+                {
+                    "name": "tagConfig",
+                    "type": "TagsConfig",
+                    "optional": false,
+                    "description": "",
+                    "line": 17
+                }
+            ],
             "methodsClass": [
                 {
                     "name": "ngOnInit",
@@ -6832,35 +7038,24 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 17
+                    "line": 22
                 },
                 {
                     "name": "onTagXClicked",
                     "args": [
                         {
-                            "name": "e",
-                            "type": "MouseEvent"
-                        },
-                        {
                             "name": "option",
-                            "type": "DataBasic"
+                            "type": "DSInput"
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 20,
+                    "line": 25,
                     "jsdoctags": [
                         {
-                            "name": "e",
-                            "type": "MouseEvent",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        },
-                        {
                             "name": "option",
-                            "type": "DataBasic",
+                            "type": "DSInput",
                             "tagName": {
                                 "text": "param"
                             }
@@ -6873,7 +7068,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { DataBasic } from '../../../types/data-basic';\n\n@Component({\n  selector: 'app-tag-list',\n  templateUrl: './tag-list.component.html',\n  styleUrls: ['./tag-list.component.sass']\n})\nexport class TagListComponent implements OnInit {\n\n\t@Input('value') tags: any[];\n\t@Input('readonly') readonly: boolean;\n\t@Output('onRemoved') removedEvent = new EventEmitter<DataBasic>();\n\t\n  constructor() { }\n\n  ngOnInit(): void {\n\t}\n\t\n\tonTagXClicked(e: MouseEvent, option: DataBasic) {\n\t\tthis.removedEvent.emit(option);\n\t\te.stopPropagation();\n\t}\n\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Inject, Input, OnInit, Output } \n\tfrom '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { TagsConfig, TAGS_CONFIG } from '../select/tags-config';\n\n@Component({\n  selector: 'app-tag-list',\n  templateUrl: './tag-list.component.html',\n  styleUrls: ['./tag-list.component.sass']\n})\nexport class TagListComponent implements OnInit {\n\n\t@Input('value') tags: any[];\n\t@Input('readonly') readonly: boolean;\n\t@Output('onRemoved') removedEvent = new EventEmitter<DSInput>();\n\ttagConfig: TagsConfig;\n\n\t\n  constructor(@Inject(TAGS_CONFIG) private tagConfig$: BehaviorSubject<TagsConfig>) { }\n\n  ngOnInit(): void {\n\t}\n\t\n\tonTagXClicked(option: DSInput): void {\n\t\tthis.removedEvent.emit(option);\n\t}\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -6885,13 +7080,27 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
-                "args": [],
-                "line": 13
+                "args": [
+                    {
+                        "name": "tagConfig$",
+                        "type": "BehaviorSubject<TagsConfig>"
+                    }
+                ],
+                "line": 17,
+                "jsdoctags": [
+                    {
+                        "name": "tagConfig$",
+                        "type": "BehaviorSubject<TagsConfig>",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
             },
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<span class=\"tag-list\">\n\t<ng-container *ngIf=\"tags?.length > 0\">\n\t\t<span *ngFor=\"let option of tags\" class=\"single-tag\">\n\t\t\t{{option.name}}\n\t\t\t<button *ngIf=\"!readonly\" (click)=\"onTagXClicked($event, option)\">\n\t\t\t\tX\n\t\t\t</button>\n\t\t</span>\n\t</ng-container>\n</span>"
+            "templateData": "<span class=\"tag-list\">\n\t<ng-content select=\"app-tag-item\"></ng-content>\n</span>"
         },
         {
             "name": "UpDownComponent",
@@ -7088,6 +7297,9 @@
                             "name": "SkillLevelFormComponent"
                         },
                         {
+                            "name": "TagItemComponent"
+                        },
+                        {
                             "name": "TagListComponent"
                         },
                         {
@@ -7234,6 +7446,22 @@
                 "defaultValue": "'menu-container-disabled'"
             },
             {
+                "name": "DSInput",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/types/ds-input.ts",
+                "type": "",
+                "defaultValue": "undefined"
+            },
+            {
+                "name": "Empty",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/select.stories.ts",
+                "type": "Story",
+                "defaultValue": "(args) => ({\n\ttemplate: `<app-select></app-select>`\n})"
+            },
+            {
                 "name": "EMPTY_COMPETITION",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -7245,17 +7473,17 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.ts",
+                "file": "src/environments/environment.prod.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: false\n}"
+                "defaultValue": "{\n  production: true\n}"
             },
             {
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.prod.ts",
+                "file": "src/environments/environment.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: true\n}"
+                "defaultValue": "{\n  production: false\n}"
             },
             {
                 "name": "Example",
@@ -7274,12 +7502,20 @@
                 "defaultValue": "(args: CallCounterComponent) => ({\n  component: CallCounterComponent,\n  props: args,\n})"
             },
             {
-                "name": "Example",
+                "name": "HasOptions",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/taglist.stories.ts",
-                "type": "Story<TagListComponent>",
-                "defaultValue": "(args: TagListComponent) => ({\n\tcomponent: TagListComponent,\n\tprops: args\n})"
+                "file": "src/stories/select.stories.ts",
+                "type": "Story",
+                "defaultValue": "(args) => ({\n\ttemplate: `<app-select>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
+            },
+            {
+                "name": "LoggedIn",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Header.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "LoggedIn",
@@ -7290,7 +7526,7 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "LoggedIn",
+                "name": "LoggedOut",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/Header.stories.ts",
@@ -7306,12 +7542,12 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "LoggedOut",
+                "name": "MultiSelect",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
+                "file": "src/stories/select.stories.ts",
+                "type": "Story",
+                "defaultValue": "(args) => ({\n\ttemplate: `<app-select\n\t\tmultiple={true}\n\t>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
             },
             {
                 "name": "openMenuClass",
@@ -7366,7 +7602,15 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/select/select-config.ts",
                 "type": "",
-                "defaultValue": "new InjectionToken<BehaviorSubject<SelectConfig | null>>(\n\t'select config'\n)"
+                "defaultValue": "new InjectionToken<BehaviorSubject<SelectConfig>>(\n\t'select config'\n)"
+            },
+            {
+                "name": "SelectRegistration",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/select/select-registration.ts",
+                "type": "",
+                "defaultValue": "undefined"
             },
             {
                 "name": "skippedKeys",
@@ -7385,12 +7629,28 @@
                 "defaultValue": "undefined"
             },
             {
+                "name": "TAGS_CONFIG",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/select/tags-config.ts",
+                "type": "",
+                "defaultValue": "new InjectionToken<BehaviorSubject<TagsConfig>>(\n\t'tag config'\n)"
+            },
+            {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/Button.stories.ts",
                 "type": "Story",
                 "defaultValue": "(args) => ({\n\ttemplate: `<storybook-button miText=\"howdy\"></storybook-button>`\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Header.stories.ts",
+                "type": "Story<Header>",
+                "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
             },
             {
                 "name": "Template",
@@ -7404,9 +7664,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/select.stories.ts",
-                "type": "Story<SelectComponent>",
-                "defaultValue": "(args: SelectComponent) => ({\n\tcomponent: SelectComponent,\n\tprops: args\n})"
+                "file": "src/stories/callCounter.stories.ts",
+                "type": "Story",
+                "defaultValue": "(args) => ({\n\ttemplate: `<callCounter></callCounter>`\n})"
             },
             {
                 "name": "Template",
@@ -7414,31 +7674,7 @@
                 "subtype": "variable",
                 "file": "src/stories/taglist.stories.ts",
                 "type": "Story",
-                "defaultValue": "(args) => ({\n\ttemplate: `<app-tag-list [value]=\"[{id: '234', name: 'value2'}]\"></app-tag-list>`\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
-                "type": "Story<Header>",
-                "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
-            },
-            {
-                "name": "Top",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/select.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Top",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/taglist.stories.ts",
-                "type": "",
-                "defaultValue": "Example.bind({})"
+                "defaultValue": "(args) => ({\n\ttemplate: `\n\t<app-tag-list>\n\t\t<app-tag-item value=\"123\">\n\t\t\tOption 1\n\t\t</app-tag-item>\n\t\t<app-tag-item value=\"234\">\n\t\t\tOption 2\n\t\t</app-tag-item>\n\t\t<app-tag-item value=\"345\">\n\t\t\tOption 3\n\t\t</app-tag-item>\t\n\t</app-tag-list>`\n})"
             }
         ],
         "functions": [
@@ -7647,6 +7883,27 @@
                 "jsdoctags": [
                     {
                         "name": "value",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "nodeFirst",
+                "file": "src/app/shared/utils/domHelper.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "description": "",
+                "args": [
+                    {
+                        "name": "nodes"
+                    }
+                ],
+                "returnType": "Node",
+                "jsdoctags": [
+                    {
+                        "name": "nodes",
                         "tagName": {
                             "text": "param"
                         }
@@ -8053,14 +8310,40 @@
                     "defaultValue": "\"empty\""
                 }
             ],
-            "src/environments/environment.ts": [
+            "src/app/types/ds-input.ts": [
                 {
-                    "name": "environment",
+                    "name": "DSInput",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/environments/environment.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  production: false\n}"
+                    "file": "src/app/types/ds-input.ts",
+                    "type": "",
+                    "defaultValue": "undefined"
+                }
+            ],
+            "src/stories/select.stories.ts": [
+                {
+                    "name": "Empty",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/select.stories.ts",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\n\ttemplate: `<app-select></app-select>`\n})"
+                },
+                {
+                    "name": "HasOptions",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/select.stories.ts",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\n\ttemplate: `<app-select>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
+                },
+                {
+                    "name": "MultiSelect",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/select.stories.ts",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\n\ttemplate: `<app-select\n\t\tmultiple={true}\n\t>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -8071,6 +8354,16 @@
                     "file": "src/environments/environment.prod.ts",
                     "type": "object",
                     "defaultValue": "{\n  production: true\n}"
+                }
+            ],
+            "src/environments/environment.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: false\n}"
                 }
             ],
             "src/stories/Button.stories.ts": [
@@ -8115,58 +8408,14 @@
                     "file": "src/stories/callCounter.stories.ts",
                     "type": "",
                     "defaultValue": "Example.bind({})"
-                }
-            ],
-            "src/stories/taglist.stories.ts": [
-                {
-                    "name": "Example",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/taglist.stories.ts",
-                    "type": "Story<TagListComponent>",
-                    "defaultValue": "(args: TagListComponent) => ({\n\tcomponent: TagListComponent,\n\tprops: args\n})"
                 },
                 {
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/taglist.stories.ts",
+                    "file": "src/stories/callCounter.stories.ts",
                     "type": "Story",
-                    "defaultValue": "(args) => ({\n\ttemplate: `<app-tag-list [value]=\"[{id: '234', name: 'value2'}]\"></app-tag-list>`\n})"
-                },
-                {
-                    "name": "Top",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/taglist.stories.ts",
-                    "type": "",
-                    "defaultValue": "Example.bind({})"
-                }
-            ],
-            "src/stories/Page.stories.ts": [
-                {
-                    "name": "LoggedIn",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Page.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "LoggedOut",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Page.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Page.stories.ts",
-                    "type": "Story<Page>",
-                    "defaultValue": "(args: Page) => ({\n  component: Page,\n  props: args,\n})"
+                    "defaultValue": "(args) => ({\n\ttemplate: `<callCounter></callCounter>`\n})"
                 }
             ],
             "src/stories/Header.stories.ts": [
@@ -8195,6 +8444,32 @@
                     "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
                 }
             ],
+            "src/stories/Page.stories.ts": [
+                {
+                    "name": "LoggedIn",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Page.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "LoggedOut",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Page.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Page.stories.ts",
+                    "type": "Story<Page>",
+                    "defaultValue": "(args: Page) => ({\n  component: Page,\n  props: args,\n})"
+                }
+            ],
             "src/app/shared/components/select/select-config.ts": [
                 {
                     "name": "SELECT_CONFIG",
@@ -8202,7 +8477,17 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/select/select-config.ts",
                     "type": "",
-                    "defaultValue": "new InjectionToken<BehaviorSubject<SelectConfig | null>>(\n\t'select config'\n)"
+                    "defaultValue": "new InjectionToken<BehaviorSubject<SelectConfig>>(\n\t'select config'\n)"
+                }
+            ],
+            "src/app/shared/components/select/select-registration.ts": [
+                {
+                    "name": "SelectRegistration",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select-registration.ts",
+                    "type": "",
+                    "defaultValue": "undefined"
                 }
             ],
             "src/app/types/sortable.ts": [
@@ -8215,22 +8500,24 @@
                     "defaultValue": "undefined"
                 }
             ],
-            "src/stories/select.stories.ts": [
+            "src/app/shared/components/select/tags-config.ts": [
+                {
+                    "name": "TAGS_CONFIG",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/tags-config.ts",
+                    "type": "",
+                    "defaultValue": "new InjectionToken<BehaviorSubject<TagsConfig>>(\n\t'tag config'\n)"
+                }
+            ],
+            "src/stories/taglist.stories.ts": [
                 {
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/select.stories.ts",
-                    "type": "Story<SelectComponent>",
-                    "defaultValue": "(args: SelectComponent) => ({\n\tcomponent: SelectComponent,\n\tprops: args\n})"
-                },
-                {
-                    "name": "Top",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/select.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
+                    "file": "src/stories/taglist.stories.ts",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\n\ttemplate: `\n\t<app-tag-list>\n\t\t<app-tag-item value=\"123\">\n\t\t\tOption 1\n\t\t</app-tag-item>\n\t\t<app-tag-item value=\"234\">\n\t\t\tOption 2\n\t\t</app-tag-item>\n\t\t<app-tag-item value=\"345\">\n\t\t\tOption 3\n\t\t</app-tag-item>\t\n\t</app-tag-list>`\n})"
                 }
             ]
         },
@@ -8436,6 +8723,27 @@
                     "jsdoctags": [
                         {
                             "name": "current",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "nodeFirst",
+                    "file": "src/app/shared/utils/domHelper.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "nodes"
+                        }
+                    ],
+                    "returnType": "Node",
+                    "jsdoctags": [
+                        {
+                            "name": "nodes",
                             "tagName": {
                                 "text": "param"
                             }
@@ -9075,15 +9383,6 @@
             },
             {
                 "filePath": "src/app/shared/components/select/select-config.ts",
-                "type": "interface",
-                "linktype": "interface",
-                "name": "SelectRegistration",
-                "coveragePercent": 0,
-                "coverageCount": "0/2",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/components/select/select-config.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -9098,7 +9397,17 @@
                 "linktype": "component",
                 "name": "SelectOptionComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/13",
+                "coverageCount": "0/14",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/select/select-registration.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SelectRegistration",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -9107,7 +9416,7 @@
                 "linktype": "component",
                 "name": "SelectComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/50",
+                "coverageCount": "0/52",
                 "status": "low"
             },
             {
@@ -9151,12 +9460,40 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/shared/components/select/tag-item/tag-item.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "TagItemComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/11",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/select/tags-config.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "TagsConfig",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/select/tags-config.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TAGS_CONFIG",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/shared/components/tag-list/tag-list.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "TagListComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/7",
+                "coverageCount": "0/8",
                 "status": "low"
             },
             {
@@ -9281,6 +9618,15 @@
                 "type": "function",
                 "linksubtype": "function",
                 "name": "focusNext",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/utils/domHelper.ts",
+                "type": "function",
+                "linksubtype": "function",
+                "name": "nodeFirst",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -9493,6 +9839,16 @@
                 "name": "DirectionEventArg",
                 "coveragePercent": 0,
                 "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/types/ds-input.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DSInput",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -9711,7 +10067,7 @@
                 "linktype": "component",
                 "name": "CallCounterComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/7",
+                "coverageCount": "0/9",
                 "status": "low"
             },
             {
@@ -9730,6 +10086,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/callCounter.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -9757,7 +10123,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Template",
+                "name": "Empty",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -9767,17 +10133,17 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Top",
+                "name": "HasOptions",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
             },
             {
-                "filePath": "src/stories/taglist.stories.ts",
+                "filePath": "src/stories/select.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Example",
+                "name": "MultiSelect",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -9788,16 +10154,6 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/taglist.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Top",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

@@ -94,7 +94,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
 	constructor(private elRef: ElementRef, 
 		@Inject(SELECT_CONFIG) 
-		private selectConfig$: BehaviorSubject<SelectConfig | null>) 
+		private selectConfig$: BehaviorSubject<SelectConfig>) 
 	{ }
 	
 	ngOnInit(): void {
@@ -171,7 +171,13 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 			else if(isEmptyStr(selectedItems)) {
 				this.selectedItems = [];
 				this.selectedSet = new Set(this.selectedItems);
+				//I'm only doing this in select places because I fear an infinite loop
 				this.propagateChange && this.propagateChange([]);
+			}
+			else if(typeof selectedItems === 'string') {
+				this.selectedItems = selectedItems.split(',');
+				this.selectedSet = new Set(this.selectedItems);
+				this.propagateChange && this.propagateChange(this.selectedItems);
 			}
 			else {
 				throw Error('When using multi-select, provided value must be array');
@@ -183,6 +189,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 				//to always be an array 
 				this.selectedItems = !isEmptyStr(selectedItems) ? [selectedItems] : [];
 				this.selectedSet = new Set(this.selectedItems);
+				this.propagateChange && this.propagateChange(this.selectedItems);
 			}
 			else if(selectedItems.length <= 1) {
 				this.selectedSet = new Set(selectedItems);
@@ -332,10 +339,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 			return this.hasSelectedValue();
 		}
 		return false;
-	}
-
-	isOptionChecked(option: unknown): boolean {
-		return this.selectedSet && this.selectedSet.has(option);
 	}
 
 	private _replaceValues(selected: unknown[]): void {

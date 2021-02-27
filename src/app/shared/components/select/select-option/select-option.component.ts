@@ -24,17 +24,16 @@ export class SelectOptionComponent implements OnInit, DSInput {
 	@Input('name') controlName: string;
 	@Input('tabindex') tabNum = -1;
 	content = '';
-	onClickCallback: (option: SelectOptionComponent) => void = null;
+	onClickCallback: (option: SelectOptionComponent) => void;
 
 	private inialized: boolean;
 
 	//this is for outside to mess with
 	@ViewChild('optionElement') elementRef: ElementRef;
 
-  constructor(
+  constructor(private elRef: ElementRef,
 		@Inject(SELECT_CONFIG) 
-		private selectConfig$: BehaviorSubject<SelectConfig | null>,
-		private elRef: ElementRef) 
+		private selectConfig$: BehaviorSubject<SelectConfig | null>) 
 	{}
 
   ngOnInit(): void {

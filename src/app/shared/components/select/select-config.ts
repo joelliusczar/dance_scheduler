@@ -1,10 +1,8 @@
 import { InjectionToken } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SelectOptionComponent } from './select-option/select-option.component';
+import { SelectRegistration } from './select-registration';
 
-export interface SelectRegistration {
-	idx: number
-};
 
 export interface SelectConfig {
 	allowMultiSelect: boolean,
@@ -15,6 +13,6 @@ export interface SelectConfig {
 };
 
 export const SELECT_CONFIG = 
-	new InjectionToken<BehaviorSubject<SelectConfig | null>>(
+	new InjectionToken<BehaviorSubject<SelectConfig>>(
 	'select config'
 );

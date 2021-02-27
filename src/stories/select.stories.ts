@@ -55,7 +55,7 @@ export const HasOptions: Story = (args) => ({
 
 export const MultiSelect: Story = (args) => ({
 	template: `<app-select
-		multiple={true}
+		multiple="true"
 	>
 		<app-select-option
 			value="123"
@@ -75,3 +75,49 @@ export const MultiSelect: Story = (args) => ({
 	</app-select>`
 });
 
+
+export const MultiSelectPreSelect: Story = (args) => ({
+	template: `<app-select
+		multiple="true"
+		[value]="['123','234']"
+	>
+		<app-select-option
+			value="123"
+		>
+			Option 1
+		</app-select-option>
+		<app-select-option
+			value="234"
+		>
+			Option 2
+		</app-select-option>
+		<app-select-option
+			value="345"
+		>
+			Option 3
+		</app-select-option>
+	</app-select>`
+});
+
+export const MultiSelectPreSelectStringValue: Story = (args) => ({
+	template: `<app-select
+		multiple="true"
+		value="123,234"
+	>
+		<app-select-option
+			value="123"
+		>
+			Option 1
+		</app-select-option>
+		<app-select-option
+			value="234"
+		>
+			Option 2
+		</app-select-option>
+		<app-select-option
+			value="345"
+		>
+			Option 3
+		</app-select-option>
+	</app-select>`
+});

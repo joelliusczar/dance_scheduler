@@ -1,5 +1,7 @@
-<span class="single-tag">
-	<ng-content></ng-content>
+<span class="single-tag" [id]="controlName">
+	<span class="tag-content">
+		<ng-content></ng-content>
+	</span>
 	<button *ngIf="!readonly" (click)="onTagXClicked($event)">
 		X
 	</button>
