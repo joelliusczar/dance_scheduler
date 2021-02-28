@@ -340,6 +340,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	}
 
 	private _replaceValues(selected: unknown[]): void {
+		console.log(selected);
 		this.selectedItems = selected;
 		this.selectedSet = new Set(selected);
 		this.onSelected.emit([...selected]);
@@ -351,6 +352,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	}
 
 	private _toggleOptionMulti(option: DSInput): void {
+		if(!option.value) return;
 		const selectedArray = this.selectedItems;
 		const items = selectedArray.filter(t => t !== option.value);
 		//if no items were matched to be removed, then add instead
@@ -361,11 +363,12 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	}
 
 	private _toggleOptionSingle(option: SelectOptionComponent): void {
-		this._replaceValues(option ? [option.value] : []);
+		this._replaceValues((option && option.value) ? [option.value] : []);
 		this._closeMenu();
 	}
 
 	onChecked(option: SelectOptionComponent): void {
+		if(!option) return;
 		if(this.allowMultiSelect) {
 			this._toggleOptionMulti(option);
 		}
@@ -375,6 +378,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 	}
 
 	onTagXClicked(option: DSInput) {
+		if(!option) return;
 		this._toggleOptionMulti(option);
 		this.propagateTouch && this.propagateTouch();
 	}

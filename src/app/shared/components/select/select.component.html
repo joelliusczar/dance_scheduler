@@ -19,11 +19,18 @@
 		[ngStyle]="customStyle"
 	>
 		<ng-container>
-			<ng-content *ngIf="!showTagList()"></ng-content>
+			<ng-content *ngIf="!showTagList() && selectedItems.length < 1"></ng-content>
 		</ng-container>
 	</span>
+	<span
+		*ngIf="!showTagList() && (custom.childNodes | elementFilter).length === 0 && selectedItems.length < 1"
+		class="closed-select-default"
+		[ngStyle]="customStyle"
+	>
+	Select...
+	</span>
 	<span 
-		*ngIf="!showTagList() && (custom.childNodes | elementFilter).length === 0" 
+		*ngIf="!showTagList() && selectedItems.length > 0" 
 		class="closed-select-default {{hasSelectedValue() ? 'select-picked-value' : ''}}"
 		[ngStyle]="customStyle"
 	>

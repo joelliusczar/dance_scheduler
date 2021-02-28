@@ -208,3 +208,25 @@ export const HasOptionsMultiInstanceName: Story = (args) => ({
 	</div>
 	`
 });
+
+
+export const HasOptionsWithDefault: Story = (args) => ({
+	template: `<app-select>
+		Default Choice
+		<app-select-option
+			value="123"
+		>
+			Option 1
+		</app-select-option>
+		<app-select-option
+			value="234"
+		>
+			Option 2
+		</app-select-option>
+		<app-select-option
+			value="345"
+		>
+			Option 3
+		</app-select-option>
+	</app-select>`
+});

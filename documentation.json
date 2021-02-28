@@ -3243,7 +3243,7 @@
     "components": [
         {
             "name": "AddCompModalComponent",
-            "id": "component-AddCompModalComponent-8e688eb188f428c0a9dfa21fd59f0bf5",
+            "id": "component-AddCompModalComponent-4e686000c2a747b86f36aa2b53df1ae2",
             "file": "src/app/add-comp-modal/add-comp-modal.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -3267,7 +3267,7 @@
                     "type": "SocialEvent",
                     "optional": false,
                     "description": "",
-                    "line": 21,
+                    "line": 23,
                     "decorators": [
                         {
                             "name": "Inject",
@@ -3279,14 +3279,30 @@
                     ]
                 },
                 {
+                    "name": "DEFAULT_COMPETITION",
+                    "defaultValue": "DEFAULT_COMPETITION",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 18
+                },
+                {
                     "name": "dialogRef",
                     "type": "MatDialogRef<AddCompModalComponent>",
                     "optional": false,
                     "description": "",
-                    "line": 20,
+                    "line": 22,
                     "modifierKind": [
                         114
                     ]
+                },
+                {
+                    "name": "EMPTY_COMPETITION",
+                    "defaultValue": "EMPTY_COMPETITION",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 19
                 },
                 {
                     "name": "loading",
@@ -3309,7 +3325,7 @@
                     "type": "Unsubscribable",
                     "optional": false,
                     "description": "",
-                    "line": 18,
+                    "line": 20,
                     "modifierKind": [
                         112
                     ]
@@ -3327,7 +3343,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 32,
+                    "line": 34,
                     "jsdoctags": [
                         {
                             "name": "event",
@@ -3344,7 +3360,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 47
+                    "line": 49
                 },
                 {
                     "name": "ngOnInit",
@@ -3352,7 +3368,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 24
+                    "line": 26
                 },
                 {
                     "name": "onCancel",
@@ -3360,7 +3376,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 43
+                    "line": 45
                 }
             ],
             "hostBindings": [],
@@ -3368,7 +3384,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, Inject, OnInit } from '@angular/core';\nimport { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\nimport { Unsubscribable } from 'rxjs';\nimport { CompetitionSetupService } from '../services/competition-setup/competition-setup.service';\nimport { SocialEvent } from '../types/social-event';\nimport { DEFAULT_COMPETITION, EMPTY_COMPETITION } from '../types/constants';\n\n\n@Component({\n  selector: 'app-add-comp-modal',\n  templateUrl: './add-comp-modal.component.html',\n  styleUrls: ['./add-comp-modal.component.sass']\n})\nexport class AddCompModalComponent implements OnInit {\n\n\tloading = true;\n\toptions: SocialEvent[] = [];\n\tprivate serviceUnsub: Unsubscribable;\n\n\tconstructor(public dialogRef: MatDialogRef<AddCompModalComponent>,\n\t\t@Inject(MAT_DIALOG_DATA) public data: SocialEvent,\n\t\tprivate competitionService$: CompetitionSetupService) { }\n\n  ngOnInit(): void {\n\t\tthis.serviceUnsub = this.competitionService$\n\t\t\t.arraySubscribe((value: SocialEvent[]) => {\n\t\t\t\tthis.options = value;\n\t\t\t\tthis.loading = false;\n\t\t});\n\t}\n\n\tgetEventName(event: SocialEvent): string {\n\t\tif(!event) return 'Invalid';\n\t\tif(event.name) return event.name;\n\t\tif(event.eventDate || event.createDate) {\n\t\t\tconst d = event.eventDate || event.createDate;\n\t\t\tconst s = `comp${d.getFullYear()}${d.getMonth()}${d.getDate}_${d.getTime()}`;\n\t\t\treturn s;\n\t\t}\n\t\treturn 'Invalid';\n\t}\n\t\n\tonCancel(): void {\n\t\tthis.dialogRef.close();\n\t}\n\n\tngOnDestroy(): void {\n\t\tthis.serviceUnsub.unsubscribe();\n\t}\n\n}\n",
+            "sourceCode": "import { Component, Inject, OnInit } from '@angular/core';\nimport { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\nimport { Unsubscribable } from 'rxjs';\nimport { CompetitionSetupService } from '../services/competition-setup/competition-setup.service';\nimport { SocialEvent } from '../types/social-event';\nimport { DEFAULT_COMPETITION, EMPTY_COMPETITION } from '../types/constants';\n\n\n@Component({\n  selector: 'app-add-comp-modal',\n  templateUrl: './add-comp-modal.component.html',\n  styleUrls: ['./add-comp-modal.component.sass']\n})\nexport class AddCompModalComponent implements OnInit {\n\n\tloading = true;\n\toptions: SocialEvent[] = [];\n\tDEFAULT_COMPETITION = DEFAULT_COMPETITION;\n\tEMPTY_COMPETITION = EMPTY_COMPETITION;\n\tprivate serviceUnsub: Unsubscribable;\n\n\tconstructor(public dialogRef: MatDialogRef<AddCompModalComponent>,\n\t\t@Inject(MAT_DIALOG_DATA) public data: SocialEvent,\n\t\tprivate competitionService$: CompetitionSetupService) { }\n\n  ngOnInit(): void {\n\t\tthis.serviceUnsub = this.competitionService$\n\t\t\t.arraySubscribe((value: SocialEvent[]) => {\n\t\t\t\tthis.options = value;\n\t\t\t\tthis.loading = false;\n\t\t});\n\t}\n\n\tgetEventName(event: SocialEvent): string {\n\t\tif(!event) return 'Invalid';\n\t\tif(event.name) return event.name;\n\t\tif(event.eventDate || event.createDate) {\n\t\t\tconst d = event.eventDate || event.createDate;\n\t\t\tconst s = `comp${d.getFullYear()}${d.getMonth()}${d.getDate}_${d.getTime()}`;\n\t\t\treturn s;\n\t\t}\n\t\treturn 'Invalid';\n\t}\n\t\n\tonCancel(): void {\n\t\tthis.dialogRef.close();\n\t}\n\n\tngOnDestroy(): void {\n\t\tthis.serviceUnsub.unsubscribe();\n\t}\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -3394,7 +3410,7 @@
                         "type": "CompetitionSetupService"
                     }
                 ],
-                "line": 18,
+                "line": 20,
                 "jsdoctags": [
                     {
                         "name": "dialogRef",
@@ -5778,7 +5794,7 @@
         },
         {
             "name": "SelectComponent",
-            "id": "component-SelectComponent-e7b3cee74f98108414b68da86dfb89b8",
+            "id": "component-SelectComponent-3f83b0e9c2c25c10481449810b68c080",
             "file": "src/app/shared/components/select/select.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -5997,7 +6013,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 280,
+                    "line": 278,
                     "modifierKind": [
                         112
                     ]
@@ -6008,7 +6024,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 218,
+                    "line": 217,
                     "modifierKind": [
                         112
                     ]
@@ -6024,7 +6040,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 258,
+                    "line": 256,
                     "modifierKind": [
                         112
                     ],
@@ -6074,7 +6090,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 251,
+                    "line": 249,
                     "modifierKind": [
                         112
                     ],
@@ -6110,7 +6126,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 287,
+                    "line": 285,
                     "modifierKind": [
                         112
                     ],
@@ -6135,7 +6151,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 344,
+                    "line": 342,
                     "modifierKind": [
                         112
                     ],
@@ -6160,7 +6176,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 355,
+                    "line": 354,
                     "modifierKind": [
                         112
                     ],
@@ -6205,7 +6221,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 388
+                    "line": 390
                 },
                 {
                     "name": "hasSelectedValue",
@@ -6213,7 +6229,7 @@
                     "optional": false,
                     "returnType": "boolean",
                     "typeParameters": [],
-                    "line": 384
+                    "line": 386
                 },
                 {
                     "name": "lookupContent",
@@ -6226,7 +6242,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 397,
+                    "line": 401,
                     "jsdoctags": [
                         {
                             "name": "value",
@@ -6251,7 +6267,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 404
+                    "line": 408
                 },
                 {
                     "name": "ngOnInit",
@@ -6289,7 +6305,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 225
+                    "line": 224
                 },
                 {
                     "name": "onFocusOut",
@@ -6297,7 +6313,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 232
+                    "line": 231
                 },
                 {
                     "name": "onTagXClicked",
@@ -6310,7 +6326,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 379,
+                    "line": 380,
                     "jsdoctags": [
                         {
                             "name": "option",
@@ -6393,7 +6409,7 @@
                     "optional": false,
                     "returnType": "boolean",
                     "typeParameters": [],
-                    "line": 337
+                    "line": 335
                 },
                 {
                     "name": "validate",
@@ -6453,13 +6469,13 @@
                     "argsDecorator": [
                         "$event"
                     ],
-                    "line": 331
+                    "line": 329
                 }
             ],
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { ContentChildren, Inject, ViewChild } from '@angular/core';\nimport { Component, \n\tElementRef, \n\tEventEmitter, \n\tforwardRef, \n\tHostListener, \n\tInput, \n\tOnInit, \n\tOutput, \n\tQueryList, \n\tSimpleChange } from '@angular/core';\nimport { AbstractControl, ControlValueAccessor, \n\tNG_VALIDATORS, \n\tNG_VALUE_ACCESSOR } from '@angular/forms';\nimport { BehaviorSubject, noop, Unsubscribable } from 'rxjs';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { isEmptyStr } from '../../utils/anyHelper';\nimport { focusNext } from '../../utils/domHelper';\nimport { SelectConfig, SELECT_CONFIG } from './select-config';\nimport { \n\tSelectOptionComponent } \nfrom './select-option/select-option.component';\n\nconst closedMenuClass = 'menu-container-closed ds-select';\nconst openMenuClass = 'menu-container-open ds-select';\nconst disabledMenuClass = 'menu-container-disabled';\n\nconst skippedKeys = new Set([\n\t'Backspace',\n\t'Tab',\n\t'F1',\n\t'F1',\n\t'F2',\n\t'F3',\n\t'F4',\n\t'F5',\n\t'F6',\n\t'F7',\n\t'F8',\n\t'F9',\n\t'F10',\n\t'F11',\n\t'F12'\n]);\n\n@Component({\n  selector: 'app-select',\n  templateUrl: './select.component.html',\n\tstyleUrls: ['./select.component.sass'],\n\tproviders: [{\n\t\tprovide: NG_VALUE_ACCESSOR,\n\t\tuseExisting: forwardRef(() => SelectComponent),\n\t\tmulti: true,\n\t},\n\t{\n\t\tprovide: SELECT_CONFIG,\n\t\tuseFactory: () => new BehaviorSubject<SelectConfig | null>(null)\n\t},\n\t{\n\t\tprovide: NG_VALIDATORS,\n\t\tuseExisting: forwardRef(() => SelectComponent),\n\t\tmulti: true,\n\t}\n]\n})\nexport class SelectComponent implements OnInit, ControlValueAccessor {\n\n\t@Input('name') controlName: string = '';\n\t@Input('value') selectedItems: unknown[] = [];\n\t@Input('multiple') allowMultiSelect: boolean = false;\n\t@Input('disabled') isDisabled: boolean;\n\t@Input('defaultDisplay') defaultDisplay: string = 'Select...';\n\t@Input('customStyle') customStyle: any = null;\n\t@Output('onSelected') onSelected = new EventEmitter<unknown[]>(); \n\tisOpen: boolean = false;\n\ttopId: string = '';\n\tselectedSet: Set<unknown>;\n\tcontainerClass: string = closedMenuClass;\n\thighlightedMenuItemIdx: number = -1;\n\ttabNum: number;\n\tpropagateChange: (_: any) => {};\n\tpropagateTouch: () => void;\n\thasError: boolean = false;\n\toptionMaxIdx: number = 0; \n\tselectConfig: SelectConfig;\n\tchildrenChangeUnsub: Unsubscribable;\n\tkeyContentMap: Map<unknown, string> = new Map();\n\n\t@ContentChildren(SelectOptionComponent) \n\toptionElements: QueryList<SelectOptionComponent>;\n\n\t@ViewChild('custom') custom: ElementRef;\n\t@ViewChild('optionsParent') optionsParent: ElementRef;\n\n\tconstructor(private elRef: ElementRef, \n\t\t@Inject(SELECT_CONFIG) \n\t\tprivate selectConfig$: BehaviorSubject<SelectConfig>) \n\t{ }\n\t\n\tngOnInit(): void {\n\t\tthis._initializeSelectedValues(this.selectedItems);\n\t\tthis.topId = `ds-select-top-${this.controlName}`;\n\t\tthis.selectConfig = {\n\t\t\tallowMultiSelect: this.allowMultiSelect,\n\t\t\tcontrolName: this.controlName,\n\t\t\tonClickCallback: this.onChecked.bind(this),\n\t\t\tregister: () => ({ idx: this.optionMaxIdx++ }),\n\t\t\tselectedSet: this.selectedSet,\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t\tif(this.isDisabled) {\n\t\t\tthis.tabNum = -1;\n\t\t\tthis.containerClass = disabledMenuClass;\n\t\t}\n\t}\n\n\t// ngOnChanges(changes: SimpleChange) {\n\t// \tconst optionChanges = changes['options'];\n\t// \tif(optionChanges && !optionChanges.firstChange) {\n\t// \t\tconst prevLength = optionChanges.previousValue?.length;\n\t// \t\t//if something was deleted\n\t// \t\tif(prevLength > optionChanges.currentValue?.length) {\n\t// \t\t\tconst current = optionChanges.currentValue\n\t// \t\t\t\t.map(o => o.key);\n\t// \t\t\tconst currentSet = new Set(optionChanges.currentValue);\n\t// \t\t\tconst selected = asArray(this.selectedItems)\n\t// \t\t\t\t.filter(o => currentSet.has(o.id));\n\t// \t\t\tthis.selectedItems = selected;\n\t// \t\t\tthis.selectedSet = new Set(selected);\n\t// \t\t}\n\t// \t}\n\t// }\n\n\tngAfterViewInit(): void {\n\t\tthis.keyContentMap = new Map(this.optionElements.map(c => [c.value, c.content]));\n\t\tthis.childrenChangeUnsub = this.optionElements.changes.subscribe(\n\t\t\t(changes: QueryList<SelectOptionComponent>) => {\n\t\t\t\tthis.keyContentMap = new Map(changes.map(c => [c.value, c.content]));\n\t\t});\n\t}\n\n\twriteValue(obj: any): void {\n\t\tthis._initializeSelectedValues(obj);\n\t}\n\n\tregisterOnChange(fn: any): void {\n\t\tthis.propagateChange = fn;\n\t}\n\n\tregisterOnTouched(fn: any): void {\n\t\tthis.propagateTouch = fn;\n\t}\n\n\tsetDisabledState?(isDisabled: boolean): void {\n\t\tthis.isDisabled = isDisabled;\n\t\tthis.tabNum = isDisabled ? -1 : 0;\n\t\tthis.containerClass = disabledMenuClass;\n\t}\n\n\tvalidate(control: AbstractControl): any {\n\t\tconst validity = (control.value as [])?.length < 1 ? {} : null;\n\t\treturn validity;\n\t}\n\n\tprivate _initializeSelectedValues(selectedItems: any) {\n\t\tif(this.allowMultiSelect) {\n\t\t\tif(Array.isArray(selectedItems)) {\n\t\t\t\tthis.selectedItems = selectedItems;\n\t\t\t\tthis.selectedSet = new Set(selectedItems);\n\t\t\t}\n\t\t\telse if(isEmptyStr(selectedItems)) {\n\t\t\t\tthis.selectedItems = [];\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t\t//I'm only doing this in select places because I fear an infinite loop\n\t\t\t\tthis.propagateChange && this.propagateChange([]);\n\t\t\t}\n\t\t\telse if(typeof selectedItems === 'string') {\n\t\t\t\tthis.selectedItems = selectedItems.split(',');\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t\tthis.propagateChange && this.propagateChange(this.selectedItems);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tthrow Error('When using multi-select, provided value must be array');\n\t\t\t}\n\t\t}\n\t\telse {\n\t\t\tif(!Array.isArray(selectedItems)) {\n\t\t\t\t//I've arbitrarily decided I want the internal representation \n\t\t\t\t//to always be an array \n\t\t\t\tthis.selectedItems = !isEmptyStr(selectedItems) ? [selectedItems] : [];\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t\tthis.propagateChange && this.propagateChange(this.selectedItems);\n\t\t\t}\n\t\t\telse if(selectedItems.length <= 1) {\n\t\t\t\tthis.selectedSet = new Set(selectedItems);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tthrow Error('When not using multi-select, '\n\t\t\t\t\t+ 'provided value cannot be array with more than 1 item.');\n\t\t\t}\n\t\t}\n\t\tthis.selectConfig = {...this.selectConfig,\n\t\t\tselectedSet: this.selectedSet\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t}\n\n\tprivate _openMenu(): void {\n\t\tif(this.isDisabled || (this.optionElements?.length || 0) < 1) return;\n\t\tconsole.log('here?');\n\t\tthis.isOpen = true;\n\t\tthis.containerClass = openMenuClass;\n\t\tsetTimeout(() => {\n\t\t\tthis.optionsParent.nativeElement.focus();\n\t\t});\n\t}\n\n\tprivate _closeMenu(): void {\n\t\tthis.isOpen = false;\n\t\tthis.containerClass = closedMenuClass;\n\t\tthis.highlightedMenuItemIdx = -1;\n\t\tthis.propagateTouch && this.propagateTouch();\n\t}\n\t\n\tonFocus(): void {\n\t\tthis._openMenu();\n\t}\n\n\t//this needs to be a focusout rather than a simple blur\n\t//because we want to get the focus event of the options themselves\n\t//otherwise, if an option is selected and we click out, this wont fire\n\tonFocusOut(): void {\n\t\tconsole.log('focus out');\n\t\t//this timeout is a hack.\n\t\t//we don't want the blur action to occur if a child is focused\n\t\t//especially since it will occur as we tab through the options\n\t\t//we can check for active element, but first focus goes to body\n\t\t//before switching to our element. the setTimeout tosses our work to the end \n\t\t//of the queue so that by then the activeElement is our option\n\n\t\tsetTimeout(() => {\n\t\t\t//reminder element is the whole thing\n\t\t\tconst element = this.elRef.nativeElement.children[0] as HTMLElement;\n\t\t\t// document.activeElement is likely to be the one of the options\n\t\t\tif(!element.contains(document.activeElement) || element === document.activeElement) {\n\t\t\t\tthis._closeMenu();\n\t\t\t}\n\t\t});\n\t}\n\n\tprivate _menuOptionHighlight(newIdx: number): void {\n\t\tconst optionsElementsArr = this.optionElements.toArray();\n\t\tconst nextHighlighted = optionsElementsArr[newIdx];\n\t\tnextHighlighted.elementRef.nativeElement.focus();\n\t\tthis.highlightedMenuItemIdx = newIdx;\n\t}\n\n\tprivate _highlightSearchedOption(e: KeyboardEvent) {\n\t\tconst optionElements = this.optionElements.toArray();\n\t\tconst idx = this.highlightedMenuItemIdx;\n\t\tconst newIdx = optionElements.findIndex(\n\t\t\t(option: SelectOptionComponent) => {\n\t\t\t\tif(!option.value) return false;\n\t\t\t\tconst upKey = e.key.toLocaleUpperCase();\n\t\t\t\tconst upStr = option.content.toLocaleUpperCase()\n\t\t\t\treturn upStr.startsWith(upKey);\n\t\t});\n\t\tif(newIdx > -1) {\n\t\t\tif(idx > -1) {\n\t\t\t\tthis._menuOptionHighlight(newIdx);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tconst option = optionElements[newIdx];\n\t\t\t\toption.elementRef.nativeElement.focus();\n\t\t\t\tthis.highlightedMenuItemIdx = newIdx;\n\t\t\t}\n\t\t}\n\t}\n\n\tprivate _chooseOption(): void {\n\t\tconst optionElements = this.optionElements.toArray();\n\t\tconst optionElement = optionElements[this.highlightedMenuItemIdx];\n\t\toptionElement.selected = true;\n\t\tthis.onChecked(optionElement);\n\t}\n\n\tprivate _openMenuKeydownEventBranches(e: KeyboardEvent) {\n\t\t\n\t\tif((e.key === ' ') && this.highlightedMenuItemIdx > -1) {\n\t\t\tthis._chooseOption();\n\t\t\tif(!this.allowMultiSelect) {\n\t\t\t\tconst element = this.elRef.nativeElement.children[0];\n\t\t\t\tfocusNext(element);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(e.key === 'Enter') {\n\t\t\tif(this.allowMultiSelect) {\n\t\t\t\tthis._closeMenu();\n\t\t\t}\n\t\t\telse if(this.highlightedMenuItemIdx > -1) {\n\t\t\t\tthis._chooseOption();\n\t\t\t}\n\t\t\tconst element = this.elRef.nativeElement.children[0];\n\t\t\tfocusNext(element);\n\t\t}\n\t\telse if(e.key === 'ArrowUp') {\n\t\t\tconst idx = this.highlightedMenuItemIdx;\n\t\t\tif(idx > 0) {\n\t\t\t\tthis._menuOptionHighlight(idx - 1);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(e.key === 'ArrowDown') {\n\t\t\tconst idx = this.highlightedMenuItemIdx;\n\t\t\tif(idx < this.optionElements.length -1) {\n\t\t\t\tthis._menuOptionHighlight(idx + 1);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(skippedKeys.has(e.key)) {\n\t\t\tnoop();\n\t\t}\n\t\telse {\n\t\t\tthis._highlightSearchedOption(e);\n\t\t}\n\t}\n\n\n\t@HostListener('window:keydown',['$event'])\n\tonKeyDown(e: KeyboardEvent): void {\n\t\tif(this.isOpen && this.optionElements?.length > 0) {\n\t\t\tthis._openMenuKeydownEventBranches(e);\n\t\t}\n\t}\n\n\tshowTagList(): boolean {\n\t\tif(this.allowMultiSelect) {\n\t\t\treturn this.hasSelectedValue();\n\t\t}\n\t\treturn false;\n\t}\n\n\tprivate _replaceValues(selected: unknown[]): void {\n\t\tthis.selectedItems = selected;\n\t\tthis.selectedSet = new Set(selected);\n\t\tthis.onSelected.emit([...selected]);\n\t\tthis.propagateChange && this.propagateChange([...selected]);\n\t\tthis.selectConfig = {...this.selectConfig,\n\t\t\tselectedSet: this.selectedSet\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t}\n\n\tprivate _toggleOptionMulti(option: DSInput): void {\n\t\tconst selectedArray = this.selectedItems;\n\t\tconst items = selectedArray.filter(t => t !== option.value);\n\t\t//if no items were matched to be removed, then add instead\n\t\tif(items.length === selectedArray.length) {\n\t\t\titems.push(option.value);\n\t\t}\n\t\tthis._replaceValues(items);\n\t}\n\n\tprivate _toggleOptionSingle(option: SelectOptionComponent): void {\n\t\tthis._replaceValues(option ? [option.value] : []);\n\t\tthis._closeMenu();\n\t}\n\n\tonChecked(option: SelectOptionComponent): void {\n\t\tif(this.allowMultiSelect) {\n\t\t\tthis._toggleOptionMulti(option);\n\t\t}\n\t\telse {\n\t\t\tthis._toggleOptionSingle(option);\n\t\t}\n\t}\n\n\tonTagXClicked(option: DSInput) {\n\t\tthis._toggleOptionMulti(option);\n\t\tthis.propagateTouch && this.propagateTouch();\n\t}\n\n\thasSelectedValue(): boolean {\n\t\treturn !!this.selectedItems && this.selectedItems.length > 0;\n\t}\n\n\tgetSingularDisplayValue(): string {\n\t\tconst selected = this.selectedItems[0];\n\t\tif(!selected) return this.defaultDisplay;\n\t\tif(this.keyContentMap.has(selected)) {\n\t\t\treturn this.lookupContent(selected);\n\t\t};\n\t\treturn selected as string;\n\t}\n\n\tlookupContent(value: unknown): string {\n\t\tif(this.keyContentMap.has(value)) {\n\t\t\treturn this.keyContentMap.get(value);\n\t\t}\n\t\treturn value as string;\n\t}\n\n\tngDestroy(): void {\n\t\tthis.childrenChangeUnsub?.unsubscribe();\n\t}\n\n}\n",
+            "sourceCode": "import { ContentChildren, Inject, ViewChild } from '@angular/core';\nimport { Component, \n\tElementRef, \n\tEventEmitter, \n\tforwardRef, \n\tHostListener, \n\tInput, \n\tOnInit, \n\tOutput, \n\tQueryList, \n\tSimpleChange } from '@angular/core';\nimport { AbstractControl, ControlValueAccessor, \n\tNG_VALIDATORS, \n\tNG_VALUE_ACCESSOR } from '@angular/forms';\nimport { BehaviorSubject, noop, Unsubscribable } from 'rxjs';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { isEmptyStr } from '../../utils/anyHelper';\nimport { focusNext } from '../../utils/domHelper';\nimport { SelectConfig, SELECT_CONFIG } from './select-config';\nimport { \n\tSelectOptionComponent } \nfrom './select-option/select-option.component';\n\nconst closedMenuClass = 'menu-container-closed ds-select';\nconst openMenuClass = 'menu-container-open ds-select';\nconst disabledMenuClass = 'menu-container-disabled';\n\nconst skippedKeys = new Set([\n\t'Backspace',\n\t'Tab',\n\t'F1',\n\t'F1',\n\t'F2',\n\t'F3',\n\t'F4',\n\t'F5',\n\t'F6',\n\t'F7',\n\t'F8',\n\t'F9',\n\t'F10',\n\t'F11',\n\t'F12'\n]);\n\n@Component({\n  selector: 'app-select',\n  templateUrl: './select.component.html',\n\tstyleUrls: ['./select.component.sass'],\n\tproviders: [{\n\t\tprovide: NG_VALUE_ACCESSOR,\n\t\tuseExisting: forwardRef(() => SelectComponent),\n\t\tmulti: true,\n\t},\n\t{\n\t\tprovide: SELECT_CONFIG,\n\t\tuseFactory: () => new BehaviorSubject<SelectConfig | null>(null)\n\t},\n\t{\n\t\tprovide: NG_VALIDATORS,\n\t\tuseExisting: forwardRef(() => SelectComponent),\n\t\tmulti: true,\n\t}\n]\n})\nexport class SelectComponent implements OnInit, ControlValueAccessor {\n\n\t@Input('name') controlName: string = '';\n\t@Input('value') selectedItems: unknown[] = [];\n\t@Input('multiple') allowMultiSelect: boolean = false;\n\t@Input('disabled') isDisabled: boolean;\n\t@Input('defaultDisplay') defaultDisplay: string = 'Select...';\n\t@Input('customStyle') customStyle: any = null;\n\t@Output('onSelected') onSelected = new EventEmitter<unknown[]>(); \n\tisOpen: boolean = false;\n\ttopId: string = '';\n\tselectedSet: Set<unknown>;\n\tcontainerClass: string = closedMenuClass;\n\thighlightedMenuItemIdx: number = -1;\n\ttabNum: number;\n\tpropagateChange: (_: any) => {};\n\tpropagateTouch: () => void;\n\thasError: boolean = false;\n\toptionMaxIdx: number = 0; \n\tselectConfig: SelectConfig;\n\tchildrenChangeUnsub: Unsubscribable;\n\tkeyContentMap: Map<unknown, string> = new Map();\n\n\t@ContentChildren(SelectOptionComponent) \n\toptionElements: QueryList<SelectOptionComponent>;\n\n\t@ViewChild('custom') custom: ElementRef;\n\t@ViewChild('optionsParent') optionsParent: ElementRef;\n\n\tconstructor(private elRef: ElementRef, \n\t\t@Inject(SELECT_CONFIG) \n\t\tprivate selectConfig$: BehaviorSubject<SelectConfig>) \n\t{ }\n\t\n\tngOnInit(): void {\n\t\tthis._initializeSelectedValues(this.selectedItems);\n\t\tthis.topId = `ds-select-top-${this.controlName}`;\n\t\tthis.selectConfig = {\n\t\t\tallowMultiSelect: this.allowMultiSelect,\n\t\t\tcontrolName: this.controlName,\n\t\t\tonClickCallback: this.onChecked.bind(this),\n\t\t\tregister: () => ({ idx: this.optionMaxIdx++ }),\n\t\t\tselectedSet: this.selectedSet,\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t\tif(this.isDisabled) {\n\t\t\tthis.tabNum = -1;\n\t\t\tthis.containerClass = disabledMenuClass;\n\t\t}\n\t}\n\n\t// ngOnChanges(changes: SimpleChange) {\n\t// \tconst optionChanges = changes['options'];\n\t// \tif(optionChanges && !optionChanges.firstChange) {\n\t// \t\tconst prevLength = optionChanges.previousValue?.length;\n\t// \t\t//if something was deleted\n\t// \t\tif(prevLength > optionChanges.currentValue?.length) {\n\t// \t\t\tconst current = optionChanges.currentValue\n\t// \t\t\t\t.map(o => o.key);\n\t// \t\t\tconst currentSet = new Set(optionChanges.currentValue);\n\t// \t\t\tconst selected = asArray(this.selectedItems)\n\t// \t\t\t\t.filter(o => currentSet.has(o.id));\n\t// \t\t\tthis.selectedItems = selected;\n\t// \t\t\tthis.selectedSet = new Set(selected);\n\t// \t\t}\n\t// \t}\n\t// }\n\n\tngAfterViewInit(): void {\n\t\tthis.keyContentMap = new Map(this.optionElements.map(c => [c.value, c.content]));\n\t\tthis.childrenChangeUnsub = this.optionElements.changes.subscribe(\n\t\t\t(changes: QueryList<SelectOptionComponent>) => {\n\t\t\t\tthis.keyContentMap = new Map(changes.map(c => [c.value, c.content]));\n\t\t});\n\t}\n\n\twriteValue(obj: any): void {\n\t\tthis._initializeSelectedValues(obj);\n\t}\n\n\tregisterOnChange(fn: any): void {\n\t\tthis.propagateChange = fn;\n\t}\n\n\tregisterOnTouched(fn: any): void {\n\t\tthis.propagateTouch = fn;\n\t}\n\n\tsetDisabledState?(isDisabled: boolean): void {\n\t\tthis.isDisabled = isDisabled;\n\t\tthis.tabNum = isDisabled ? -1 : 0;\n\t\tthis.containerClass = disabledMenuClass;\n\t}\n\n\tvalidate(control: AbstractControl): any {\n\t\tconst validity = (control.value as [])?.length < 1 ? {} : null;\n\t\treturn validity;\n\t}\n\n\tprivate _initializeSelectedValues(selectedItems: any) {\n\t\tif(this.allowMultiSelect) {\n\t\t\tif(Array.isArray(selectedItems)) {\n\t\t\t\tthis.selectedItems = selectedItems;\n\t\t\t\tthis.selectedSet = new Set(selectedItems);\n\t\t\t}\n\t\t\telse if(isEmptyStr(selectedItems)) {\n\t\t\t\tthis.selectedItems = [];\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t\t//I'm only doing this in select places because I fear an infinite loop\n\t\t\t\tthis.propagateChange && this.propagateChange([]);\n\t\t\t}\n\t\t\telse if(typeof selectedItems === 'string') {\n\t\t\t\tthis.selectedItems = selectedItems.split(',');\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t\tthis.propagateChange && this.propagateChange(this.selectedItems);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tthrow Error('When using multi-select, provided value must be array');\n\t\t\t}\n\t\t}\n\t\telse {\n\t\t\tif(!Array.isArray(selectedItems)) {\n\t\t\t\t//I've arbitrarily decided I want the internal representation \n\t\t\t\t//to always be an array \n\t\t\t\tthis.selectedItems = !isEmptyStr(selectedItems) ? [selectedItems] : [];\n\t\t\t\tthis.selectedSet = new Set(this.selectedItems);\n\t\t\t\tthis.propagateChange && this.propagateChange(this.selectedItems);\n\t\t\t}\n\t\t\telse if(selectedItems.length <= 1) {\n\t\t\t\tthis.selectedSet = new Set(selectedItems);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tthrow Error('When not using multi-select, '\n\t\t\t\t\t+ 'provided value cannot be array with more than 1 item.');\n\t\t\t}\n\t\t}\n\t\tthis.selectConfig = {...this.selectConfig,\n\t\t\tselectedSet: this.selectedSet\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t}\n\n\tprivate _openMenu(): void {\n\t\tif(this.isDisabled || (this.optionElements?.length || 0) < 1) return;\n\t\tthis.isOpen = true;\n\t\tthis.containerClass = openMenuClass;\n\t\tsetTimeout(() => {\n\t\t\tthis.optionsParent.nativeElement.focus();\n\t\t});\n\t}\n\n\tprivate _closeMenu(): void {\n\t\tthis.isOpen = false;\n\t\tthis.containerClass = closedMenuClass;\n\t\tthis.highlightedMenuItemIdx = -1;\n\t\tthis.propagateTouch && this.propagateTouch();\n\t}\n\t\n\tonFocus(): void {\n\t\tthis._openMenu();\n\t}\n\n\t//this needs to be a focusout rather than a simple blur\n\t//because we want to get the focus event of the options themselves\n\t//otherwise, if an option is selected and we click out, this wont fire\n\tonFocusOut(): void {\n\t\t//this timeout is a hack.\n\t\t//we don't want the blur action to occur if a child is focused\n\t\t//especially since it will occur as we tab through the options\n\t\t//we can check for active element, but first focus goes to body\n\t\t//before switching to our element. the setTimeout tosses our work to the end \n\t\t//of the queue so that by then the activeElement is our option\n\n\t\tsetTimeout(() => {\n\t\t\t//reminder element is the whole thing\n\t\t\tconst element = this.elRef.nativeElement.children[0] as HTMLElement;\n\t\t\t// document.activeElement is likely to be the one of the options\n\t\t\tif(!element.contains(document.activeElement) || element === document.activeElement) {\n\t\t\t\tthis._closeMenu();\n\t\t\t}\n\t\t});\n\t}\n\n\tprivate _menuOptionHighlight(newIdx: number): void {\n\t\tconst optionsElementsArr = this.optionElements.toArray();\n\t\tconst nextHighlighted = optionsElementsArr[newIdx];\n\t\tnextHighlighted.elementRef.nativeElement.focus();\n\t\tthis.highlightedMenuItemIdx = newIdx;\n\t}\n\n\tprivate _highlightSearchedOption(e: KeyboardEvent) {\n\t\tconst optionElements = this.optionElements.toArray();\n\t\tconst idx = this.highlightedMenuItemIdx;\n\t\tconst newIdx = optionElements.findIndex(\n\t\t\t(option: SelectOptionComponent) => {\n\t\t\t\tif(!option.value) return false;\n\t\t\t\tconst upKey = e.key.toLocaleUpperCase();\n\t\t\t\tconst upStr = option.content.toLocaleUpperCase()\n\t\t\t\treturn upStr.startsWith(upKey);\n\t\t});\n\t\tif(newIdx > -1) {\n\t\t\tif(idx > -1) {\n\t\t\t\tthis._menuOptionHighlight(newIdx);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tconst option = optionElements[newIdx];\n\t\t\t\toption.elementRef.nativeElement.focus();\n\t\t\t\tthis.highlightedMenuItemIdx = newIdx;\n\t\t\t}\n\t\t}\n\t}\n\n\tprivate _chooseOption(): void {\n\t\tconst optionElements = this.optionElements.toArray();\n\t\tconst optionElement = optionElements[this.highlightedMenuItemIdx];\n\t\toptionElement.selected = true;\n\t\tthis.onChecked(optionElement);\n\t}\n\n\tprivate _openMenuKeydownEventBranches(e: KeyboardEvent) {\n\t\t\n\t\tif((e.key === ' ') && this.highlightedMenuItemIdx > -1) {\n\t\t\tthis._chooseOption();\n\t\t\tif(!this.allowMultiSelect) {\n\t\t\t\tconst element = this.elRef.nativeElement.children[0];\n\t\t\t\tfocusNext(element);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(e.key === 'Enter') {\n\t\t\tif(this.allowMultiSelect) {\n\t\t\t\tthis._closeMenu();\n\t\t\t}\n\t\t\telse if(this.highlightedMenuItemIdx > -1) {\n\t\t\t\tthis._chooseOption();\n\t\t\t}\n\t\t\tconst element = this.elRef.nativeElement.children[0];\n\t\t\tfocusNext(element);\n\t\t}\n\t\telse if(e.key === 'ArrowUp') {\n\t\t\tconst idx = this.highlightedMenuItemIdx;\n\t\t\tif(idx > 0) {\n\t\t\t\tthis._menuOptionHighlight(idx - 1);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(e.key === 'ArrowDown') {\n\t\t\tconst idx = this.highlightedMenuItemIdx;\n\t\t\tif(idx < this.optionElements.length -1) {\n\t\t\t\tthis._menuOptionHighlight(idx + 1);\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t}\n\t\telse if(skippedKeys.has(e.key)) {\n\t\t\tnoop();\n\t\t}\n\t\telse {\n\t\t\tthis._highlightSearchedOption(e);\n\t\t}\n\t}\n\n\n\t@HostListener('window:keydown',['$event'])\n\tonKeyDown(e: KeyboardEvent): void {\n\t\tif(this.isOpen && this.optionElements?.length > 0) {\n\t\t\tthis._openMenuKeydownEventBranches(e);\n\t\t}\n\t}\n\n\tshowTagList(): boolean {\n\t\tif(this.allowMultiSelect) {\n\t\t\treturn this.hasSelectedValue();\n\t\t}\n\t\treturn false;\n\t}\n\n\tprivate _replaceValues(selected: unknown[]): void {\n\t\tconsole.log(selected);\n\t\tthis.selectedItems = selected;\n\t\tthis.selectedSet = new Set(selected);\n\t\tthis.onSelected.emit([...selected]);\n\t\tthis.propagateChange && this.propagateChange([...selected]);\n\t\tthis.selectConfig = {...this.selectConfig,\n\t\t\tselectedSet: this.selectedSet\n\t\t};\n\t\tthis.selectConfig$.next(this.selectConfig);\n\t}\n\n\tprivate _toggleOptionMulti(option: DSInput): void {\n\t\tif(!option.value) return;\n\t\tconst selectedArray = this.selectedItems;\n\t\tconst items = selectedArray.filter(t => t !== option.value);\n\t\t//if no items were matched to be removed, then add instead\n\t\tif(items.length === selectedArray.length) {\n\t\t\titems.push(option.value);\n\t\t}\n\t\tthis._replaceValues(items);\n\t}\n\n\tprivate _toggleOptionSingle(option: SelectOptionComponent): void {\n\t\tthis._replaceValues((option && option.value) ? [option.value] : []);\n\t\tthis._closeMenu();\n\t}\n\n\tonChecked(option: SelectOptionComponent): void {\n\t\tif(!option) return;\n\t\tif(this.allowMultiSelect) {\n\t\t\tthis._toggleOptionMulti(option);\n\t\t}\n\t\telse {\n\t\t\tthis._toggleOptionSingle(option);\n\t\t}\n\t}\n\n\tonTagXClicked(option: DSInput) {\n\t\tif(!option) return;\n\t\tthis._toggleOptionMulti(option);\n\t\tthis.propagateTouch && this.propagateTouch();\n\t}\n\n\thasSelectedValue(): boolean {\n\t\treturn !!this.selectedItems && this.selectedItems.length > 0;\n\t}\n\n\tgetSingularDisplayValue(): string {\n\t\tconsole.log('display');\n\t\tconst selected = this.selectedItems[0];\n\t\tconsole.log(selected);\n\t\tif(!selected) return this.defaultDisplay;\n\t\tif(this.keyContentMap.has(selected)) {\n\t\t\treturn this.lookupContent(selected);\n\t\t};\n\t\treturn selected as string;\n\t}\n\n\tlookupContent(value: unknown): string {\n\t\tif(this.keyContentMap.has(value)) {\n\t\t\treturn this.keyContentMap.get(value);\n\t\t}\n\t\treturn value as string;\n\t}\n\n\tngDestroy(): void {\n\t\tthis.childrenChangeUnsub?.unsubscribe();\n\t}\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -6851,7 +6867,7 @@
         },
         {
             "name": "TagItemComponent",
-            "id": "component-TagItemComponent-793f1386c7a436ad40894a627ab81a3d",
+            "id": "component-TagItemComponent-b6dbf7226e2ed7afba261d262154182d",
             "file": "src/app/shared/components/select/tag-item/tag-item.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -6962,7 +6978,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { nodeFirst } from 'src/app/shared/utils/domHelper';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { TagsConfig, TAGS_CONFIG } from '../tags-config';\n\n@Component({\n  selector: 'app-tag-item',\n  templateUrl: './tag-item.component.html',\n  styleUrls: ['./tag-item.component.sass']\n})\nexport class TagItemComponent implements OnInit, DSInput {\n\n\t@Input('value') value: unknown;\n\t@Input('readonly') readonly: boolean;\n\t@Input('name') controlName: string;\n\tonClickCallback: (option: TagItemComponent) => void;\n\t@Input('tabindex') tabNum = -1;\n\tcontent = '';\n\tprivate inialized: boolean;\n\t\n\tconstructor(private elRef: ElementRef, \n\t\t@Inject(TAGS_CONFIG) private tagsConfig$: BehaviorSubject<TagsConfig>) { }\n\n  ngOnInit(): void {\n\t\tthis.tagsConfig$.subscribe((config: TagsConfig) => {\n\t\t\tif(!config) return;\n\t\t\tif(!this.inialized) {\n\t\t\t\tthis.inialized = true;\n\t\t\t\tconst registration = config.register();\n\t\t\t\tthis.controlName = `option-${config.controlName}-${registration.idx}`;\n\t\t\t\tthis.onClickCallback = config.onClickCallback;\n\t\t\t\tthis.readonly = !config.showXButton;\n\t\t\t}\n\t\t});\n\t}\n\t\n\tonTagXClicked(e: MouseEvent) {\n\t\tthis.onClickCallback && this.onClickCallback(this);\n\t\te.stopPropagation();\n\t}\n\n\tngAfterViewChecked(): void {\n\t\tconst first = nodeFirst(this.elRef?.nativeElement?.children);\n\t\tthis.content = first?.textContent || '';\n\t}\n\n}\n",
+            "sourceCode": "import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\nimport { nodeFirst } from 'src/app/shared/utils/domHelper';\nimport { DSInput } from 'src/app/types/ds-input';\nimport { TagsConfig, TAGS_CONFIG } from '../tags-config';\n\n@Component({\n  selector: 'app-tag-item',\n  templateUrl: './tag-item.component.html',\n  styleUrls: ['./tag-item.component.sass']\n})\nexport class TagItemComponent implements OnInit, DSInput {\n\n\t@Input('value') value: unknown;\n\t@Input('readonly') readonly: boolean;\n\t@Input('name') controlName: string;\n\tonClickCallback: (option: TagItemComponent) => void;\n\t@Input('tabindex') tabNum = -1;\n\tcontent = '';\n\tprivate inialized: boolean;\n\t\n\tconstructor(private elRef: ElementRef, \n\t\t@Inject(TAGS_CONFIG) private tagsConfig$: BehaviorSubject<TagsConfig>) { }\n\n  ngOnInit(): void {\n\t\tthis.tagsConfig$.subscribe((config: TagsConfig) => {\n\t\t\tif(!config) return;\n\t\t\tif(!this.inialized) {\n\t\t\t\tthis.inialized = true;\n\t\t\t\tconst registration = config.register();\n\t\t\t\tthis.controlName = `tag-${config.controlName}-${registration.idx}`;\n\t\t\t\tthis.onClickCallback = config.onClickCallback;\n\t\t\t\tthis.readonly = !config.showXButton;\n\t\t\t}\n\t\t});\n\t}\n\t\n\tonTagXClicked(e: MouseEvent) {\n\t\tthis.onClickCallback && this.onClickCallback(this);\n\t\te.stopPropagation();\n\t}\n\n\tngAfterViewChecked(): void {\n\t\tconst first = nodeFirst(this.elRef?.nativeElement?.children);\n\t\tthis.content = first?.textContent || '';\n\t}\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -7551,6 +7567,30 @@
                 "defaultValue": "(args) => ({\n\ttemplate: `<app-select>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
             },
             {
+                "name": "HasOptionsMultiInstanceName",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/select.stories.ts",
+                "type": "Story",
+                "defaultValue": "(args) => ({\n\ttemplate: `\n\t<div>\n\t\t<app-select name=\"alpha\">\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"123\"\n\t\t\t>\n\t\t\t\tOption 1\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"234\"\n\t\t\t>\n\t\t\t\tOption 2\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"345\"\n\t\t\t>\n\t\t\t\tOption 3\n\t\t\t</app-select-option>\n\t\t</app-select>\n\t</div>\n\t<div>\n\t\t<app-select name=\"bravo\">\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"123\"\n\t\t\t>\n\t\t\t\tOption 1\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"234\"\n\t\t\t>\n\t\t\t\tOption 2\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"345\"\n\t\t\t>\n\t\t\t\tOption 3\n\t\t\t</app-select-option>\n\t\t</app-select>\n\t</div>\n\t`\n})"
+            },
+            {
+                "name": "HasOptionsMultiInstanceNoName",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/select.stories.ts",
+                "type": "Story",
+                "defaultValue": "(args) => ({\n\ttemplate: `\n\t<div>\n\t\t<app-select>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"123\"\n\t\t\t>\n\t\t\t\tOption 1\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"234\"\n\t\t\t>\n\t\t\t\tOption 2\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"345\"\n\t\t\t>\n\t\t\t\tOption 3\n\t\t\t</app-select-option>\n\t\t</app-select>\n\t</div>\n\t<div>\n\t\t<app-select>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"123\"\n\t\t\t>\n\t\t\t\tOption 1\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"234\"\n\t\t\t>\n\t\t\t\tOption 2\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"345\"\n\t\t\t>\n\t\t\t\tOption 3\n\t\t\t</app-select-option>\n\t\t</app-select>\n\t</div>\n\t`\n})"
+            },
+            {
+                "name": "LoggedIn",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Page.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "LoggedIn",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -7559,7 +7599,7 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "LoggedIn",
+                "name": "LoggedOut",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/Page.stories.ts",
@@ -7575,12 +7615,12 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "LoggedOut",
+                "name": "Multi",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Page.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
+                "file": "src/stories/taglist.stories.ts",
+                "type": "Story",
+                "defaultValue": "(args) => ({\n\ttemplate: `\n\t<div>\n\t\t<app-tag-list name=\"alpha\">\n\t\t\t<app-tag-item value=\"123\">\n\t\t\t\tOption 1\n\t\t\t</app-tag-item>\n\t\t\t<app-tag-item value=\"234\">\n\t\t\t\tOption 2\n\t\t\t</app-tag-item>\n\t\t\t<app-tag-item value=\"345\">\n\t\t\t\tOption 3\n\t\t\t</app-tag-item>\t\n\t\t</app-tag-list>\n\t</div>\n\t<div>\n\t<app-tag-list name=\"bravo\">\n\t\t<app-tag-item value=\"123\">\n\t\t\tOption 1\n\t\t</app-tag-item>\n\t\t<app-tag-item value=\"234\">\n\t\t\tOption 2\n\t\t</app-tag-item>\n\t\t<app-tag-item value=\"345\">\n\t\t\tOption 3\n\t\t</app-tag-item>\t\n\t</app-tag-list>\n\t</div>\n\t`\n})"
             },
             {
                 "name": "MultiSelect",
@@ -7705,17 +7745,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
-                "type": "Story<Header>",
-                "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
+                "file": "src/stories/Page.stories.ts",
+                "type": "Story<Page>",
+                "defaultValue": "(args: Page) => ({\n  component: Page,\n  props: args,\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Page.stories.ts",
-                "type": "Story<Page>",
-                "defaultValue": "(args: Page) => ({\n  component: Page,\n  props: args,\n})"
+                "file": "src/stories/Header.stories.ts",
+                "type": "Story<Header>",
+                "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
             },
             {
                 "name": "Template",
@@ -8395,6 +8435,22 @@
                     "defaultValue": "(args) => ({\n\ttemplate: `<app-select>\n\t\t<app-select-option\n\t\t\tvalue=\"123\"\n\t\t>\n\t\t\tOption 1\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"234\"\n\t\t>\n\t\t\tOption 2\n\t\t</app-select-option>\n\t\t<app-select-option\n\t\t\tvalue=\"345\"\n\t\t>\n\t\t\tOption 3\n\t\t</app-select-option>\n\t</app-select>`\n})"
                 },
                 {
+                    "name": "HasOptionsMultiInstanceName",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/select.stories.ts",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\n\ttemplate: `\n\t<div>\n\t\t<app-select name=\"alpha\">\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"123\"\n\t\t\t>\n\t\t\t\tOption 1\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"234\"\n\t\t\t>\n\t\t\t\tOption 2\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"345\"\n\t\t\t>\n\t\t\t\tOption 3\n\t\t\t</app-select-option>\n\t\t</app-select>\n\t</div>\n\t<div>\n\t\t<app-select name=\"bravo\">\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"123\"\n\t\t\t>\n\t\t\t\tOption 1\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"234\"\n\t\t\t>\n\t\t\t\tOption 2\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"345\"\n\t\t\t>\n\t\t\t\tOption 3\n\t\t\t</app-select-option>\n\t\t</app-select>\n\t</div>\n\t`\n})"
+                },
+                {
+                    "name": "HasOptionsMultiInstanceNoName",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/select.stories.ts",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\n\ttemplate: `\n\t<div>\n\t\t<app-select>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"123\"\n\t\t\t>\n\t\t\t\tOption 1\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"234\"\n\t\t\t>\n\t\t\t\tOption 2\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"345\"\n\t\t\t>\n\t\t\t\tOption 3\n\t\t\t</app-select-option>\n\t\t</app-select>\n\t</div>\n\t<div>\n\t\t<app-select>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"123\"\n\t\t\t>\n\t\t\t\tOption 1\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"234\"\n\t\t\t>\n\t\t\t\tOption 2\n\t\t\t</app-select-option>\n\t\t\t<app-select-option\n\t\t\t\tvalue=\"345\"\n\t\t\t>\n\t\t\t\tOption 3\n\t\t\t</app-select-option>\n\t\t</app-select>\n\t</div>\n\t`\n})"
+                },
+                {
                     "name": "MultiSelect",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -8491,6 +8547,32 @@
                     "defaultValue": "(args) => ({\n\ttemplate: `<callCounter></callCounter>`\n})"
                 }
             ],
+            "src/stories/Page.stories.ts": [
+                {
+                    "name": "LoggedIn",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Page.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "LoggedOut",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Page.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Page.stories.ts",
+                    "type": "Story<Page>",
+                    "defaultValue": "(args: Page) => ({\n  component: Page,\n  props: args,\n})"
+                }
+            ],
             "src/stories/Header.stories.ts": [
                 {
                     "name": "LoggedIn",
@@ -8517,30 +8599,22 @@
                     "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
                 }
             ],
-            "src/stories/Page.stories.ts": [
+            "src/stories/taglist.stories.ts": [
                 {
-                    "name": "LoggedIn",
+                    "name": "Multi",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Page.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "LoggedOut",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Page.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
+                    "file": "src/stories/taglist.stories.ts",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\n\ttemplate: `\n\t<div>\n\t\t<app-tag-list name=\"alpha\">\n\t\t\t<app-tag-item value=\"123\">\n\t\t\t\tOption 1\n\t\t\t</app-tag-item>\n\t\t\t<app-tag-item value=\"234\">\n\t\t\t\tOption 2\n\t\t\t</app-tag-item>\n\t\t\t<app-tag-item value=\"345\">\n\t\t\t\tOption 3\n\t\t\t</app-tag-item>\t\n\t\t</app-tag-list>\n\t</div>\n\t<div>\n\t<app-tag-list name=\"bravo\">\n\t\t<app-tag-item value=\"123\">\n\t\t\tOption 1\n\t\t</app-tag-item>\n\t\t<app-tag-item value=\"234\">\n\t\t\tOption 2\n\t\t</app-tag-item>\n\t\t<app-tag-item value=\"345\">\n\t\t\tOption 3\n\t\t</app-tag-item>\t\n\t</app-tag-list>\n\t</div>\n\t`\n})"
                 },
                 {
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Page.stories.ts",
-                    "type": "Story<Page>",
-                    "defaultValue": "(args: Page) => ({\n  component: Page,\n  props: args,\n})"
+                    "file": "src/stories/taglist.stories.ts",
+                    "type": "Story",
+                    "defaultValue": "(args) => ({\n\ttemplate: `\n\t<app-tag-list>\n\t\t<app-tag-item value=\"123\">\n\t\t\tOption 1\n\t\t</app-tag-item>\n\t\t<app-tag-item value=\"234\">\n\t\t\tOption 2\n\t\t</app-tag-item>\n\t\t<app-tag-item value=\"345\">\n\t\t\tOption 3\n\t\t</app-tag-item>\t\n\t</app-tag-list>`\n})"
                 }
             ],
             "src/app/shared/components/select/select-config.ts": [
@@ -8581,16 +8655,6 @@
                     "file": "src/app/shared/components/select/tags-config.ts",
                     "type": "",
                     "defaultValue": "new InjectionToken<BehaviorSubject<TagsConfig>>(\n\t'tag config'\n)"
-                }
-            ],
-            "src/stories/taglist.stories.ts": [
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/taglist.stories.ts",
-                    "type": "Story",
-                    "defaultValue": "(args) => ({\n\ttemplate: `\n\t<app-tag-list>\n\t\t<app-tag-item value=\"123\">\n\t\t\tOption 1\n\t\t</app-tag-item>\n\t\t<app-tag-item value=\"234\">\n\t\t\tOption 2\n\t\t</app-tag-item>\n\t\t<app-tag-item value=\"345\">\n\t\t\tOption 3\n\t\t</app-tag-item>\t\n\t</app-tag-list>`\n})"
                 }
             ]
         },
@@ -9147,7 +9211,7 @@
                 "linktype": "component",
                 "name": "AddCompModalComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/11",
+                "coverageCount": "0/13",
                 "status": "low"
             },
             {
@@ -10216,6 +10280,26 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "HasOptionsMultiInstanceName",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/select.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "HasOptionsMultiInstanceNoName",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/select.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "MultiSelect",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
@@ -10237,6 +10321,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "MultiSelectPreSelectStringValue",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/taglist.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Multi",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

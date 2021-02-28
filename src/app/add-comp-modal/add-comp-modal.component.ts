@@ -15,6 +15,8 @@ export class AddCompModalComponent implements OnInit {
 
 	loading = true;
 	options: SocialEvent[] = [];
+	DEFAULT_COMPETITION = DEFAULT_COMPETITION;
+	EMPTY_COMPETITION = EMPTY_COMPETITION;
 	private serviceUnsub: Unsubscribable;
 
 	constructor(public dialogRef: MatDialogRef<AddCompModalComponent>,
