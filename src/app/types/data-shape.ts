@@ -17,7 +17,7 @@ export interface Category extends Sortable, DataBasic {
 
 export interface DanceCommon extends Sortable, IdSelectable {
 	categoryId: DataKey,
-	linkedDanceIds: string[],
+	linkedDanceIds: DataKey[],
 }
 
 export interface DanceDtoCommon extends Sortable, IdSelectable {
@@ -78,24 +78,6 @@ export interface Heat {
 	impossible: Set<Couple>,
 };
 
-
-export interface Competition extends SocialEvent {
-	ageGroups: AgeGroupType[],
-	multiEventAgeGroups: AgeGroupType[],
-	categories: Category[],
-	dances: Dance[],
-	multiDances: MultiDance[],
-	skillLevels: SkillLevel[],
-	multiEventSkillLevels: SkillLevel[],
-	dancers: Dancer[],
-	heats: Heat[],
-	judges: Person[],
-	dateOfComp: Date,
-	finished: boolean,
-};
-
-
-export type TableTypes = Competition | Person | School;
 
 export type CompSubType = AgeGroupType | Category | Dance | 
 	SkillLevel | MultiDance;

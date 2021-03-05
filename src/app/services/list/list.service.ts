@@ -6,13 +6,13 @@ import {
 	PartialObserver,
 	from, 
 	BehaviorSubject } from 'rxjs';
-import { TableTypes } from '../../types/data-shape';
 import { BrowserDbService } from '../browser-Db/browser-db.service';
 import { v4 } from 'uuid';
 import { IdSelectable } from '../../types/id-selectable';
 import { DataKey } from '../../types/data-key';
 import { TableStats } from '../../types/table-stats';
 import { OpQueueService } from '../op-queue/op-queue.service';
+import { TableTypes } from 'src/app/types/table-types';
 
 
 @Injectable({

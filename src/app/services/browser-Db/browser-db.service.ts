@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TableTypes } from '../../types/data-shape';
 import { openDB, IDBPDatabase } from 'idb';
+import { TableTypes } from 'src/app/types/table-types';
 
 const DANCE_SCHEDULER_LOCAL_DB_VERSION = 1;
 const DANCE_SCHEDULER_LOCAL_DB_NAME = "danceSchedulerLocalDb"

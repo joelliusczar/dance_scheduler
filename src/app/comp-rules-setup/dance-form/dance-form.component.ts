@@ -4,9 +4,10 @@ import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService, CompKeys } 
 	from '../../services/competition-setup/competition-setup.service';
 import { first } from '../../shared/utils/arrayHelpers';
-import { Category, Competition, Dance, DanceDto } from '../../types/data-shape';
+import { Category, Dance, DanceDto } from '../../types/data-shape';
 import { DataKey } from '../../types/data-key';
 import { DirectionEventArg } from '../../types/directions';
+import { Competition } from 'src/app/types/competition';
 
 
 @Component({

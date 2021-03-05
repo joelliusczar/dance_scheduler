@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Unsubscribable, PartialObserver, BehaviorSubject, Subject } from 'rxjs';
-import { Competition, CompSubType } 
+import { CompSubType } 
 	from '../../types/data-shape';
 import { BrowserDbService, COMPETITION_TABLE_NAME } 
 	from '../browser-Db/browser-db.service';
@@ -10,6 +10,7 @@ import { v4 } from 'uuid';
 import { OpQueueService } from '../op-queue/op-queue.service';
 import { DEFAULT_COMPETITION, EMPTY_COMPETITION } from '../../types/constants';
 import { DataKey } from '../../types/data-key';
+import { Competition } from 'src/app/types/competition';
 
 
 export enum CompKeys {
@@ -24,25 +25,6 @@ export enum CompKeys {
 
 export type CompKeyChoices = keyof typeof CompKeys;
 
-const compBaseShape : Competition = {
-	id: null,
-	name: '',
-	ageGroups: [],
-	multiEventAgeGroups: [],
-	categories: [],
-	dances: [],
-	multiDances: [],
-	skillLevels: [],
-	multiEventSkillLevels: [],
-	dancers: [],
-	heats: [],
-	judges: [],
-	dateOfComp: null,
-	eventDate: null,
-	lastUpdated: null,
-	finished: false,
-	createDate: null,
-}
 
 @Injectable({
   providedIn: 'root'
@@ -51,8 +33,7 @@ export class CompetitionSetupService {
 
 	private competitions: Competition[];
 	private currentCompetitionIdx = -1;
-	private currentCompetition: Competition;
-	private competitions$ = new BehaviorSubject<Competition>({ ...compBaseShape});
+	private competitions$ = new BehaviorSubject<Competition>(new Competition());
 	private allCompetitions$ = new BehaviorSubject<Competition[]>([]);
 
 	constructor(private browserDb: BrowserDbService, 
@@ -76,13 +57,7 @@ export class CompetitionSetupService {
 		}
 		else {
 			this.currentCompetitionIdx = 0;
-			this.competitions = [
-				{ ...compBaseShape, 
-					id: v4(),
-					createDate: new Date(),
-					lastUpdated: new Date(),
-				}
-			];
+			this.competitions = [ new Competition() ];
 		}
 		this.competitions$.next(this.competitions[this.currentCompetitionIdx]);
 		this.allCompetitions$.next(this.competitions);
@@ -131,11 +106,9 @@ export class CompetitionSetupService {
 	}
 
 	replaceAll<T extends CompSubType>(items: T[], key: CompKeyChoices): void {
-		const currentCompetition = {
-			...this.competitions[this.currentCompetitionIdx],
-			[key]: items,
-			lastUpdated: new Date()
-		};
+		const currentCompetition = new Competition(
+			this.competitions[this.currentCompetitionIdx]);
+		currentCompetition[key] = items as any;
 		this.browserDb.putValue(COMPETITION_TABLE_NAME, currentCompetition);
 		this.competitions$.next(currentCompetition);
 		this.competitions = immutableReplace(this.competitions, 

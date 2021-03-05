@@ -3,7 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService, CompKeys } from 'src/app/services/competition-setup/competition-setup.service';
 import { first } from 'src/app/shared/utils/arrayHelpers';
-import { Category, Competition, Dance, MultiDance, MultiDanceDto } from 'src/app/types/data-shape';
+import { Competition } from 'src/app/types/competition';
+import { Category, Dance, MultiDance, MultiDanceDto } from 'src/app/types/data-shape';
 import { DirectionEventArg } from 'src/app/types/directions';
 
 @Component({

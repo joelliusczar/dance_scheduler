@@ -2,7 +2,8 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
 import { CompetitionSetupService, CompKeys } from 'src/app/services/competition-setup/competition-setup.service';
-import { Competition, SkillLevel } from 'src/app/types/data-shape';
+import { Competition } from 'src/app/types/competition';
+import { SkillLevel } from 'src/app/types/data-shape';
 import { DirectionEventArg } from 'src/app/types/directions';
 
 export type SkillLevelsChoice = CompKeys.skillLevels | CompKeys.multiEventSkillLevels;

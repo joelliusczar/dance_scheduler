@@ -6,7 +6,8 @@ import {
 } from '../../validators/age-range-validator.directive';
 import { Direction, DirectionEventArg } from '../../types/directions';
 import { CompetitionSetupService, CompKeys } from 'src/app/services/competition-setup/competition-setup.service';
-import { AgeGroupType, Competition, plus } from 'src/app/types/data-shape';
+import { AgeGroupType, plus } from 'src/app/types/data-shape';
+import { Competition } from 'src/app/types/competition';
 
 export type AgeGroupChoice = CompKeys.ageGroups | CompKeys.multiEventAgeGroups;
 
