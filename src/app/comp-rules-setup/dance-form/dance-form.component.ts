@@ -97,8 +97,8 @@ export class DanceFormComponent implements OnInit {
 		}
 	}
 
-	removeDance(dance: DanceDto): void {
-		const dances: Dance[] = this.competitionSetup$.get(CompKeys.dances);
+	async removeDance(dance: DanceDto): Promise<void> {
+		const dances: Dance[] = await this.competitionSetup$.get(CompKeys.dances);
 		const filtered = dances
 			.filter(i => i.id != dance.id);
 		if(dance.linkedDances?.length > 0) {

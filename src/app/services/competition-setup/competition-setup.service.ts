@@ -159,7 +159,8 @@ export class CompetitionSetupService {
 		}
 	}
 
-	get<T extends CompSubType>(key: CompKeyChoices): T[] {
+	async get<T extends CompSubType>(key: CompKeyChoices): Promise<T[]> {
+		await this._triggerLoadItems();
 		const currentCompetition = this.competitions[this.currentCompetitionIdx];
 		if(!currentCompetition[key]) {
 			return [];
@@ -167,11 +168,5 @@ export class CompetitionSetupService {
 		return currentCompetition[key] as unknown as T[];
 	}
 
-	initializeNewComp(id: DataKey): Competition {
-		if(id === DEFAULT_COMPETITION) {}
-		else if(id === EMPTY_COMPETITION) {}
-		else {}
-		return null;
-	}
 
 }
